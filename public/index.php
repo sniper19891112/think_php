@@ -26,7 +26,7 @@ require __DIR__ . '/../extend/org/Mobile.php';
 
 //echo '<pre>';
 //var_dump($_SERVER['REQUEST_URI'],stripos($_SERVER['REQUEST_URI'],"admin"));die;
-/**
+
 if ( stripos($_SERVER['REQUEST_URI'],"admin") === false && ( $_SERVER['REQUEST_URI'] != '/index/crontab/start')  ){
     if( $_SERVER['REQUEST_URI'] != '/index/crontab/lxb_jiesuan' ){
         $dev = new \org\Mobile();
@@ -35,9 +35,7 @@ if ( stripos($_SERVER['REQUEST_URI'],"admin") === false && ( $_SERVER['REQUEST_U
             header('Location:/app/?hash=1585235829605');
         }
     }
-}else{
-
-}**/
+}
 
 Container::get('app')->run()->send();
 

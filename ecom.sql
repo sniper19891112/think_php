@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : 43.154.106.155_3306
  Source Server Type    : MySQL
- Source Server Version : 100425
- Source Host           : localhost:3306
- Source Schema         : think_database
+ Source Server Version : 50744
+ Source Host           : 43.154.106.155:3306
+ Source Schema         : thinkphp
 
  Target Server Type    : MySQL
- Target Server Version : 100425
+ Target Server Version : 50744
  File Encoding         : 65001
 
- Date: 27/08/2024 00:16:55
+ Date: 05/09/2024 01:07:22
 */
 
 SET NAMES utf8mb4;
@@ -22,16 +22,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `system_auth`;
 CREATE TABLE `system_auth`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限名称',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '权限状态',
-  `sort` bigint UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
+  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注说明',
-  `create_at` timestamp NULL DEFAULT current_timestamp COMMENT '创建时间',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_auth_status`(`status`) USING BTREE,
   INDEX `index_system_auth_title`(`title`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_auth
@@ -45,13 +45,13 @@ INSERT INTO `system_auth` VALUES (4, '管理', 1, 0, '管理', '2022-03-12 15:13
 -- ----------------------------
 DROP TABLE IF EXISTS `system_auth_node`;
 CREATE TABLE `system_auth_node`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `auth` bigint UNSIGNED NULL DEFAULT NULL COMMENT '角色',
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `auth` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '角色',
   `node` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '节点',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_auth_auth`(`auth`) USING BTREE,
   INDEX `index_system_auth_node`(`node`(191)) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2213 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限-授权' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2213 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限-授权' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_auth_node
@@ -371,13 +371,13 @@ INSERT INTO `system_auth_node` VALUES (2212, 3, 'admin/users/edit_users_bk');
 -- ----------------------------
 DROP TABLE IF EXISTS `system_auth_node_copy`;
 CREATE TABLE `system_auth_node_copy`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `auth` bigint UNSIGNED NULL DEFAULT NULL COMMENT '角色',
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `auth` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '角色',
   `node` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '节点',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_auth_auth`(`auth`) USING BTREE,
   INDEX `index_system_auth_node`(`node`(191)) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 766 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限-授权' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 766 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限-授权' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_auth_node_copy
@@ -483,12 +483,12 @@ INSERT INTO `system_auth_node_copy` VALUES (765, 1, 'admin/users/edit_users_bala
 -- ----------------------------
 DROP TABLE IF EXISTS `system_config`;
 CREATE TABLE `system_config`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '配置名',
   `value` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_config_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-配置' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_config
@@ -578,12 +578,12 @@ INSERT INTO `system_config` VALUES (104, 'app_color', 'pink');
 -- ----------------------------
 DROP TABLE IF EXISTS `system_data`;
 CREATE TABLE `system_data`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '配置名',
   `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_data_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-数据' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-数据' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_data
@@ -595,15 +595,15 @@ INSERT INTO `system_data` VALUES (1, 'menudata', '[{\"name\":\"请输入名称\"
 -- ----------------------------
 DROP TABLE IF EXISTS `system_log`;
 CREATE TABLE `system_log`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `node` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '当前操作节点',
   `geoip` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '操作者IP地址',
   `action` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '操作行为名称',
   `content` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '操作内容描述',
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '操作人用户名',
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp COMMENT '创建时间',
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1865 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-日志' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1883 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_log
@@ -637,27 +637,45 @@ INSERT INTO `system_log` VALUES (1861, 'admin/login/index', '113.132.203.231', '
 INSERT INTO `system_log` VALUES (1862, 'admin/login/index', '178.173.225.132', '系统管理', '用户登录系统成功', 'admin', '2022-11-10 15:19:53');
 INSERT INTO `system_log` VALUES (1863, 'admin/login/index', '134.195.101.26', '系统管理', '用户登录系统成功', 'admin', '2022-11-10 15:21:52');
 INSERT INTO `system_log` VALUES (1864, 'admin/login/index', '::1', '系统管理', '用户登录系统成功', 'admin', '2024-08-26 23:43:18');
+INSERT INTO `system_log` VALUES (1865, 'admin/login/index', '50.7.159.47', '系统管理', '用户登录系统成功', 'admin', '2024-08-27 14:02:55');
+INSERT INTO `system_log` VALUES (1866, 'admin/login/index', '103.30.198.133', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 10:14:22');
+INSERT INTO `system_log` VALUES (1867, 'admin/login/index', '103.30.198.133', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 10:25:23');
+INSERT INTO `system_log` VALUES (1868, 'admin/login/index', '49.156.46.131', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 10:49:26');
+INSERT INTO `system_log` VALUES (1869, 'admin/login/index', '49.156.46.131', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 11:25:16');
+INSERT INTO `system_log` VALUES (1870, 'admin/login/index', '49.156.46.131', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 12:21:50');
+INSERT INTO `system_log` VALUES (1871, 'admin/login/index', '188.43.136.44', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 12:26:43');
+INSERT INTO `system_log` VALUES (1872, 'admin/login/index', '50.7.159.47', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 14:19:48');
+INSERT INTO `system_log` VALUES (1873, 'admin/login/index', '49.156.46.131', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 14:21:03');
+INSERT INTO `system_log` VALUES (1874, 'admin/login/index', '50.7.159.47', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 14:26:33');
+INSERT INTO `system_log` VALUES (1875, 'admin/login/index', '50.7.159.47', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 15:31:49');
+INSERT INTO `system_log` VALUES (1876, 'admin/login/index', '50.7.159.47', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 15:37:59');
+INSERT INTO `system_log` VALUES (1877, 'admin/login/index', '50.7.159.47', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 15:46:29');
+INSERT INTO `system_log` VALUES (1878, 'admin/login/index', '50.7.159.47', '系统管理', '用户登录系统成功', 'admin', '2024-08-28 15:48:19');
+INSERT INTO `system_log` VALUES (1879, 'admin/login/index', '49.156.46.131', '系统管理', '用户登录系统成功', 'admin', '2024-08-29 07:51:20');
+INSERT INTO `system_log` VALUES (1880, 'admin/login/index', '103.30.198.133', '系统管理', '用户登录系统成功', 'admin', '2024-08-29 09:23:12');
+INSERT INTO `system_log` VALUES (1881, 'admin/login/index', '188.43.136.44', '系统管理', '用户登录系统成功', 'admin', '2024-09-03 13:30:43');
+INSERT INTO `system_log` VALUES (1882, 'admin/login/index', '115.178.24.12', '系统管理', '用户登录系统成功', 'admin', '2024-09-03 14:40:11');
 
 -- ----------------------------
 -- Table structure for system_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `system_menu`;
 CREATE TABLE `system_menu`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pid` bigint UNSIGNED NULL DEFAULT 0 COMMENT '父ID',
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '父ID',
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '名称',
   `node` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '节点代码',
   `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '菜单图标',
   `url` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '链接',
   `params` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '链接参数',
   `target` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '_self' COMMENT '打开方式',
-  `sort` int UNSIGNED NULL DEFAULT 0 COMMENT '菜单排序',
+  `sort` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '菜单排序',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0:禁用,1:启用)',
-  `create_at` timestamp NULL DEFAULT current_timestamp COMMENT '创建时间',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_menu_node`(`node`(191)) USING BTREE,
   INDEX `index_system_menu_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-菜单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-菜单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_menu
@@ -711,23 +729,23 @@ INSERT INTO `system_menu` VALUES (101, 100, '分组列表', '', '', 'admin/Group
 -- ----------------------------
 DROP TABLE IF EXISTS `system_queue`;
 CREATE TABLE `system_queue`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '任务名称',
   `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '执行参数',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '任务状态(1新任务,2处理中,3成功,4失败)',
   `preload` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '执行内容',
-  `time` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT '执行时间',
+  `time` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '执行时间',
   `double` tinyint(1) NULL DEFAULT 1 COMMENT '单例模式',
   `desc` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '状态描述',
   `start_at` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '开始时间',
   `end_at` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '结束时间',
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp COMMENT '创建时间',
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_queue_double`(`double`) USING BTREE,
   INDEX `index_system_queue_time`(`time`) USING BTREE,
   INDEX `index_system_queue_title`(`title`) USING BTREE,
   INDEX `index_system_queue_create_at`(`create_at`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-任务' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-任务' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_queue
@@ -738,7 +756,7 @@ CREATE TABLE `system_queue`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `system_user`;
 CREATE TABLE `system_user`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户账号',
   `password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户密码',
   `qq` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系QQ',
@@ -746,42 +764,42 @@ CREATE TABLE `system_user`  (
   `phone` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系手机',
   `login_at` datetime NULL DEFAULT NULL COMMENT '登录时间',
   `login_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '登录IP',
-  `login_num` bigint UNSIGNED NULL DEFAULT 0 COMMENT '登录次数',
+  `login_num` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '登录次数',
   `authorize` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '权限授权',
   `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户标签',
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注说明',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0禁用,1启用)',
   `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除(1删除,0未删)',
-  `create_at` timestamp NULL DEFAULT current_timestamp COMMENT '创建时间',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_user_username`(`username`) USING BTREE,
   INDEX `index_system_user_status`(`status`) USING BTREE,
   INDEX `index_system_user_deleted`(`is_deleted`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10172 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10172 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-用户' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2024-08-26 23:43:18', '::1', 1629, '', '', '', 1, 0, '2015-11-13 16:14:22');
+INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2024-09-03 14:40:11', '115.178.24.12', 1647, '', '', '', 1, 0, '2015-11-13 16:14:22');
 
 -- ----------------------------
 -- Table structure for xy_balance_log
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_balance_log`;
 CREATE TABLE `xy_balance_log`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `uid` int NOT NULL COMMENT '会员ID',
-  `sid` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '交易对象id',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT '会员ID',
+  `sid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '交易对象id',
   `oid` char(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '交易单号',
   `num` decimal(10, 2) NOT NULL COMMENT '交易金额',
-  `type` int NOT NULL COMMENT '交易类型 0系统 1充值 2交易 3返佣 4强制交易 5推广返佣 6下级交易返佣  7提现,11彩金',
-  `status` int NULL DEFAULT 1 COMMENT '收入1 支出2',
-  `addtime` int NOT NULL COMMENT '添加时间',
-  `f_lv` int NULL DEFAULT NULL,
+  `type` int(11) NOT NULL COMMENT '交易类型 0系统 1充值 2交易 3返佣 4强制交易 5推广返佣 6下级交易返佣  7提现,11彩金',
+  `status` int(11) NULL DEFAULT 1 COMMENT '收入1 支出2',
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
+  `f_lv` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oid`(`oid`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 270747 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-收支明细表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 270769 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-收支明细表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_balance_log
@@ -819,18 +837,40 @@ INSERT INTO `xy_balance_log` VALUES (270743, 12229, 0, 'UB2211101425514425', 839
 INSERT INTO `xy_balance_log` VALUES (270744, 12229, 0, 'UB2211101425514425', 2099.00, 3, 1, 1668061570, NULL);
 INSERT INTO `xy_balance_log` VALUES (270745, 12229, 0, 'UB2211101427001376', 16900.00, 2, 2, 1668061643, NULL);
 INSERT INTO `xy_balance_log` VALUES (270746, 12229, 0, 'UB2211101427001376', 422.50, 3, 1, 1668061643, NULL);
+INSERT INTO `xy_balance_log` VALUES (270747, 12230, 0, 'UB2408281944298091', 5990.00, 2, 2, 1724845510, NULL);
+INSERT INTO `xy_balance_log` VALUES (270748, 12230, 0, 'UB2408281944298091', 119.80, 3, 1, 1724845510, NULL);
+INSERT INTO `xy_balance_log` VALUES (270749, 12229, 12230, 'UB2408281944298091', 41.93, 6, 1, 1724845510, 1);
+INSERT INTO `xy_balance_log` VALUES (270750, 12232, 0, 'UB2408282036528189', 5024.00, 2, 2, 1724848636, NULL);
+INSERT INTO `xy_balance_log` VALUES (270751, 12232, 0, 'UB2408282036528189', 125.60, 3, 1, 1724848636, NULL);
+INSERT INTO `xy_balance_log` VALUES (270752, 12229, 12232, 'UB2408282036528189', 15.07, 6, 1, 1724848636, 2);
+INSERT INTO `xy_balance_log` VALUES (270753, 12230, 12232, 'UB2408282036528189', 43.96, 6, 1, 1724848636, 1);
+INSERT INTO `xy_balance_log` VALUES (270754, 12230, 0, 'UB2408282110428925', 3020.00, 2, 2, 1724850690, NULL);
+INSERT INTO `xy_balance_log` VALUES (270755, 12230, 0, 'UB2408282110428925', 30.20, 3, 1, 1724850690, NULL);
+INSERT INTO `xy_balance_log` VALUES (270756, 12229, 12230, 'UB2408282110428925', 10.57, 6, 1, 1724850690, 1);
+INSERT INTO `xy_balance_log` VALUES (270757, 12230, 0, 'UB2408282115064752', 5290.00, 2, 2, 1724850941, NULL);
+INSERT INTO `xy_balance_log` VALUES (270758, 12230, 0, 'UB2408282115064752', 52.90, 3, 1, 1724850941, NULL);
+INSERT INTO `xy_balance_log` VALUES (270759, 12229, 12230, 'UB2408282115064752', 18.52, 6, 1, 1724850941, 1);
+INSERT INTO `xy_balance_log` VALUES (270760, 12232, 0, 'UB2408282130011975', 1049.00, 2, 2, 1724851820, NULL);
+INSERT INTO `xy_balance_log` VALUES (270761, 12232, 0, 'UB2408282130011975', 10.49, 3, 1, 1724851820, NULL);
+INSERT INTO `xy_balance_log` VALUES (270762, 12229, 12232, 'UB2408282130011975', 1.26, 6, 1, 1724851820, 2);
+INSERT INTO `xy_balance_log` VALUES (270763, 12230, 12232, 'UB2408282130011975', 3.67, 6, 1, 1724851820, 1);
+INSERT INTO `xy_balance_log` VALUES (270764, 12234, 0, 'UB2408282148164814', 49.00, 2, 2, 1724852914, NULL);
+INSERT INTO `xy_balance_log` VALUES (270765, 12234, 0, 'UB2408282148164814', 0.49, 3, 1, 1724852914, NULL);
+INSERT INTO `xy_balance_log` VALUES (270766, 12229, 12234, 'UB2408282148164814', 0.04, 6, 1, 1724852914, 3);
+INSERT INTO `xy_balance_log` VALUES (270767, 12230, 12234, 'UB2408282148164814', 0.06, 6, 1, 1724852914, 2);
+INSERT INTO `xy_balance_log` VALUES (270768, 12232, 12234, 'UB2408282148164814', 0.17, 6, 1, 1724852914, 1);
 
 -- ----------------------------
 -- Table structure for xy_bank_list
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_bank_list`;
 CREATE TABLE `xy_bank_list`  (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `type` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `bankcode` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '银行编号',
   `bankname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '银行名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '提现银行编码表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '提现银行编码表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_bank_list
@@ -867,8 +907,8 @@ INSERT INTO `xy_bank_list` VALUES (26, '', 'IDPT0025', 'Bank of Baroda');
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_bankinfo`;
 CREATE TABLE `xy_bankinfo`  (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uid` int UNSIGNED NOT NULL COMMENT '会员ID',
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uid` int(10) UNSIGNED NOT NULL COMMENT '会员ID',
   `bankname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '银行名称',
   `bankcode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `cardnum` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '卡号',
@@ -883,7 +923,7 @@ CREATE TABLE `xy_bankinfo`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `Uid`(`uid`) USING BTREE,
   INDEX `Cardnum`(`cardnum`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-银行卡信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-银行卡信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_bankinfo
@@ -895,12 +935,12 @@ INSERT INTO `xy_bankinfo` VALUES (1, 12229, 'ธนาคารกรุงศ�
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_banner`;
 CREATE TABLE `xy_banner`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '首页轮播图' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '首页轮播图' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_banner
@@ -918,22 +958,22 @@ INSERT INTO `xy_banner` VALUES (21, '/upload/a76cb9815b63c16a/d5895b92ffba9154.p
 DROP TABLE IF EXISTS `xy_convey`;
 CREATE TABLE `xy_convey`  (
   `id` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `uid` int NOT NULL COMMENT '会员ID',
+  `uid` int(11) NOT NULL COMMENT '会员ID',
   `ubalance` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `num` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '交易金额',
-  `addtime` int NOT NULL DEFAULT 0 COMMENT '下单时间',
-  `endtime` int NOT NULL DEFAULT 0 COMMENT '完成交易时间',
-  `status` int NOT NULL DEFAULT 0 COMMENT '订单状态 0待付款 1交易完成 2用户取消  3强制完成 4强制取消  5交易冻结',
+  `addtime` int(11) NOT NULL DEFAULT 0 COMMENT '下单时间',
+  `endtime` int(11) NOT NULL DEFAULT 0 COMMENT '完成交易时间',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '订单状态 0待付款 1交易完成 2用户取消  3强制完成 4强制取消  5交易冻结',
   `commission` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '佣金',
-  `c_status` int NOT NULL DEFAULT 0 COMMENT '佣金发放状态 0未发放 1已发放 2账号冻结',
-  `add_id` int NOT NULL COMMENT '收货地址',
-  `goods_id` int NOT NULL COMMENT '商品ID',
-  `goods_count` int NOT NULL DEFAULT 1 COMMENT '商品数量',
-  `grouping_id` int NOT NULL,
-  `order_num` int NOT NULL,
+  `c_status` int(11) NOT NULL DEFAULT 0 COMMENT '佣金发放状态 0未发放 1已发放 2账号冻结',
+  `add_id` int(11) NOT NULL COMMENT '收货地址',
+  `goods_id` int(11) NOT NULL COMMENT '商品ID',
+  `goods_count` int(11) NOT NULL DEFAULT 1 COMMENT '商品数量',
+  `grouping_id` int(11) NOT NULL,
+  `order_num` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-订单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-订单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_convey
@@ -953,13 +993,20 @@ INSERT INTO `xy_convey` VALUES ('UB2211091949125812', 12229, '123312.38', 55500.
 INSERT INTO `xy_convey` VALUES ('UB2211101425514425', 12229, '124699.88', 83960.00, 1668061551, 1668061630, 1, 2099.00, 1, 2105, 1860, 4, 0, 0);
 INSERT INTO `xy_convey` VALUES ('UB2211101427001376', 12229, '126798.88', 16900.00, 1668061620, 1668061703, 1, 422.50, 1, 2105, 1847, 1, 0, 0);
 INSERT INTO `xy_convey` VALUES ('UB2211101441005027', 12229, '127221.38', 70650.00, 1668062460, 1668062580, 0, 1766.25, 0, 2105, 1862, 3, 0, 0);
+INSERT INTO `xy_convey` VALUES ('UB2408281944298091', 12230, '10000.00', 5990.00, 1724845469, 1724845570, 1, 119.80, 1, 2106, 1723, 1, 0, 0);
+INSERT INTO `xy_convey` VALUES ('UB2408282036528189', 12232, '10000.00', 5024.00, 1724848612, 1724848696, 1, 125.60, 1, 2107, 1477, 8, 0, 0);
+INSERT INTO `xy_convey` VALUES ('UB2408282110428925', 12230, '10163.76', 3020.00, 1724850642, 1724850750, 1, 30.20, 1, 2106, 1430, 4, 0, 0);
+INSERT INTO `xy_convey` VALUES ('UB2408282115064752', 12230, '10193.96', 5290.00, 1724850906, 1724851001, 1, 52.90, 1, 2106, 1732, 1, 0, 0);
+INSERT INTO `xy_convey` VALUES ('UB2408282130011975', 12232, '10125.60', 1049.00, 1724851801, 1724851880, 1, 10.49, 1, 2107, 1771, 1, 0, 0);
+INSERT INTO `xy_convey` VALUES ('UB2408282148164814', 12234, '100.00', 49.00, 1724852896, 1724852974, 1, 0.49, 1, 2108, 1008, 1, 0, 0);
+INSERT INTO `xy_convey` VALUES ('UB2408291738457673', 12232, '10136.26', 1700.00, 1724924325, 1724924445, 0, 17.00, 0, 2107, 1422, 2, 0, 0);
 
 -- ----------------------------
 -- Table structure for xy_cs
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_cs`;
 CREATE TABLE `xy_cs`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tel` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '手机号',
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户名',
   `pwd` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '密码',
@@ -969,14 +1016,14 @@ CREATE TABLE `xy_cs`  (
   `qr_code` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '微信二维码',
   `btime` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '上班时间',
   `etime` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '下班时间',
-  `status` int NOT NULL DEFAULT 1 COMMENT '账号状态 1启用 2禁用',
-  `addtime` int NOT NULL COMMENT '添加时间',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '账号状态 1启用 2禁用',
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `ico` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `remark` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `linktext` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '客服-用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '客服-用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_cs
@@ -991,15 +1038,15 @@ INSERT INTO `xy_cs` VALUES (4, '13800000000', '平台审核客服MChat（请咨�
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_deal_elog`;
 CREATE TABLE `xy_deal_elog`  (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `oid` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '相关订单',
-  `uid` int UNSIGNED NOT NULL COMMENT '用户id',
+  `uid` int(10) UNSIGNED NOT NULL COMMENT '用户id',
   `errmsg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '错误信息',
-  `addtime` int UNSIGNED NOT NULL COMMENT '添加时间',
+  `addtime` int(10) UNSIGNED NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oid`(`oid`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '交易错误日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '交易错误日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_deal_elog
@@ -1011,12 +1058,12 @@ CREATE TABLE `xy_deal_elog`  (
 DROP TABLE IF EXISTS `xy_deposit`;
 CREATE TABLE `xy_deposit`  (
   `id` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `uid` int NOT NULL COMMENT '提现用户',
-  `bk_id` int NOT NULL COMMENT '银行卡信息',
+  `uid` int(11) NOT NULL COMMENT '提现用户',
+  `bk_id` int(11) NOT NULL COMMENT '银行卡信息',
   `num` decimal(12, 2) NOT NULL COMMENT '提现金额',
-  `addtime` int NOT NULL COMMENT '提交时间',
-  `endtime` int NOT NULL DEFAULT 0 COMMENT '审核时间',
-  `status` int NOT NULL DEFAULT 1 COMMENT '订单状态 1待处理 2审核通过 3审核不通过',
+  `addtime` int(11) NOT NULL COMMENT '提交时间',
+  `endtime` int(11) NOT NULL DEFAULT 0 COMMENT '审核时间',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '订单状态 1待处理 2审核通过 3审核不通过',
   `type` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `real_num` decimal(12, 2) NULL DEFAULT NULL,
   `shouxu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -1027,7 +1074,7 @@ CREATE TABLE `xy_deposit`  (
   `applyDate` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `notifyDate` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-余额提现表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-余额提现表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_deposit
@@ -1038,23 +1085,23 @@ CREATE TABLE `xy_deposit`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_goods_cate`;
 CREATE TABLE `xy_goods_cate`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商店名称',
   `bili` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品名称',
   `cate_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品描述',
   `goods_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '商品价格',
   `cate_pic` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品展示图片',
   `cat_ico` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `addtime` int NOT NULL COMMENT '添加时间',
-  `status` int NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
+  `status` int(11) NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
   `min` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '最小金额限制',
-  `level_id` int NULL DEFAULT NULL,
-  `deal_min_num` int NOT NULL,
-  `deal_max_num` int NOT NULL,
-  `deal_min_numbaifenbi` int NOT NULL DEFAULT 0,
-  `deal_max_numbaifenbi` int NOT NULL DEFAULT 0,
+  `level_id` int(11) NULL DEFAULT NULL,
+  `deal_min_num` int(11) NOT NULL,
+  `deal_max_num` int(11) NOT NULL,
+  `deal_min_numbaifenbi` int(11) NOT NULL DEFAULT 0,
+  `deal_max_numbaifenbi` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 172 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 172 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_goods_cate
@@ -1073,7 +1120,7 @@ INSERT INTO `xy_goods_cate` VALUES (171, 'VIP-8', '0.022', 'Amazon channel CPS 0
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_goods_list`;
 CREATE TABLE `xy_goods_list`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `shop_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商店名称',
   `en_shop_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `goods_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品名称',
@@ -1082,11 +1129,11 @@ CREATE TABLE `xy_goods_list`  (
   `en_goods_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `goods_price` decimal(10, 2) NOT NULL COMMENT '商品价格',
   `goods_pic` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品展示图片',
-  `addtime` int NOT NULL COMMENT '添加时间',
-  `status` int NOT NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
-  `cid` int NULL DEFAULT 1,
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
+  `cid` int(11) NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1880 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 1880 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_goods_list
@@ -2176,13 +2223,13 @@ INSERT INTO `xy_goods_list` VALUES (1879, 'ASUS ROG PHONE 5s (BK/WH) Mobile Phon
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_grouping`;
 CREATE TABLE `xy_grouping`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `type` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL,
   `title` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `status` int NOT NULL,
+  `status` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_grouping
@@ -2249,7 +2296,7 @@ INSERT INTO `xy_grouping` VALUES (61, 0, 'เชือบิล 3', '[{\"pipei_d
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_index_msg`;
 CREATE TABLE `xy_index_msg`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `en_title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `fr_title` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -2260,16 +2307,16 @@ CREATE TABLE `xy_index_msg`  (
   `fr_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `es_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `pt_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `type` int NOT NULL DEFAULT 1 COMMENT '1平台公告 2平台简介 3抢单规则 4代理合作 5常见问题',
-  `addtime` int NOT NULL COMMENT '发表时间',
-  `status` int NOT NULL DEFAULT 0 COMMENT '0发布 1不发布',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '1平台公告 2平台简介 3抢单规则 4代理合作 5常见问题',
+  `addtime` int(11) NOT NULL COMMENT '发表时间',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '0发布 1不发布',
   `author` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '作者',
   `kr_title` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `kr_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `jp_title` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `jp_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '首页内容表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '首页内容表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_index_msg
@@ -2292,15 +2339,15 @@ INSERT INTO `xy_index_msg` VALUES (12, '公司资质', 'Company Qualificatio', '
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_io_log`;
 CREATE TABLE `xy_io_log`  (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `oid` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `amount` decimal(7, 2) NOT NULL COMMENT '支付金额',
   `tran_amount` decimal(7, 2) NOT NULL COMMENT '实收金额',
-  `type` int NOT NULL DEFAULT 1 COMMENT '1收入(用户充值) 2支出(用户提现)',
-  `addtime` int UNSIGNED NOT NULL COMMENT '交易时间',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '1收入(用户充值) 2支出(用户提现)',
+  `addtime` int(10) UNSIGNED NOT NULL COMMENT '交易时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oid`(`oid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '平台收支记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '平台收支记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_io_log
@@ -2311,32 +2358,32 @@ CREATE TABLE `xy_io_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_level`;
 CREATE TABLE `xy_level`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(36) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `order_num` int NULL DEFAULT NULL COMMENT '接单限制',
+  `order_num` int(11) NULL DEFAULT NULL COMMENT '接单限制',
   `num` decimal(18, 2) NULL DEFAULT NULL,
   `addtime` datetime NULL DEFAULT NULL,
   `bili` decimal(18, 4) NULL DEFAULT NULL COMMENT '比例',
-  `level` int NULL DEFAULT NULL COMMENT 'd等级',
-  `tixian_ci` int NULL DEFAULT NULL COMMENT '提现次数',
+  `level` int(11) NULL DEFAULT NULL COMMENT 'd等级',
+  `tixian_ci` int(11) NULL DEFAULT NULL COMMENT '提现次数',
   `tixian_min` decimal(18, 2) NULL DEFAULT NULL,
   `tixian_max` decimal(18, 2) NULL DEFAULT NULL COMMENT '提现最大金额',
   `num_min` decimal(18, 2) NULL DEFAULT NULL,
   `cids` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `tixian_nim_order` int NULL DEFAULT NULL COMMENT '提现最少完成订单数',
-  `auto_vip_xu_num` int NULL DEFAULT NULL COMMENT '自动升级vip需要邀请的人',
+  `tixian_nim_order` int(11) NULL DEFAULT NULL COMMENT '提现最少完成订单数',
+  `auto_vip_xu_num` int(11) NULL DEFAULT NULL COMMENT '自动升级vip需要邀请的人',
   `tixian_shouxu` varchar(36) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '0' COMMENT '提现手续费',
   `pic` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_level
 -- ----------------------------
-INSERT INTO `xy_level` VALUES (1, 'VIP 1', 10, 100.00, '2020-02-05 17:48:29', 0.0250, 0, 3, 100.00, 10000000000.00, 100.00, '', 3, 10, '0', '/public/level/lv1.png');
-INSERT INTO `xy_level` VALUES (2, 'VIP 2', 20, 300.00, '2020-02-05 17:48:29', 0.0300, 1, 6, 300.00, 6000.00, 300.00, '', 10, 15, '0', '/public/level/lv2.png');
-INSERT INTO `xy_level` VALUES (3, 'VIP 3', 30, 500.00, '2020-02-05 17:48:29', 0.0200, 2, 6, 500.00, 100000.00, 500.00, '', 15, 20, '0', '/public/level/lv3.png');
-INSERT INTO `xy_level` VALUES (4, 'VIP 4', 40, 1000.00, '2020-02-05 17:48:29', 0.0200, 3, 8, 1000.00, 350000.00, 1000.00, '', 30, 50, '0', '/public/level/lv4.png');
+INSERT INTO `xy_level` VALUES (1, 'VIP 1', 3, 100.00, '2020-02-05 17:48:29', 0.0100, 0, 3, 100.00, 10000000000.00, 100.00, '', 3, 3, '0', '/public/level/lv1.png');
+INSERT INTO `xy_level` VALUES (2, 'VIP 2', 5, 300.00, '2020-02-05 17:48:29', 0.0200, 1, 6, 300.00, 6000.00, 300.00, '', 10, 8, '0', '/public/level/lv2.png');
+INSERT INTO `xy_level` VALUES (3, 'VIP 3', 10, 500.00, '2020-02-05 17:48:29', 0.0300, 2, 6, 500.00, 100000.00, 500.00, '', 15, 12, '0', '/public/level/lv3.png');
+INSERT INTO `xy_level` VALUES (4, 'VIP 4', 40, 1000.00, '2020-02-05 17:48:29', 0.0200, 3, 8, 1000.00, 350000.00, 1000.00, '', 30, 36, '0', '/public/level/lv4.png');
 INSERT INTO `xy_level` VALUES (5, 'VIP 5', 50, 3000.00, '2021-08-07 00:00:00', 0.0200, 4, 8, 3000.00, 5000000.00, 3000.00, '', 45, 70, '0', '/public/level/lv5.png');
 INSERT INTO `xy_level` VALUES (6, 'VIP 6', 60, 5000.00, '2021-08-07 00:00:00', 0.0200, 5, 8, 5000.00, 800000.00, 5000.00, '', 80, 80, '0', '/public/level/lv6.png');
 INSERT INTO `xy_level` VALUES (7, 'VIP 7', 70, 10000.00, '2021-08-07 00:00:00', 0.0200, 6, 8, 10000.00, 10000000.00, 10000.00, '', 80, 90, '0', '/public/level/lv7.png');
@@ -2347,21 +2394,21 @@ INSERT INTO `xy_level` VALUES (8, 'VIP 8', 80, 50000.00, '2021-08-07 00:00:00', 
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_lixibao`;
 CREATE TABLE `xy_lixibao`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `uid` int NULL DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NULL DEFAULT NULL,
   `num` decimal(18, 5) NULL DEFAULT NULL,
-  `addtime` int NULL DEFAULT NULL,
-  `endtime` int NULL DEFAULT NULL,
-  `type` int NULL DEFAULT NULL,
-  `status` int NULL DEFAULT NULL,
+  `addtime` int(11) NULL DEFAULT NULL,
+  `endtime` int(11) NULL DEFAULT NULL,
+  `type` int(11) NULL DEFAULT NULL,
+  `status` int(11) NULL DEFAULT NULL,
   `yuji_num` decimal(18, 5) NULL DEFAULT NULL,
-  `sid` int NULL DEFAULT NULL,
-  `is_qu` int NULL DEFAULT 0,
+  `sid` int(11) NULL DEFAULT NULL,
+  `is_qu` int(11) NULL DEFAULT 0,
   `shouxu` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `real_num` decimal(18, 5) NULL DEFAULT 0.00000,
-  `is_sy` int NULL DEFAULT 0,
+  `is_sy` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_lixibao
@@ -2372,17 +2419,17 @@ CREATE TABLE `xy_lixibao`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_lixibao_list`;
 CREATE TABLE `xy_lixibao_list`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `day` int NULL DEFAULT NULL,
+  `day` int(11) NULL DEFAULT NULL,
   `bili` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `min_num` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `max_num` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `addtime` int NULL DEFAULT NULL,
-  `status` int NULL DEFAULT NULL,
+  `addtime` int(11) NULL DEFAULT NULL,
+  `status` int(11) NULL DEFAULT NULL,
   `shouxu` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_lixibao_list
@@ -2397,41 +2444,44 @@ INSERT INTO `xy_lixibao_list` VALUES (4, 'One year', 365, '0.015', '100', '50000
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_member_address`;
 CREATE TABLE `xy_member_address`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uid` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT '会员ID',
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '会员ID',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '收货姓名',
   `tel` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '收货手机',
   `area` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '地区',
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '地址-详情',
   `is_default` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '默认地址',
-  `addtime` int NOT NULL COMMENT '创建时间',
+  `addtime` int(11) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_xy_member_address_uid`(`uid`) USING BTREE,
   INDEX `index_xy_member_address_is_default`(`is_default`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2106 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员收货地址' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2109 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员收货地址' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_member_address
 -- ----------------------------
 INSERT INTO `xy_member_address` VALUES (2105, 12229, '12312', '123123', '1231231', '1231231', 0, 1665819303);
+INSERT INTO `xy_member_address` VALUES (2106, 12230, '测试', '306699999', '英国', '流浪者', 0, 1724845427);
+INSERT INTO `xy_member_address` VALUES (2107, 12232, 'sugel', '+661238569', 'US', '336', 0, 1724848579);
+INSERT INTO `xy_member_address` VALUES (2108, 12234, 'ceshi', '+85212345678', 'US', '9685', 0, 1724852853);
 
 -- ----------------------------
 -- Table structure for xy_message
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_message`;
 CREATE TABLE `xy_message`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `uid` int NOT NULL DEFAULT 0 COMMENT '接收人ID',
-  `sid` int NOT NULL DEFAULT 0 COMMENT '发送人ID',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL DEFAULT 0 COMMENT '接收人ID',
+  `sid` int(11) NOT NULL DEFAULT 0 COMMENT '发送人ID',
   `title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '信息标题',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '正文内容',
-  `addtime` int NOT NULL COMMENT '发表时间',
-  `type` int NOT NULL DEFAULT 1 COMMENT '消息类型 1公告 2通知',
-  `status` int NOT NULL COMMENT '是否阅读状态',
+  `addtime` int(11) NOT NULL COMMENT '发表时间',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '消息类型 1公告 2通知',
+  `status` int(11) NOT NULL COMMENT '是否阅读状态',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `sid`(`sid`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 141 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-消息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 141 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-消息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_message
@@ -2582,15 +2632,15 @@ INSERT INTO `xy_message` VALUES (140, 12094, 0, 'System notification', 'Recharge
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_msg`;
 CREATE TABLE `xy_msg`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文本内容',
-  `type` int NOT NULL DEFAULT 1 COMMENT '1平台公告 2平台简介 3抢单规则 4代理合作 5常见问题',
-  `addtime` int NOT NULL COMMENT '发表时间',
-  `status` int NOT NULL DEFAULT 0 COMMENT '0发布 1不发布',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '1平台公告 2平台简介 3抢单规则 4代理合作 5常见问题',
+  `addtime` int(11) NOT NULL COMMENT '发表时间',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '0发布 1不发布',
   `author` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '作者',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_msg
@@ -2601,7 +2651,7 @@ CREATE TABLE `xy_msg`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_pay`;
 CREATE TABLE `xy_pay`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `name2` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `ico` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -2609,13 +2659,13 @@ CREATE TABLE `xy_pay`  (
   `max` double(18, 2) NULL DEFAULT NULL,
   `ewm` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `status` int NULL DEFAULT NULL,
-  `tuijian` int NOT NULL,
+  `status` int(11) NULL DEFAULT NULL,
+  `tuijian` int(11) NOT NULL,
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `sort` int NOT NULL,
-  `charge` int NOT NULL COMMENT '手续费',
+  `sort` int(11) NOT NULL,
+  `charge` int(11) NOT NULL COMMENT '手续费',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_pay
@@ -2636,13 +2686,13 @@ INSERT INTO `xy_pay` VALUES (10, 'Qea', 'Qea', '/public/img/uz.png', 1.00, 10000
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_reads`;
 CREATE TABLE `xy_reads`  (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `mid` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '消息ID',
-  `uid` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '会员ID',
-  `addtime` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '读取时间',
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `mid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '消息ID',
+  `uid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '会员ID',
+  `addtime` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '读取时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `mid-uid`(`mid`, `uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-消息读取记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-消息读取记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_reads
@@ -2655,27 +2705,27 @@ INSERT INTO `xy_reads` VALUES (1, 30, 1, 1582140346);
 DROP TABLE IF EXISTS `xy_recharge`;
 CREATE TABLE `xy_recharge`  (
   `id` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `uid` int NOT NULL COMMENT '用户ID',
+  `uid` int(11) NOT NULL COMMENT '用户ID',
   `real_name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '充值姓名',
   `tel` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '手机号',
   `num` decimal(12, 2) NOT NULL COMMENT '充值金额',
-  `type` int NOT NULL DEFAULT 1 COMMENT '支付方式 1微信 2支付宝 3qq',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '支付方式 1微信 2支付宝 3qq',
   `pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '打款凭证',
-  `addtime` int NOT NULL COMMENT '下单时间',
-  `endtime` int NOT NULL DEFAULT 0 COMMENT '处理时间',
-  `status` int NOT NULL DEFAULT 1 COMMENT '订单状态 1下单成功 2充值成功 3充值失败',
+  `addtime` int(11) NOT NULL COMMENT '下单时间',
+  `endtime` int(11) NOT NULL DEFAULT 0 COMMENT '处理时间',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '订单状态 1下单成功 2充值成功 3充值失败',
   `pay_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `is_vip` int NULL DEFAULT 0,
-  `level` int NULL DEFAULT NULL,
+  `is_vip` int(11) NULL DEFAULT 0,
+  `level` int(11) NULL DEFAULT NULL,
   `pay_type` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `charge` int NOT NULL COMMENT '充值手续费',
+  `charge` int(11) NOT NULL COMMENT '充值手续费',
   `payInfo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `orderNo` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `orderDate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `notifyDate` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-充值表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-充值表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_recharge
@@ -2686,19 +2736,19 @@ CREATE TABLE `xy_recharge`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_reward_log`;
 CREATE TABLE `xy_reward_log`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `oid` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单号',
-  `uid` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '产生交易用户',
-  `sid` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '交易对象',
+  `uid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '产生交易用户',
+  `sid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '交易对象',
   `num` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '交易数额',
-  `lv` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '级差',
-  `type` int NOT NULL DEFAULT 0 COMMENT '订单类型 1充值订单(推广返佣) 2交易订单(交易返佣)',
-  `status` int NOT NULL DEFAULT 0 COMMENT '佣金发放状态 0自动发放 1未发放 2已发放',
-  `addtime` int UNSIGNED NOT NULL COMMENT '创建时间',
-  `endtime` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '处理时间',
+  `lv` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '级差',
+  `type` int(11) NOT NULL DEFAULT 0 COMMENT '订单类型 1充值订单(推广返佣) 2交易订单(交易返佣)',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '佣金发放状态 0自动发放 1未发放 2已发放',
+  `addtime` int(10) UNSIGNED NOT NULL COMMENT '创建时间',
+  `endtime` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '处理时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oid`(`oid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 202590 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单佣金发放记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 202606 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单佣金发放记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_reward_log
@@ -2718,6 +2768,22 @@ INSERT INTO `xy_reward_log` VALUES (202586, 'UB2211091948051391', 12229, 0, 1149
 INSERT INTO `xy_reward_log` VALUES (202587, 'UB2211091949125812', 12229, 0, 55500.00, 0, 2, 0, 1667994577, 0);
 INSERT INTO `xy_reward_log` VALUES (202588, 'UB2211101425514425', 12229, 0, 83960.00, 0, 2, 0, 1668061570, 0);
 INSERT INTO `xy_reward_log` VALUES (202589, 'UB2211101427001376', 12229, 0, 16900.00, 0, 2, 0, 1668061643, 0);
+INSERT INTO `xy_reward_log` VALUES (202590, 'UB2408281944298091', 12230, 0, 5990.00, 0, 2, 0, 1724845510, 0);
+INSERT INTO `xy_reward_log` VALUES (202591, 'UB2408281944298091', 12229, 12230, 41.93, 1, 2, 1, 1724845510, 0);
+INSERT INTO `xy_reward_log` VALUES (202592, 'UB2408282036528189', 12232, 0, 5024.00, 0, 2, 0, 1724848636, 0);
+INSERT INTO `xy_reward_log` VALUES (202593, 'UB2408282036528189', 12229, 12232, 15.07, 2, 2, 1, 1724848636, 0);
+INSERT INTO `xy_reward_log` VALUES (202594, 'UB2408282036528189', 12230, 12232, 43.96, 1, 2, 1, 1724848636, 0);
+INSERT INTO `xy_reward_log` VALUES (202595, 'UB2408282110428925', 12230, 0, 3020.00, 0, 2, 0, 1724850690, 0);
+INSERT INTO `xy_reward_log` VALUES (202596, 'UB2408282110428925', 12229, 12230, 10.57, 1, 2, 1, 1724850690, 0);
+INSERT INTO `xy_reward_log` VALUES (202597, 'UB2408282115064752', 12230, 0, 5290.00, 0, 2, 0, 1724850941, 0);
+INSERT INTO `xy_reward_log` VALUES (202598, 'UB2408282115064752', 12229, 12230, 18.52, 1, 2, 1, 1724850941, 0);
+INSERT INTO `xy_reward_log` VALUES (202599, 'UB2408282130011975', 12232, 0, 1049.00, 0, 2, 0, 1724851820, 0);
+INSERT INTO `xy_reward_log` VALUES (202600, 'UB2408282130011975', 12229, 12232, 1.26, 2, 2, 1, 1724851820, 0);
+INSERT INTO `xy_reward_log` VALUES (202601, 'UB2408282130011975', 12230, 12232, 3.67, 1, 2, 1, 1724851820, 0);
+INSERT INTO `xy_reward_log` VALUES (202602, 'UB2408282148164814', 12234, 0, 49.00, 0, 2, 0, 1724852914, 0);
+INSERT INTO `xy_reward_log` VALUES (202603, 'UB2408282148164814', 12229, 12234, 0.04, 3, 2, 1, 1724852914, 0);
+INSERT INTO `xy_reward_log` VALUES (202604, 'UB2408282148164814', 12230, 12234, 0.06, 2, 2, 1, 1724852914, 0);
+INSERT INTO `xy_reward_log` VALUES (202605, 'UB2408282148164814', 12232, 12234, 0.17, 1, 2, 1, 1724852914, 0);
 
 -- ----------------------------
 -- Table structure for xy_script
@@ -2725,9 +2791,9 @@ INSERT INTO `xy_reward_log` VALUES (202589, 'UB2211101427001376', 12229, 0, 1690
 DROP TABLE IF EXISTS `xy_script`;
 CREATE TABLE `xy_script`  (
   `script` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '代码块',
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_script
@@ -2739,17 +2805,17 @@ INSERT INTO `xy_script` VALUES ('', 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_shop_goods_cate`;
 CREATE TABLE `xy_shop_goods_cate`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商店名称',
   `bili` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品名称',
   `cate_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品描述',
   `goods_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '商品价格',
   `cate_pic` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品展示图片',
-  `addtime` int NOT NULL COMMENT '添加时间',
-  `status` int NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
+  `status` int(11) NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
   `min` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '最小金额限制',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 167 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 167 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_shop_goods_cate
@@ -2765,7 +2831,7 @@ INSERT INTO `xy_shop_goods_cate` VALUES (4, '装饰品', '0', '111', NULL, 'http
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_shop_goods_list`;
 CREATE TABLE `xy_shop_goods_list`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `shop_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商店名称',
   `en_shop_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `goods_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品名称',
@@ -2774,12 +2840,12 @@ CREATE TABLE `xy_shop_goods_list`  (
   `en_goods_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `goods_price` decimal(10, 2) NOT NULL COMMENT '商品价格',
   `goods_pic` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品展示图片',
-  `addtime` int NOT NULL COMMENT '添加时间',
-  `status` int NOT NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
-  `cid` int NULL DEFAULT 1,
-  `is_tj` int NULL DEFAULT NULL,
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
+  `cid` int(11) NULL DEFAULT 1,
+  `is_tj` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 954 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 954 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_shop_goods_list
@@ -3169,16 +3235,16 @@ INSERT INTO `xy_shop_goods_list` VALUES (953, '3D Mask ทรีดี มาส
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_shop_order`;
 CREATE TABLE `xy_shop_order`  (
-  `uid` int NOT NULL,
-  `gid` int NOT NULL COMMENT '商品id',
-  `addtime` int NOT NULL COMMENT '添加时间',
+  `uid` int(11) NOT NULL,
+  `gid` int(11) NOT NULL COMMENT '商品id',
+  `addtime` int(11) NOT NULL COMMENT '添加时间',
   `price` decimal(15, 3) NULL DEFAULT NULL,
-  `status` int NOT NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
-  `num` int NULL DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '上架状态 0不上架 1上架',
+  `num` int(11) NULL DEFAULT NULL,
   `price2` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `id` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_shop_order
@@ -3195,12 +3261,12 @@ INSERT INTO `xy_shop_order` VALUES (20, 1, 1615296035, 1.000, 2, 1, '1', 'SP2103
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_signlog`;
 CREATE TABLE `xy_signlog`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `uid` int NOT NULL,
-  `signtime` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `signtime` int(11) NOT NULL,
   `money` float NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1104 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1104 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_signlog
@@ -4314,14 +4380,14 @@ INSERT INTO `xy_signlog` VALUES (1103, 12229, 1667005947, 0.35);
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_user_error`;
 CREATE TABLE `xy_user_error`  (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uid` int NOT NULL COMMENT '用户ID',
-  `addtime` int NOT NULL COMMENT '记录时间',
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT '用户ID',
+  `addtime` int(11) NOT NULL COMMENT '记录时间',
   `oid` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '交易单号',
-  `type` int NOT NULL DEFAULT 1 COMMENT '记录类型 1解封 2违规操作 3冻结',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '记录类型 1解封 2违规操作 3冻结',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-违规操作记录表' ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-违规操作记录表' ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of xy_user_error
@@ -4332,26 +4398,26 @@ CREATE TABLE `xy_user_error`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `xy_users`;
 CREATE TABLE `xy_users`  (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tel` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `username` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户名',
-  `nickname` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '昵称',
-  `email` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱',
+  `nickname` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '昵称',
+  `email` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '邮箱',
   `pwd` char(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '密码',
   `salt` char(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '密码盐',
-  `parent_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级ID',
+  `parent_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级ID',
   `signiture` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '个性签名',
-  `pwd_error_num` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '密码错误次数',
-  `allow_login_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '允许登录时间',
+  `pwd_error_num` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '密码错误次数',
+  `allow_login_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '允许登录时间',
   `real_name` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '真实姓名',
   `id_card_num` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '身份证号码',
   `top_pic` varchar(96) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '身份证正面图',
   `bot_pic` varchar(96) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '身份证背面图',
   `id_status` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '实名认证状态，0未审核，1审核通过，2审核不通过',
   `invite_code` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '邀请码',
-  `addtime` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '注册时间',
+  `addtime` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '注册时间',
   `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '状态，1启用，2禁用',
-  `real_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '实名时间',
+  `real_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '实名时间',
   `pwd2` char(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '提现密码',
   `salt2` char(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '提现密码盐',
   `headpic` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '头像',
@@ -4362,45 +4428,49 @@ CREATE TABLE `xy_users`  (
   `deposit_num` decimal(7, 2) NOT NULL DEFAULT 0.00 COMMENT '日提现金额',
   `deal_status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '交易状态，0交易冻结，1停止交易，2等待交易，3交易中',
   `deal_error` tinyint(1) NOT NULL DEFAULT 0 COMMENT '违规次数',
-  `deal_reward_count` int NOT NULL DEFAULT 0 COMMENT '奖励交易次数',
-  `deal_count` int NOT NULL DEFAULT 0 COMMENT '当日交易次数',
-  `deal_time` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后交易日期(年月日)',
-  `active` smallint UNSIGNED NOT NULL DEFAULT 0 COMMENT '激活状态，0未激活(首次充值发放推广奖励)，1已激活',
-  `childs` int NOT NULL DEFAULT 0 COMMENT '直推用户数量',
+  `deal_reward_count` int(11) NOT NULL DEFAULT 0 COMMENT '奖励交易次数',
+  `deal_count` int(11) NOT NULL DEFAULT 0 COMMENT '当日交易次数',
+  `deal_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后交易日期(年月日)',
+  `active` smallint(5) UNSIGNED NOT NULL DEFAULT 0 COMMENT '激活状态，0未激活(首次充值发放推广奖励)，1已激活',
+  `childs` int(11) NOT NULL DEFAULT 0 COMMENT '直推用户数量',
   `kouchu_balance` decimal(15, 2) NULL DEFAULT NULL COMMENT '扣除金额',
-  `kouchu_balance_uid` int NULL DEFAULT NULL,
-  `show_td` int NULL DEFAULT 1,
-  `show_cz` int NULL DEFAULT 1,
-  `show_tx` int NULL DEFAULT 1,
-  `show_tel` int NULL DEFAULT 1,
-  `show_num` int NULL DEFAULT 1,
-  `show_tel2` int NULL DEFAULT 1,
+  `kouchu_balance_uid` int(11) NULL DEFAULT NULL,
+  `show_td` int(11) NULL DEFAULT 1,
+  `show_cz` int(11) NULL DEFAULT 1,
+  `show_tx` int(11) NULL DEFAULT 1,
+  `show_tel` int(11) NULL DEFAULT 1,
+  `show_num` int(11) NULL DEFAULT 1,
+  `show_tel2` int(11) NULL DEFAULT 1,
   `wx_ewm` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `zfb_ewm` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `level` int NULL DEFAULT NULL,
+  `level` int(11) NULL DEFAULT NULL,
   `lixibao_balance` decimal(15, 4) NULL DEFAULT 0.0000 COMMENT '利息宝金额',
   `lixibao_dj_balance` decimal(15, 4) NULL DEFAULT 0.0000 COMMENT '利息宝冻结金额',
   `ip` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `is_jia` int NULL DEFAULT 0,
-  `activetime` int NOT NULL,
-  `deal_min_num` int NOT NULL,
-  `deal_max_num` int NOT NULL,
-  `trc20` varchar(34) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `pipei_dan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `pipei_type` int NOT NULL,
-  `pipei_grouping` int NOT NULL,
-  `autoorder` int NOT NULL DEFAULT 0 COMMENT '联单开关',
+  `is_jia` int(11) NULL DEFAULT 0,
+  `activetime` int(11) NULL DEFAULT NULL,
+  `deal_min_num` int(11) NULL DEFAULT NULL,
+  `deal_max_num` int(11) NULL DEFAULT NULL,
+  `trc20` varchar(34) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `pipei_dan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `pipei_type` int(11) NULL DEFAULT NULL,
+  `pipei_grouping` int(11) NULL DEFAULT 0,
+  `autoorder` int(11) NULL DEFAULT 0 COMMENT '联单开关',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `invite_code`(`invite_code`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE,
   INDEX `parent_id`(`parent_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12231 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12235 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of xy_users
 -- ----------------------------
-INSERT INTO `xy_users` VALUES (12229, '0630065352', 'Thongcha99', '', '', 'b23193f152b948fca337f2d01e0b2d2102e0a288', '96076', 0, '', 0, 0, '', '', '', '', 0, 'BLJ96T', 1663680070, 1, 0, '15d3df418e87d06cea47e62a16125d091c7217f5', '69436', '/static_new6/headimg/0.8612276.png', 127221.38, 0.00, 1, 0.00, 0.00, 3, 0, 0, 3, 1668009600, 0, 1, NULL, NULL, 1, 1, 1, 1, 1, 1, NULL, NULL, 0, 0.0000, 0.0000, '178.173.225.132', 0, 1668063974, 0, 0, '', '', 0, 0, 0);
-INSERT INTO `xy_users` VALUES (12230, '30065352', 'angel', '', '', 'f587f1a087613ed2a30016ec58f501e8af9b8fcf', '49343', 12229, '', 0, 0, '', '', '', '', 0, 'JAPG4U', 1724677149, 1, 0, 'b59343cee68169616b131766af75cec44f060115', '41561', '', 0.00, 0.00, 1, 0.00, 0.00, 1, 0, 0, 0, 0, 0, 0, NULL, NULL, 1, 1, 1, 1, 1, 1, NULL, NULL, NULL, 0.0000, 0.0000, '::1', 0, 1724685374, 0, 0, '', '', 0, 0, 0);
+INSERT INTO `xy_users` VALUES (12229, '0630065352', 'Thongcha99', '', '', 'b23193f152b948fca337f2d01e0b2d2102e0a288', '96076', 0, '', 0, 0, '', '', '', '', 0, 'BLJ96T', 1663680070, 1, 0, '15d3df418e87d06cea47e62a16125d091c7217f5', '69436', '/static_new6/headimg/0.8612276.png', 127308.77, 0.00, 1, 0.00, 0.00, 3, 0, 0, 3, 1668009600, 0, 1, NULL, NULL, 1, 1, 1, 1, 1, 1, NULL, NULL, 0, 0.0000, 0.0000, '178.173.225.132', 0, 1668063974, 0, 0, '', '', 0, 0, 0);
+INSERT INTO `xy_users` VALUES (12230, '30065352', 'angel', '', '', 'f587f1a087613ed2a30016ec58f501e8af9b8fcf', '49343', 12229, '', 0, 0, '', '', '', '', 0, 'JAPG4U', 1724677149, 1, 0, 'b59343cee68169616b131766af75cec44f060115', '41561', '', 10250.59, 0.00, 1, 0.00, 0.00, 1, 0, 0, 3, 1724774400, 0, 3, NULL, NULL, 1, 1, 1, 1, 1, 1, NULL, NULL, 0, 0.0000, 0.0000, '104.251.123.179', 0, 1724952121, 0, 0, '', '', 0, 0, 0);
+INSERT INTO `xy_users` VALUES (12231, '06300653521', 'sniper', '', '', 'a3a341bde584bf3defb6d52fb1b65ba3cc519142', '7265', 12230, '', 0, 0, '', '', '', '', 0, 'QTCH9D', 1724848128, 2, 0, '', '', '', 0.00, 10000.00, 0, 0.00, 0.00, 1, 0, 0, 0, 0, 0, 0, NULL, NULL, 1, 1, 1, 1, 1, 1, NULL, NULL, 0, 0.0000, 0.0000, NULL, 0, NULL, 0, 0, NULL, NULL, NULL, 0, 0);
+INSERT INTO `xy_users` VALUES (12232, '06300653223', 'suger', '', '', '545f095a1ec85b9d2c5d2e5c4a1b0972b5a44593', '68188', 12230, '', 0, 0, '', '', '', '', 0, 'WZJ7E5', 1724848255, 1, 0, '', '', '', 10136.26, 0.00, 1, 0.00, 0.00, 3, 0, 0, 1, 1724860800, 0, 1, NULL, NULL, 1, 1, 1, 1, 1, 1, NULL, NULL, 0, 0.0000, 0.0000, '36.37.245.90', 0, 1725374041, 0, 0, NULL, NULL, NULL, 0, 0);
+INSERT INTO `xy_users` VALUES (12233, '+8523695426', 'ermo', '', '', '6e819b21163d51b69fa224eeb8a59739513bb221', '15781', 12230, '', 0, 0, '', '', '', '', 0, 'XAM8Z9', 1724850742, 1, 0, '', '', '', 0.00, 0.00, 1, 0.00, 0.00, 1, 0, 0, 0, 0, 0, 0, NULL, NULL, 1, 1, 1, 1, 1, 1, NULL, NULL, NULL, 0.0000, 0.0000, '49.156.46.131', 0, 1724850828, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `xy_users` VALUES (12234, '+8521234678', 'ceshi', '', '', 'ea302fc97ad14c233f525c326b6e97de93e342fc', '75261', 12232, '', 0, 0, '', '', '', '', 0, 'K9V672', 1724852746, 1, 0, '', '', '', 100.49, 0.00, 1, 0.00, 0.00, 1, 0, 0, 1, 1724774400, 0, 0, NULL, NULL, 1, 1, 1, 1, 1, 1, NULL, NULL, 0, 0.0000, 0.0000, '49.156.46.131', 0, 1724854085, 0, 0, NULL, NULL, NULL, 0, 0);
 
 -- ----------------------------
 -- Table structure for xy_verify_msg
@@ -4409,11 +4479,11 @@ DROP TABLE IF EXISTS `xy_verify_msg`;
 CREATE TABLE `xy_verify_msg`  (
   `tel` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户ID',
   `msg` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '验证码',
-  `addtime` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '发送时间',
-  `type` tinyint NOT NULL DEFAULT 0 COMMENT '类型，1注册,2修改密码，3修改二级密码',
+  `addtime` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '发送时间',
+  `type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '类型，1注册,2修改密码，3修改二级密码',
   PRIMARY KEY (`tel`) USING BTREE,
   INDEX `type`(`type`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of xy_verify_msg

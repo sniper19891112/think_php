@@ -7,4 +7,16 @@ services:
       - "8008:80"
     volumes:
       - ./public:/var/www/html
+      - ./application:/var/www/html/../application
+      - ./config:/var/www/html/../config
+      - ./extend:/var/www/html/../extend
+      - ./route:/var/www/html/../route
+      - ./vendor:/var/www/html/../vendor
+      - ./thinkphp:/var/www/html/../thinkphp
     restart: always
+    environment:
+      - MYSQL_HOST=43.154.106.155
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=thinkphp
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=7OXTsJHBgQ4TmujlN3d5ZdQ
