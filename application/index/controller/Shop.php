@@ -50,8 +50,10 @@ class Shop extends Base
         if (!$uid) {
             $this->redirect('User/login');
         }
-        $cartlist = db('xy_goods_list')->limit(20)->select();
+        $itemsPerPage = 10;
+        $cartlist = db('xy_goods_list')->where('status', 0)->paginate($itemsPerPage);
         $this->assign('cartlist', $cartlist);
+        $this->assign('pagination', $cartlist->render());
         $this->select = "cart";
         return $this->fetch();
     }
