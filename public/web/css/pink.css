@@ -2732,15 +2732,13 @@ button[data-v-b19b4918] {
 }
 
 .footer[data-v-59e03106] {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    height: 66px !important;
     width: 100%;
+    max-width: 500px;
+    position: fixed;
+    bottom: 0;
     background: white;
-    /*background: linear-gradient(to bottom left, #C144FEFF,#9456ff,#C144FEFF);*/
-    background-size: 100%;
     z-index: 999;
-    height: 1.733333rem;
 }
 
 .footer ul[data-v-59e03106] {

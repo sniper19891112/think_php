@@ -1,0 +1,26 @@
+.home-container {
+    background: rgba(255, 234, 235, 0.9);
+    height: 100vh;
+    padding: 8px 16px;
+    box-sizing: border-box;
+}
+
+.home-body-1 {
+    font-family: PangMenZhengDaoBiaoTiTiMianFeiBan-4, PangMenZhengDaoBiaoTiTiMianFeiBan-4;
+    font-weight: 400;
+    font-size: 24px;
+    color: #2D353C;
+    text-align: left;
+    font-style: normal;
+    text-transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-body-2 {
+    height: 32px;
+    background: #FF5035;
+    border-radius: 8px;
+    margin-top: 16px
+}

@@ -1,0 +1,16 @@
+#app {
+    height: 100vh;
+    height: 100dvh;
+    position: relative;
+    overflow-x: hidden;
+    max-width: 500px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    background: #fff;
+}
+
+body {
+    margin: 0;
+    font-family: var(--van-base-font);
+    background: #f5f5f9;
+}

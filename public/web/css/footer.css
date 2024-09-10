@@ -1,0 +1,29 @@
+.footer {
+    height: 66px !important;
+    width: 100%;
+    max-width: 500px;
+    position: fixed;
+    bottom: 0;
+    background: white;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 16px;
+    box-sizing: border-box;
+}
+
+.footer-item {
+    cursor: pointer;
+    text-align: center;
+    font-family: PingFangSC-Regular, PingFangSC-Regular;
+    font-weight: normal;
+    font-size: 12px;
+    color: #5E5E5E;
+    font-style: normal;
+    text-transform: none;
+}
+
+.footer-active-item {
+    color: #FF5035;
+}

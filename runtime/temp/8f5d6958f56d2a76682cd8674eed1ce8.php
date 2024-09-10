@@ -1,0 +1,205 @@
+<?php /*a:1:{s:73:"F:\xampp\htdocs\think_php\application\index\view\user\password_reset.html";i:1725889566;}*/ ?>
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta name="viewport"
+        content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta content="telephone=yes" name="format-detection" /><meta name="apple-mobile-web-app-status-bar-style" content="white" /><meta name="x5-fullscreen" content="true" /><meta name="apple-touch-fullscreen" content="yes" /><title><?php echo lang('登录'); ?></title><link rel="stylesheet" href="/statics/css/global.css" /><link rel="stylesheet" href="/web/css/password_reset.css" /><link rel="stylesheet" href="/static_new/css/public.css"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"><script charset="utf-8" src="/static_new/js/jquery.min.js"></script><script charset="utf-8" src="/static_new/js/dialog.min.js"></script><script charset="utf-8" src="/static_new/js/common.js"></script></head><body><div id="app"><div class="password-reset-container"><div class="password-reset-header"><a href="/index/user/forgot_password"><i class="material-icons" style="cursor: pointer;">close</i></a></div><div class="password-reset-title-1">Enter verification code</div><div class="password-reset-title-2">                Please enter the 4-digit verification code we sent you
+                To verify your identity
+            </div><div class="password-reset-verify-code"><div class="password-reset-verify-code-form"><input id="verifyCodeInput1" name="verifyCodeInput1" class="password-reset-verify-code-input"
+                        type="text" oninput="validateInput1(this, 1)" /></div><div class="password-reset-verify-code-form"><input id="verifyCodeInput2" name="verifyCodeInput2" class="password-reset-verify-code-input"
+                        type="text" oninput="validateInput2(this, 2)" /></div><div class="password-reset-verify-code-form"><input id="verifyCodeInput3" name="verifyCodeInput3" class="password-reset-verify-code-input"
+                        type="text" oninput="validateInput3(this, 3)" /></div><div class="password-reset-verify-code-form"><input id="verifyCodeInput4" name="verifyCodeInput4" class="password-reset-verify-code-input"
+                        type="text" oninput="validateInput4(this, 4)" /></div></div><div class="password-reset-verify-code-time get-code">                Resend Verification Code
+            </div><div class="password-reset-input-form"><i class="material-icons-outlined">lock</i><input class="password-reset-input" type="password" name="pwd" placeholder="Enter password" /><i class="material-icons-outlined icon-eye-1" style="cursor: pointer;">visibility</i></div><div class="password-again-input-form"><i class="material-icons-outlined">lock</i><input class="password-again-input" type="password" name="pwd_re"
+                    placeholder="Enter the new password again" /><i class="material-icons-outlined icon-eye-2" style="cursor: pointer;">visibility</i></div><div class="password-reset-btn-form"><button class="password-reset-btn form-buttom">OK</button></div></div></div></body><script type="application/javascript">    function validateInput1(input, currentIndex) {
+        // Remove any characters that are not digits
+        input.value = input.value.replace(/[^0-9]/g, '');
+
+        // Ensure that only one digit is entered
+        if (input.value.length > 1) {
+            input.value = input.value.slice(0, 1);
+        }
+        if (input.value.length === 1 && currentIndex < 4) {
+            document.getElementById(`verifyCodeInput${currentIndex + 1}`).focus(); // Move to the next input
+        }
+    }
+    function validateInput2(input, currentIndex) {
+        // Remove any characters that are not digits
+        input.value = input.value.replace(/[^0-9]/g, '');
+
+        // Ensure that only one digit is entered
+        if (input.value.length > 1) {
+            input.value = input.value.slice(0, 1);
+        }
+    }
+    function validateInput3(input, currentIndex) {
+        // Remove any characters that are not digits
+        input.value = input.value.replace(/[^0-9]/g, '');
+
+        // Ensure that only one digit is entered
+        if (input.value.length > 1) {
+            input.value = input.value.slice(0, 1);
+        }
+    }
+    function validateInput4(input, currentIndex) {
+        // Remove any characters that are not digits
+        input.value = input.value.replace(/[^0-9]/g, '');
+
+        // Ensure that only one digit is entered
+        if (input.value.length > 1) {
+            input.value = input.value.slice(0, 1);
+        }
+    }
+
+    // Handle paste event across all inputs
+    document.getElementById('verifyCodeInput1').addEventListener('paste', function (event) {
+        var pasteData = (event.clipboardData || window.clipboardData).getData('text');
+
+        // Ensure the pasted data contains only digits and has a length of up to 4 characters
+        var validData = pasteData.replace(/[^0-9]/g, '').slice(0, 4);
+
+        // Split the valid data into individual characters
+        var digits = validData.split('');
+
+        // Assign each digit to the corresponding input
+        digits.forEach(function (digit, index) {
+            document.getElementById(`verifyCodeInput${index + 1}`).value = digit;
+        });
+
+        // Move focus to the last filled input
+        document.getElementById(`verifyCodeInput${digits.length}`).focus();
+
+        // Prevent default paste action
+        event.preventDefault();
+    });
+
+    $(function () {
+        var countdown = 60;
+        var flag = true;
+        var loading = null;
+        /*检查表单*/
+        function check() {
+
+            var verify_code = $("input[name=verifyCodeInput1]").val()
+                + $("input[name=verifyCodeInput1]").val()
+                + $("input[name=verifyCodeInput1]").val()
+                + $("input[name=verifyCodeInput1]").val();
+
+            if (verify_code.length != 4) {
+                $(document).dialog({ infoText: "<?php echo lang('请输入验证码'); ?>" });
+                return false;
+            }
+
+            if ($("input[name=pwd]").val() == '' || $("input[name=pwd_re]").val() == '') {
+                $(document).dialog({ infoText: "<?php echo lang('请输入密码'); ?>" });
+                return false;
+            }
+            if ($("input[name=pwd]").val() !== $("input[name=pwd_re]").val()) {
+                $(document).dialog({ infoText: '<?php echo lang("两次输入的密码不一致"); ?>' });
+                return false;
+            }
+            return true;
+        }
+
+        /*手机号码验证*/
+        function check_phone() {
+            if ($("input[name=tel]").val() == '') {
+                $(document).dialog({ infoText: '<?php echo lang("请输入手机号"); ?>' });
+                return false;
+            }
+            var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+            if (!myreg.test($("input[name=tel]").val())) {
+                $(document).dialog({ infoText: '<?php echo lang("手机号码输入错误"); ?>' });
+                return false;
+            }
+            return true;
+        }
+        $(".icon-eye-1").on('click', function () {
+            var input = $("input[name=pwd]");
+            var icon = $(this);
+
+            // Toggle the input type between password and text
+            if (input.attr("type") === 'password') {
+                input.attr('type', 'text');
+                icon.text('visibility_off'); // Change the icon to "visibility_off"
+            } else {
+                input.attr('type', 'password');
+                icon.text('visibility'); // Change the icon back to "visibility"
+            }
+        });
+        $(".icon-eye-2").on('click', function () {
+            var input = $("input[name=pwd_re]");
+            var icon = $(this);
+
+            // Toggle the input type between password and text
+            if (input.attr("type") === 'password') {
+                input.attr('type', 'text');
+                icon.text('visibility_off'); // Change the icon to "visibility_off"
+            } else {
+                input.attr('type', 'password');
+                icon.text('visibility'); // Change the icon back to "visibility"
+            }
+        });
+
+        /*验证码倒计时*/
+        function time_down(obj) {
+            if (countdown == 0) {
+                flag = true;
+                obj.text("Resend Verification Code");
+                countdown = 60;
+                return;
+            } else {
+                flag = false;
+                obj.text("Resend Verification Code (" + countdown + "s)");
+                countdown--;
+            }
+            setTimeout(function () { time_down(obj) }, 1000);
+        }
+
+        /*获取验证码*/
+        $(".get-code").on('click', function () {
+            if (!flag) return;
+            $.ajax({
+                url: '/index/send/sendemail',
+                data: { 'tel': $("input[name=tel]").val(), 'type': 2 },
+                type: 'POST',
+                success: function (data) {
+                    if (data.code == 0) {
+                        $(document).dialog({ infoText: data.info });
+                        time_down($(".get-code"));
+                    } else {
+                        $(document).dialog({ infoText: data.msg });
+                    }
+                }
+            });
+        })
+
+        /*提交*/
+        $(".form-buttom").on('click', function () {
+            if (check()) {
+                $.ajax({
+                    url: "<?php echo url('do_forget'); ?>",
+                    data: $("#forgetpwd-form").serialize(),
+                    type: 'POST',
+                    beforeSend: function () {
+                        loading = $(document).dialog({
+                            type: 'notice',
+                            infoIcon: '/static_new/img/loading.gif',
+                            infoText: '<?php echo lang("正在加载中"); ?>',
+                            autoClose: 0
+                        });
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            $(document).dialog({ infoText: '<?php echo lang("修改成功"); ?>' });
+                            setTimeout(function () {
+                                location.href = "<?php echo url('user/login'); ?>"
+                            }, 1500);
+                        } else {
+                            loading.close();
+                            $(document).dialog({ infoText: data.info });
+                        }
+                    }
+                });
+            }
+            return false;
+        })
+    })
+</script></html>
