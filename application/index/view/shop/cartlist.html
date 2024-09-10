@@ -31,9 +31,17 @@
                 </button>
             </div>
             <div class="cartlist-body">
+                {if isset($noItemsMessage)}
+                <div class="cartlist-no-item">
+                    <div class="cartlist-no-item-text">{$noItemsMessage}</div>
+                    <button class="cartlist-no-item-btn">Continue shopping</button>
+                </div>
+                {else}
                 {volist name="cartlist" id="item"}
-                <div class="cartlist-item">
-                    <i class="material-icons-outlined color-FF5035">radio_button_checked</i>
+                <div class="cartlist-item" onclick="itemActive({$item.id}, {$item.addtime})">
+                    <div class="cartlist-item-timecount display-none" id="cartlist-item-timecount-{$item.id}">
+                    </div>
+                    <i class="material-icons-outlined cartlist-item-radio-icon" id="material-icons-outlined-{$item.id}">radio_button_checked</i>
                     {if $item.goods_pic}
                     <img class="cartlist-item-img" src="{$item.goods_pic}" />
                     {else}
@@ -43,11 +51,12 @@
                         <div class="cartlist-item-title">{$item.goods_name}</div>
                         <div class="cartlist-item-price">
                             <div>￥{$item.goods_price}</div>
-                            <button class="cartlist-item-btn bg-FF5035">Go to Result</button>
+                            <button class="cartlist-item-btn" id="cartlist-item-btn-{$item.id}">Go to Result</button>
                         </div>
                     </div>
                 </div>
                 {/volist}
+                {/if}
                 <!-- Display pagination links -->
                 <div>
                     {$pagination|raw}
@@ -58,6 +67,46 @@
     </div>
 </body>
 <script type="application/javascript">
+    var selectedId = 0;
+    var timerInterval;
+    var countdownTime = 0;
+
+    function updateTimer(id) {
+        const hours = Math.floor(countdownTime / 3600);
+        const minutes = Math.floor((countdownTime % 3600) / 60);
+        const seconds = Math.floor(countdownTime % 60);
+
+        $('#cartlist-item-timecount-' + id).text(`Distance from end ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+
+        if (countdownTime <= 0) {
+            clearInterval(timerInterval);
+        } else {
+            countdownTime--;
+        }
+    }
+
+    function itemActive(id, addtime) {
+        $('.cartlist-item-btn').removeClass('bg-FF5035');
+        $('.cartlist-item-radio-icon').removeClass('color-FF5035');
+        $('#cartlist-item-btn-' + id).addClass('bg-FF5035');
+        $('#material-icons-outlined-' + id).addClass('color-FF5035');
+        $('.cartlist-item-timecount').removeClass('display-block');
+        $('.cartlist-item-timecount').addClass('display-none');
+        $('#cartlist-item-timecount-' + id).removeClass('display-none');
+        $('#cartlist-item-timecount-' + id).addClass('display-block');
+        selectedId = id;
+        countdownTime = 12 * 60 * 60 + Number(addtime); // Reset to 12 hours
+        countdownTime = countdownTime - (Date.now() / 1000)
+        if (countdownTime > 0) {
+            clearInterval(timerInterval); // Clear any existing interval
+            timerInterval = setInterval(() => updateTimer(id), 1000); // Start a new interval
+            updateTimer(id); // Initial call to display the timer immediately
+        }
+    }
+
+    // setInterval(() => {
+    //     window.location.reload()
+    // }, 10000)
 </script>
 
 </html>

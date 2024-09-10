@@ -17,9 +17,9 @@ body {
 }
 
 .color-FF5035 {
-    color: #FF5035;
+    color: #FF5035 !important;
 }
 
 .bg-FF5035 {
-    background: #FF5035;
+    background: #FF5035 !important;
 }
