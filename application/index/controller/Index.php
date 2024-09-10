@@ -14,6 +14,10 @@ class Index extends Base
 
     public function index()
     {
+        $uid = session('user_id');
+        if ($uid) {
+            $this->redirect('home');
+        }
         $this->changelang();
         $this->redirect('landing');
     }

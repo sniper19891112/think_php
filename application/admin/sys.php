@@ -3,13 +3,13 @@
 // +----------------------------------------------------------------------
 // | ThinkAdmin
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2019 
+// | 版权所有 2014~2019
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 
+// |
 
 // +----------------------------------------------------------------------
 
@@ -87,9 +87,9 @@ if (!function_exists('sysqueue')) {
             throw new \think\Exception('该任务已经创建，请耐心等待处理完成！');
         }
         $result = Db::name('SystemQueue')->insert([
-            'title'  => $title, 'preload' => $loade,
-            'data'   => json_encode($data, JSON_UNESCAPED_UNICODE),
-            'time'   => $later > 0 ? time() + $later : time(),
+            'title' => $title, 'preload' => $loade,
+            'data' => json_encode($data, JSON_UNESCAPED_UNICODE),
+            'time' => $later > 0 ? time() + $later : time(),
             'double' => intval($double), 'create_at' => date('Y-m-d H:i:s'),
         ]);
         return $result !== false;
@@ -163,6 +163,6 @@ Console::addDefaultCommands([
 Route::get('/think/admin/captcha', function () {
     $image = new CaptchaService();
     return json(['code' => '1', 'info' => '生成验证码', 'data' => [
-        'uniqid' => $image->getUniqid(), 'image' => $image->getData()
+        'uniqid' => $image->getUniqid(), 'image' => $image->getData(),
     ]]);
 });

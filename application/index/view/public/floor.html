@@ -1,13 +1,17 @@
 <link href="/web/css/footer.css" rel="stylesheet" />
 <div class="footer">
-    <div class="{if $select == 'home'}footer-active-item{/if} footer-item">
-        <i class="{if $select == 'home'}material-icons{else}material-icons-outlined{/if}">home</i>
-        <div>{:lang('Home page')}</div>
-    </div>
-    <div class="{if $select == 'cart'}footer-active-item{/if} footer-item">
-        <i class="{if $select == 'cart'}material-icons{else}material-icons-outlined{/if}">shopping_cart</i>
-        <div>{:lang('Shopping cart')}</div>
-    </div>
+    <a href="/index/index/home">
+        <div class="{if $select == 'home'}footer-active-item{/if} footer-item">
+            <i class="{if $select == 'home'}material-icons{else}material-icons-outlined{/if}">home</i>
+            <div>{:lang('Home page')}</div>
+        </div>
+    </a>
+    <a href="/index/shop/cartlist">
+        <div class="{if $select == 'cart'}footer-active-item{/if} footer-item">
+            <i class="{if $select == 'cart'}material-icons{else}material-icons-outlined{/if}">shopping_cart</i>
+            <div>{:lang('Shopping cart')}</div>
+        </div>
+    </a>
     <div class="{if $select == 'order'}footer-active-item{/if} footer-item">
         <i class="{if $select == 'order'}material-icons{else}material-icons-outlined{/if}">list_alt</i>
         <div>{:lang('Order for goods')}</div>

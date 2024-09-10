@@ -98,7 +98,7 @@ class Shop extends Controller
         if(input('cid/d',''))$where[] = ['cid','=',input('cid/d','')];
 
         //var_dump($where);die;
-        $query->where($where)->page();;
+        $query->where($where)->page();
 
 
     }

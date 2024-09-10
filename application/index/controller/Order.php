@@ -12,7 +12,6 @@ use think\Request;
 class Order extends Base
 {
 
-
     public function index()
     {
         $uid = session('user_id');

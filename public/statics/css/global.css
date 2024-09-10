@@ -13,4 +13,13 @@ body {
     margin: 0;
     font-family: var(--van-base-font);
     background: #f5f5f9;
+    box-sizing: border-box;
+}
+
+.color-FF5035 {
+    color: #FF5035;
+}
+
+.bg-FF5035 {
+    background: #FF5035;
 }

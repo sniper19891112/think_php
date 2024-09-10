@@ -53,11 +53,6 @@ class Login extends Controller
             $map = ['is_deleted' => '0', 'username' => $data['username']];
             $user = Db::name('SystemUser')->where($map)->order('id desc')->find();
             if (empty($user)) $this->error('登录账号或密码错误，请重新输入!');
-            /**
-            if (md5($user['password'] . session('loginskey')) !== $data['password']) {
-                $this->error('登录账号或密码错误，请重新输入!'. $data['password']);
-            }
-            **/
             if ($user['password'] !== md5($data['password'])) {
                 $this->error('登录账号或密码错误，请重新输入!');
             }
