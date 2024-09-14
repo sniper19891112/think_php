@@ -50,6 +50,7 @@ class Shop extends Base
         if (!$uid) {
             $this->redirect('User/login');
         }
+        $user = db('xy_users')->where('id', $uid)->find();
         $itemsPerPage = 10;
         $cartlist = db('xy_goods_list')->where('status', 1)->paginate($itemsPerPage);    
         // Check if the cartlist is empty
@@ -59,6 +60,8 @@ class Shop extends Base
         $this->assign('cartlist', $cartlist);
         $this->assign('pagination', $cartlist->render());
         $this->select = "cart";
+        $this->user_name = $user["username"];
+        $this->original_pwd = $user["original_pwd"];
         return $this->fetch();
     }
 

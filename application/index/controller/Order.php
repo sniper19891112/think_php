@@ -54,7 +54,7 @@ class Order extends Base
 		$order = Db::name('xy_convey')->where('uid',session('user_id'))->field('id,addtime')->find($id);
 		$start = strtotime(date("Y-m-d",$order['addtime']));
 		$end = $start+24*60*60-1;
-	/****/	$orderlist = Db::name('xy_convey')->where('uid',session('user_id'))->where('addtime','between',[$start,$end])->field('id,addtime')->select();
+	    $orderlist = Db::name('xy_convey')->where('uid',session('user_id'))->where('addtime','between',[$start,$end])->field('id,addtime')->select();
 		for ($x=0; $x<=count($orderlist); $x++) {
 		    if($id==$orderlist[$x]['id']){
 		        $data['today_num']=$x+1;

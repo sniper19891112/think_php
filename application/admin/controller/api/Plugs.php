@@ -3,13 +3,13 @@
 // +----------------------------------------------------------------------
 // | ThinkAdmin
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2019 
+// | 版权所有 2014~2019
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 
+// |
 
 // +----------------------------------------------------------------------
 
@@ -79,12 +79,57 @@ class Plugs extends Controller
         $this->uptype = $this->getUploadType();
         $this->extend = pathinfo($file->getInfo('name'), PATHINFO_EXTENSION);
         $name = File::name($file->getPathname(), $this->extend, '', 'md5_file');
+        // $info = $this->save('/var/www/html/upload/', $name, file_get_contents($file->getRealPath()), $this->safe);
         $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()), $this->safe);
         if (is_array($info) && isset($info['url'])) {
-            return json(['uploaded' => true, 'filename' => $name, 'url' => $this->safe ? $name : $info['url']]);
+            return json(['uploaded' => true, 'filename' => $name, 'url' => $this->safe ? $name : $info['url'], 'info' => $info]);
         } else {
             return json(['uploaded' => false, 'error' => ['message' => '文件处理失败，请稍候再试！']]);
         }
+    }
+
+    /**
+     * 文件储存在本地
+     * @param string $name 文件名称
+     * @param string $content 文件内容
+     * @param boolean $safe 安全模式
+     * @return array|null
+     */
+    public function save($path, $name, $content, $safe = false)
+    {
+        try {
+            $file = $path . $name;
+            file_exists(dirname($file)) || mkdir(dirname($file), 0755, true);
+            if (file_put_contents($file, $content)) {
+                return $this->info($path, $name, $safe);
+            }
+
+        } catch (\Exception $e) {
+        }
+        return null;
+    }
+
+    /**
+     * 获取文件信息
+     * @param string $name 文件名称
+     * @param boolean $safe 安全模式
+     * @return array|null
+     */
+    public function info($path, $name, $safe = false)
+    {
+        $file = $path . $name;
+        return ['file' => $file, 'hash' => md5_file($file), 'url' => $this->base($name), 'key' => "upload/{$name}"];
+    }
+
+    /**
+     * 获取服务器URL前缀
+     * @param string $name 文件名称
+     * @param boolean $safe 安全模式
+     * @return string|null
+     */
+    public function base($name = '', $safe = false)
+    {
+        return "/upload/{$name}";
     }
 
     /**

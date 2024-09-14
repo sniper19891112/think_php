@@ -1,4 +1,4 @@
-<?php /*a:1:{s:67:"F:\xampp\htdocs\think_php\application\index\view\user\register.html";i:1725891552;}*/ ?>
+<?php /*a:1:{s:67:"F:\xampp\htdocs\think_php\application\index\view\user\register.html";i:1725891755;}*/ ?>
 <!DOCTYPE html><html><head><meta charset="utf-8" /><meta name="viewport"
         content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta content="telephone=yes" name="format-detection" /><meta name="apple-mobile-web-app-status-bar-style" content="white" /><meta name="x5-fullscreen" content="true" /><meta name="apple-touch-fullscreen" content="yes" /><title><?php echo lang('注册'); ?></title><link rel="stylesheet" href="/statics/css/global.css" /><link rel="stylesheet" href="/web/css/register.css" /><link rel="stylesheet" href="/static_new/css/public.css"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"><script charset="utf-8" src="/static_new/js/jquery.min.js"></script><script charset="utf-8" src="/static_new/js/dialog.min.js"></script><script charset="utf-8" src="/static_new/js/common.js"></script></head><body style="font-size: 12px;"><div id="app"><div class="register-container"><div class="register-header"><a href="/index/user/login"><i class="material-icons" style="cursor: pointer;">close</i></a></div><div class="register-title-1">Register now</div><div class="register-title-2">Register now to continue</div><div class="register-title-3">
                 Email registration
@@ -44,6 +44,10 @@
     var loading = null;
     /*检查表单*/
     function check() {
+        if ($("input[name=email]").val() == '') {
+            $(document).dialog({ infoText: "<?php echo lang('请输入帐号'); ?>" });
+            return false;
+        }
         if ($("input[name=pwd]").val() == '') {
             $(document).dialog({ infoText: "<?php echo lang('请输入登录密码'); ?>" });
             return false;
@@ -89,8 +93,6 @@
 
     /*获取验证码*/
     $(".get-code").on('click', function () {
-        alert("dsfdsfsdf");
-        console.log(flag);
         if (!flag) return;
         $.ajax({
             url: '/index/send/sendemail',

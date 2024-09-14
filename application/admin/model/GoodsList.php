@@ -21,7 +21,7 @@ class GoodsList extends Model
      * @param string $id 传参则更新数据,不传则写入数据
      * @return array
      */
-    public function submit_goods($shop_name,$goods_name,$goods_price,$goods_pic,$goods_info,$cid,$id='')
+    public function submit_goods($shop_name,$goods_name,$goods_price,$status,$goods_pic,$goods_info,$cid,$id='')
     {
         if(!$goods_pic) return ['code'=>1,'info'=>('请上传商品图片')];
         if(!$goods_name) return ['code'=>1,'info'=>('请输入商品名称')];
@@ -31,6 +31,7 @@ class GoodsList extends Model
             'shop_name'     => $shop_name,
             'goods_name'    => $goods_name,
             'goods_price'   => $goods_price,
+            'status' => $status,
             'goods_pic'     => $goods_pic,
             'goods_info'    => $goods_info,
             'cid'    => $cid,

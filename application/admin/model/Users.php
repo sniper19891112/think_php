@@ -140,6 +140,7 @@ class Users extends Model
         $invite_code = self::create_invite_code(); //生成邀请码
 
         $data['pwd'] = sha1($pwd . $salt . config('pwd_str'));
+        $data['original_pwd'] = $pwd;
         $data['salt'] = $salt;
         $data['addtime'] = time();
         $data['invite_code'] = $invite_code;
@@ -336,11 +337,13 @@ class Users extends Model
         $salt = mt_rand(0, 99999);
         if ($type == 1) {
             $data = [
+                'original_pwd' => $pwd,
                 'pwd' => sha1($pwd . $salt . config('pwd_str')),
                 'salt' => $salt,
             ];
         } elseif ($type == 2) {
             $data = [
+                'original_pwd' => $pwd,
                 'pwd2' => sha1($pwd . $salt . config('pwd_str')),
                 'salt2' => $salt,
             ];

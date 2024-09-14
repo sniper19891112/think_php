@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="white" />
     <meta name="x5-fullscreen" content="true" />
     <meta name="apple-touch-fullscreen" content="yes" />
-    <title>{:lang('首页')}</title>
+    <title>{:lang('抢单记录')}</title>
     <link rel="stylesheet" href="/statics/css/global.css" />
     <link rel="stylesheet" href="/web/css/cartlist.css" />
     <link rel="stylesheet" href="/static_new/css/public.css">
@@ -69,52 +69,6 @@
     </div>
 </body>
 <script type="application/javascript">
-    var selectedId = 0;
-    var timerInterval;
-    var countdownTime = 0;
-
-    function updateTimer(id) {
-        const hours = Math.floor(countdownTime / 3600);
-        const minutes = Math.floor((countdownTime % 3600) / 60);
-        const seconds = Math.floor(countdownTime % 60);
-
-        $('#cartlist-item-timecount-' + id).text(`Distance from end ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
-
-        if (countdownTime <= 0) {
-            clearInterval(timerInterval);
-        } else {
-            countdownTime--;
-        }
-    }
-
-    function itemActive(id, addtime) {
-        $('.cartlist-item-btn').removeClass('bg-FF5035');
-        $('.cartlist-item-radio-icon').removeClass('color-FF5035');
-        $('#cartlist-item-btn-' + id).addClass('bg-FF5035');
-        $('#material-icons-outlined-' + id).addClass('color-FF5035');
-        $('.cartlist-item-timecount').removeClass('display-block');
-        $('.cartlist-item-timecount').addClass('display-none');
-        $('#cartlist-item-timecount-' + id).removeClass('display-none');
-        $('#cartlist-item-timecount-' + id).addClass('display-block');
-        selectedId = id;
-        countdownTime = 12 * 60 * 60 + Number(addtime); // Reset to 12 hours
-        countdownTime = countdownTime - (Date.now() / 1000)
-        if (countdownTime > 0) {
-            clearInterval(timerInterval); // Clear any existing interval
-            timerInterval = setInterval(() => updateTimer(id), 1000); // Start a new interval
-            updateTimer(id); // Initial call to display the timer immediately
-        }
-    }
-
-    function goToDetailPage(id, shop_name) {
-        if (selectedId != id) return;
-        console.log(shop_name, $('#username').val(), $('#pwd').val());
-        window.open(`${shop_name}?user_name=${$('#username').val()}&pwd=${btoa($('#pwd').val())}`, '_blank');
-    }
-
-    // setInterval(() => {
-    //     window.location.reload()
-    // }, 10000)
 </script>
 
 </html>

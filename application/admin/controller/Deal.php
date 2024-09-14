@@ -353,10 +353,11 @@ class Deal extends Controller
             $shop_name = input('post.shop_name/s', '');
             $goods_name = input('post.goods_name/s', '');
             $goods_price = input('post.goods_price/f', 0);
+            $status = input('post.status/f', 0);
             $goods_pic = input('post.goods_pic/s', '');
             $goods_info = input('post.goods_info/s', '');
             $cid = input('post.cid/d', 1);
-            $res = model('GoodsList')->submit_goods($shop_name, $goods_name, $goods_price, $goods_pic, $goods_info, $cid);
+            $res = model('GoodsList')->submit_goods($shop_name, $goods_name, $goods_price, $status, $goods_pic, $goods_info, $cid);
             if ($res['code'] === 0) {
                 return $this->success($res['info'], '/admin.html#/admin/deal/goods_list.html');
             } else {
@@ -461,11 +462,12 @@ class Deal extends Controller
             $shop_name = input('post.shop_name/s', '');
             $goods_name = input('post.goods_name/s', '');
             $goods_price = input('post.goods_price/f', 0);
+            $status = input('post.status/f', 0);
             $goods_pic = input('post.goods_pic/s', '');
             $goods_info = input('post.goods_info/s', '');
             $id = input('post.id/d', 0);
             $cid = input('post.cid/d', 0);
-            $res = model('GoodsList')->submit_goods($shop_name, $goods_name, $goods_price, $goods_pic, $goods_info, $cid, $id);
+            $res = model('GoodsList')->submit_goods($shop_name, $goods_name, $goods_price, $status, $goods_pic, $goods_info, $cid, $id);
             if ($res['code'] === 0) {
                 return $this->success($res['info'], '/admin.html#/admin/deal/goods_list.html');
             } else {
