@@ -23,7 +23,7 @@
 
 <body>
     <div id="app">
-        <div class="catlist-container">
+        <div class="cartlist-container">
             <div class="cartlist-header">
                 <div class="cartlist-header-text">Shopping cart</div>
                 <button class="cartlist-header-btn">
@@ -41,7 +41,8 @@
                 <div class="cartlist-item" onclick="itemActive('{$item.id}', '{$item.addtime}')">
                     <div class="cartlist-item-timecount display-none" id="cartlist-item-timecount-{$item.id}">
                     </div>
-                    <i class="material-icons-outlined cartlist-item-radio-icon" id="material-icons-outlined-{$item.id}">radio_button_checked</i>
+                    <i class="material-icons-outlined cartlist-item-radio-icon"
+                        id="material-icons-outlined-{$item.id}">radio_button_checked</i>
                     {if $item.goods_pic}
                     <img class="cartlist-item-img" src="{$item.goods_pic}" />
                     {else}
@@ -51,14 +52,15 @@
                         <div class="cartlist-item-title">{$item.goods_name}</div>
                         <div class="cartlist-item-price">
                             <div>￥{$item.goods_price}</div>
-                            <button class="cartlist-item-btn" id="cartlist-item-btn-{$item.id}" onclick="goToDetailPage('{$item.id}', '{$item.shop_name}')">Go to Result</button>
+                            <button class="cartlist-item-btn" id="cartlist-item-btn-{$item.id}"
+                                onclick="goToDetailPage('{$item.id}', '{$item.shop_name}')">Go to Result</button>
                         </div>
                     </div>
                 </div>
                 {/volist}
                 {/if}
-                <input type="hidden" id="username" value="{$user_name}"/>
-                <input type="hidden" id="pwd" value="{$original_pwd}"/>
+                <input type="hidden" id="username" value="{$user_name}" />
+                <input type="hidden" id="pwd" value="{$original_pwd}" />
                 <!-- Display pagination links -->
                 <div>
                     {$pagination|raw}
@@ -108,8 +110,18 @@
 
     function goToDetailPage(id, shop_name) {
         if (selectedId != id) return;
-        console.log(shop_name, $('#username').val(), $('#pwd').val());
-        window.open(`${shop_name}?user_name=${$('#username').val()}&pwd=${btoa($('#pwd').val())}`, '_blank');
+        $.ajax({
+            url: "/index/order/create_settlement_order",
+            type: "POST",
+            dataType: "JSON",
+            data: { goods_id: id },
+            success: function (res) {
+                console.log(shop_name, $('#username').val(), $('#pwd').val());
+                window.open(`${shop_name}?user_name=${$('#username').val()}&pwd=${btoa($('#pwd').val())}`, '_blank');
+            },
+            error: function (err) {
+            }
+        })
     }
 
     // setInterval(() => {

@@ -12,10 +12,12 @@
             <div>{:lang('Shopping cart')}</div>
         </div>
     </a>
-    <div class="{if $select == 'order'}footer-active-item{/if} footer-item">
-        <i class="{if $select == 'order'}material-icons{else}material-icons-outlined{/if}">list_alt</i>
-        <div>{:lang('Order for goods')}</div>
-    </div>
+    <a href="/index/order/order">
+        <div class="{if $select == 'order'}footer-active-item{/if} footer-item">
+            <i class="{if $select == 'order'}material-icons{else}material-icons-outlined{/if}">list_alt</i>
+            <div>{:lang('Order for goods')}</div>
+        </div>
+    </a>
     <div class="{if $select == 'my'}footer-active-item{/if} footer-item">
         <i class="{if $select == 'my'}material-icons{else}material-icons-outlined{/if}">person</i>
         <div>{:lang('Mine')}</div>

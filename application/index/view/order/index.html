@@ -254,12 +254,18 @@
 
                                             {/if}
 
-                                            {empty name='list'}<span
-                                                class="notdata">{:lang('没有记录哦')}</span>{else}{$pagehtml|raw|default=''}{/empty}
+                                            {empty name='list'}
+                                            <span class="notdata">
+                                                {:lang('没有记录哦')}
+                                            </span>
+                                            {else}
+                                            {$pagehtml|raw|default=''}
+                                            {/empty}
 
                                             <div data-v-35ad745e="" class="van-list__placeholder">
                                                 <div data-v-35ad745e="" class="no_more" style="display: none;">
-                                                    {:lang('没有数据')}</div>
+                                                    {:lang('没有数据')}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
