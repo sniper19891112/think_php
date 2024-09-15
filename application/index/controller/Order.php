@@ -85,6 +85,35 @@ class Order extends Base
         return json(['code' => 1, 'info' => lang('错误请求')]);
     }
 
+    public function settlement_order_detail() {
+        $uid = session('user_id');
+
+        if (!$uid && request()->isPost()) {
+            $this->error(lang('请先登录'));
+        }
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $order_id = input('get.oid/s', '');
+        $order = db('xy_convey')
+            ->where('xc.id', $order_id)
+            ->alias('xc')
+            ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
+            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic')
+            ->find();
+        $this->order = $order;
+        return $this->fetch();
+    }
+
+    public function confirm_receipt() {
+        $order_id = input('post.order_id/s', '');
+        $result = db('xy_convey')->where('id', $order_id)->update(['status' => 1]);
+        if (!$result) {
+            json(['code' => 1, 'info' => lang('error')]);
+        }
+        return json(['code' => 0, 'info' => lang('success')]);        
+    }
+
     public function get_order_info()
     {
 
