@@ -24,8 +24,7 @@
 <body>
     <div id="app">
         <div class="order-detail-header">
-            <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;"
-                onclick="goBack()">
+            <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
             Order details
@@ -43,26 +42,34 @@
             <div class="order-detail-status">
                 <div class="order-detail-status-line"></div>
                 <div style="z-index: 2;">
-                    <div class="order-detail-status-checkbox {if condition='$order.status eq 0'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
-                        <i class="material-icons-outlined {if condition='$order.status eq 0'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                    <div
+                        class="order-detail-status-checkbox {if condition='$order.status eq 0'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
+                        <i
+                            class="material-icons-outlined {if condition='$order.status eq 0'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
                     </div>
                     <div class="order-detail-status-text">Placed an order</div>
                 </div>
                 <div style="z-index: 2;">
-                    <div class="order-detail-status-checkbox {if condition='$order.status eq 1'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
-                        <i class="material-icons-outlined {if condition='$order.status eq 1'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                    <div
+                        class="order-detail-status-checkbox {if condition='$order.status eq 1'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
+                        <i
+                            class="material-icons-outlined {if condition='$order.status eq 1'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
                     </div>
                     <div class="order-detail-status-text">confirmed</div>
                 </div>
                 <div style="z-index: 2;">
-                    <div class="order-detail-status-checkbox {if condition='$order.status eq 2'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
-                        <i class="material-icons-outlined {if condition='$order.status eq 2'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                    <div
+                        class="order-detail-status-checkbox {if condition='$order.status eq 2'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
+                        <i
+                            class="material-icons-outlined {if condition='$order.status eq 2'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
                     </div>
                     <div class="order-detail-status-text">shipped</div>
                 </div>
                 <div style="z-index: 2;">
-                    <div class="order-detail-status-checkbox {if condition='$order.status eq 3'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
-                        <i class="material-icons-outlined {if condition='$order.status eq 3'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                    <div
+                        class="order-detail-status-checkbox {if condition='$order.status eq 3'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
+                        <i
+                            class="material-icons-outlined {if condition='$order.status eq 3'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
                     </div>
                     <div class="order-detail-status-text">Rated</div>
                 </div>
@@ -114,7 +121,11 @@
                     up to two lines of folding
                 </div>
             </div>
-            <button class="order-detail-confirm-receipt" onclick="confirmReceipt('{$order.id}')">Confirm receipt of goods</button>
+            {if $order.status == 0}
+            <button class="order-detail-confirm-receipt" onclick="confirmReceipt('{$order.id}')">
+                Confirm receipt of goods
+            </button>
+            {/if}
         </div>
     </div>
 </body>

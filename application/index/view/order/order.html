@@ -35,35 +35,38 @@
             if($v['status']==3) $status_text = 'Rated';
             $settlement_value = round($v['goods_price'] * $v['goods_count'], 2);
             {/php}
-            <div class="order-item">
-                <div class="order-item-title-container">
-                    <div class="order-item-title">Product:
-                        <span style="color: #333333;">
-                            {php}
+            <a href="{:url('order/settlement_order_detail')}?oid={$v.id}">
+                <div class="order-item">
+                    <div class="order-item-title-container">
+                        <div class="order-item-title">Product:
+                            <span style="color: #333333;">
+                                {php}
                                 echo mb_strimwidth($v['goods_name'], 0, 25, '...');
-                            {/php}
-                        </span>
+                                {/php}
+                            </span>
+                        </div>
+                        <div class="order-item-time">{$v['addtime']|format_datetime='Y-m-d H:i:s'}</div>
                     </div>
-                    <div class="order-item-time">{$v['addtime']|format_datetime='Y-m-d H:i:s'}</div>
-                </div>
-                <div class="order-item-status-container">
-                    <div class="order-item-status-text">
-                        Order status:
-                        <span class="order-item-status {if condition='$v.status eq 0'}bg-2595e8{else /}bg-26d28b{/if}">{$status_text}</span>
+                    <div class="order-item-status-container">
+                        <div class="order-item-status-text">
+                            Order status:
+                            <span
+                                class="order-item-status {if condition='$v.status eq 0'}bg-2595e8{else /}bg-26d28b{/if}">{$status_text}</span>
+                        </div>
+                    </div>
+                    <div class="order-settlement-container">
+                        <div class="order-settlement-container-text">
+                            Order settlement:
+                            <span class="order-settlement-value">￥{$settlement_value}</span>
+                        </div>
+                        {if $v['status'] == 0}
+                        <a href="{:url('order/settlement_order_detail')}?oid={$v.id}">
+                            <button class="order-settlement-confirm">Confirm receipt</button>
+                        </a>
+                        {/if}
                     </div>
                 </div>
-                <div class="order-settlement-container">
-                    <div class="order-settlement-container-text">
-                        Order settlement:
-                        <span class="order-settlement-value">￥{$settlement_value}</span>
-                    </div>
-                    {if $v['status'] == 0}
-                    <a href="{:url('order/settlement_order_detail')}?oid={$v.id}" class="status thaw gosure" data-id="1725592">
-                        <button class="order-settlement-confirm">Confirm receipt</button>
-                    </a>
-                    {/if}
-                </div>
-            </div>
+            </a>
             {/volist}
             {else/}
             {/if}

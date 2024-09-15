@@ -16,12 +16,8 @@ body {
     box-sizing: border-box;
 }
 
-.color-FF5035 {
-    color: #FF5035 !important;
-}
-
-.bg-FF5035 {
-    background: #FF5035 !important;
+.cursor-pointer {
+    cursor: pointer;
 }
 
 .color-white {
@@ -30,6 +26,10 @@ body {
 
 .font-bold {
     font-weight: bold;
+}
+
+.font-800 {
+    font-weight: 800;
 }
 
 .text-14 {
@@ -44,6 +44,54 @@ body {
     font-size: 18px;
 }
 
+.text-32 {
+    font-size: 32px;
+}
+
 .text-12 {
     font-size: 12px;
+}
+
+.bg-FFFFFF {
+    background: #FFFFFF;
+}
+
+.bg-FF5035 {
+    background: #FF5035 !important;
+}
+
+.color-FFFFFF {
+    color: #FFFFFF
+}
+
+.color-FF5035 {
+    color: #FF5035;
+}
+
+.mg-auto {
+    margin: auto;
+}
+
+.color-2B2B2B {
+    color: #2B2B2B;
+}
+
+.color-4F4F4F {
+    color: #4F4F4F;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.color-4F4F4F {
+    color: #4F4F4F;
+}
+
+.justify-between {
+    justify-content: space-between;
 }

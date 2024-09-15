@@ -23,53 +23,72 @@
 
 <body>
     <div id="app">
-        <div class="order-header">My order</div>
-        <div class="order-container">
-            {if $list}
-            {volist name='list' id='v'}
-            {php}
-            $status_text = '';
-            if($v['status']==0) $status_text = 'Placed an order';
-            if($v['status']==1) $status_text = 'Confirmed';
-            if($v['status']==2) $status_text = 'Shipped';
-            if($v['status']==3) $status_text = 'Rated';
-            $settlement_value = round($v['goods_price'] * $v['goods_count'], 2);
-            {/php}
-            <div class="order-item">
-                <div class="order-item-title-container">
-                    <div class="order-item-title">Product:
-                        <span style="color: #333333;">
-                            {php}
-                                echo mb_strimwidth($v['goods_name'], 0, 25, '...');
-                            {/php}
-                        </span>
-                    </div>
-                    <div class="order-item-time">{$v['addtime']|format_datetime='Y-m-d H:i:s'}</div>
-                </div>
-                <div class="order-item-status-container">
-                    <div class="order-item-status-text">
-                        Order status:
-                        <span class="order-item-status {if condition='$v.status eq 0'}bg-2595e8{else /}bg-26d28b{/if}">{$status_text}</span>
+        <div class="my-container">
+            <div class="my-container-header">
+                <div class="d-flex align-center">
+                    <img src="/web/img/USER_item.png" width="64" height="64">
+                    <div style="margin-left: 10px;">
+                        <div class="text-18 font-800">Little bamboo shoots</div>
+                        <div class="text-14 color-2B2B2B">15800000000</div>
                     </div>
                 </div>
-                <div class="order-settlement-container">
-                    <div class="order-settlement-container-text">
-                        Order settlement:
-                        <span class="order-settlement-value">￥{$settlement_value}</span>
+                <img src="/public/img/图层_832.png"/>
+            </div>
+            <div class="my-account-balance">
+                <div class="text-14 font-800 color-white">Account balance</div>
+                <div class="text-32 font-800 color-white" style="margin-top: 12px;">116.50</div>
+            </div>
+            <div class="my-order">
+                <div class="text-16 font-800 color-2B2B2B">My order</div>
+                <div class="my-order-container">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_20.png"/>
+                        <div class="text-14 color-2B2B2B">All</div>
                     </div>
-                    {if $v['status'] == 0}
-                    <a href="{:url('order/settlement_order_detail')}?oid={$v.id}" class="status thaw gosure" data-id="1725592">
-                        <button class="order-settlement-confirm">Confirm receipt</button>
-                    </a>
-                    {/if}
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_24.png"/>
+                        <div class="text-14 color-2B2B2B">Under way</div>
+                    </div>
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_25.png"/>
+                        <div class="text-14 color-2B2B2B">Received</div>
+                    </div>
                 </div>
             </div>
-            {/volist}
-            {else/}
-            {/if}
-            <!-- Display pagination links -->
-            <div>
-                {$pagination|raw}
+            <div class="my-other-functions">
+                <div class="text-16 font-800 color-2B2B2B">Other functions</div>
+                <div style="padding: 13px;" class="d-flex align-center justify-between">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_35.png"/>
+                        <div class="text-14 color-2B2B2B">Purse</div>
+                    </div>
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_36.png"/>
+                        <div class="text-14 color-2B2B2B">Wallet</div>
+                    </div>
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_37.png"/>
+                        <div class="text-14 color-2B2B2B">Delivery address</div>
+                    </div>
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_38.png"/>
+                        <div class="text-14 color-2B2B2B">My team</div>
+                    </div>
+                </div>
+                <div style="padding: 13px;" class="d-flex align-center justify-between">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_45.png"/>
+                        <div class="text-14 color-2B2B2B">Invitation code</div>
+                    </div>
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_46.png"/>
+                        <div class="text-14 color-2B2B2B">Online customer service</div>
+                    </div>
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_47.png"/>
+                        <div class="text-14 color-2B2B2B">Account setting</div>
+                    </div>
+                </div>
             </div>
         </div>
         {include file="public/floor" /}

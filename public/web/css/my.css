@@ -1,0 +1,35 @@
+.my-container {
+    background: linear-gradient(180deg, #FFEAEB 0%, #FFFFFF 100%);
+    padding: 16px;
+}
+
+.my-container-header {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.my-account-balance {
+    background: url(/public/img/组_64.png);
+    background-size: 100% 100%;
+    aspect-ratio: 4;
+    height: 100%;
+    margin-top: 24px;
+    padding: 24px;
+}
+
+.my-order {
+    margin-top: 24px;
+}
+
+.my-order-container {
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.my-other-functions{
+    margin-top: 24px;
+}
