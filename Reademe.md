@@ -10,6 +10,8 @@ chmod -R 755 /var/www/html/../application/../config/bank.txt
 chown -R www-data:www-data /var/www/html/../public/upload/
 chmod -R 755 /var/www/html/../application/../public/upload/
 
+chown -R www-data:www-data /var/www/html/upload/
+
 sudo chown -R ec2-user:ec2-user /home/ec2-user/ecom/public/web/css
 
 

@@ -62,7 +62,7 @@
                         placeholder="Enter referrer" />
                 </div>
                 <div class="register-btn-form">
-                    <button class="register-btn form-buttom">Register now</button>
+                    <button class="register-btn form-button">Register now</button>
                 </div>
             </form>
         </div>
@@ -175,7 +175,7 @@
     })
 
     /*提交*/
-    $(".form-buttom").on('click', function () {
+    $(".form-button").on('click', function () {
         if (check()) {
             $.ajax({
                 url: "{:url('do_register')}",
