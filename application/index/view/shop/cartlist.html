@@ -38,6 +38,10 @@
                 </div>
                 {else}
                 {volist name="cartlist" id="item"}
+                {php}
+                    $ulevel = db('xy_level')->where('level', 0)->find();
+                    $commission = $item['goods_price'] * $ulevel['bili'];
+                {/php}
                 <div class="cartlist-item" onclick="itemActive('{$item.id}', '{$item.addtime}')">
                     <div class="cartlist-item-timecount display-none" id="cartlist-item-timecount-{$item.id}">
                     </div>
@@ -51,7 +55,7 @@
                     <div style="margin-left: 10px; width: 100%;">
                         <div class="cartlist-item-title">{$item.goods_name}</div>
                         <div class="cartlist-item-price">
-                            <div>${$item.goods_price}</div>
+                            <div>${$commission}</div>
                             <button class="cartlist-item-btn" id="cartlist-item-btn-{$item.id}"
                                 onclick="goToDetailPage('{$item.id}', '{$item.shop_name}')">Go to Result</button>
                         </div>

@@ -46,6 +46,7 @@ class Convey extends Model
                 'order_num' => 0,
                 'grouping_id' => 0,
             ]);
+            
         if ($res && $res1) {
             Db::commit();
             return ['code' => 0, 'info' => lang('抢单成功'), 'oid' => $id];
