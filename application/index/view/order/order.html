@@ -57,7 +57,7 @@
                     <div class="order-settlement-container">
                         <div class="order-settlement-container-text">
                             Order settlement:
-                            <span class="order-settlement-value">￥{$settlement_value}</span>
+                            <span class="order-settlement-value">${$settlement_value}</span>
                         </div>
                         {if $v['status'] == 0}
                         <a href="{:url('order/settlement_order_detail')}?oid={$v.id}">

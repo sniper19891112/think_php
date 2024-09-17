@@ -83,8 +83,8 @@
                     <div class="order-detail-product-title-text">{$order.goods_name}</div>
                     <div class="order-detail-product-amount">
                         <div style="font-size: 14px; color: #4F4F4F;">
-                            ￥{$order.goods_price}&nbsp;&nbsp;X&nbsp;&nbsp;{$order.goods_count}</div>
-                        <div style="font-size: 14px; color: #4F4F4F;">￥{$sub_total_amount}</div>
+                            ${$order.goods_price}&nbsp;&nbsp;X&nbsp;&nbsp;{$order.goods_count}</div>
+                        <div style="font-size: 14px; color: #4F4F4F;">${$sub_total_amount}</div>
                     </div>
                 </div>
             </div>
@@ -92,24 +92,24 @@
                 <div class="text-14 color-2B2B2B">Order information</div>
                 <div style="margin-top: 10px;" class="text-14 color-4F4F4F d-flex align-center justify-between">
                     <div>subtotal</div>
-                    <div>￥{$sub_total_amount}</div>
+                    <div>${$sub_total_amount}</div>
                 </div>
                 <div style="margin-top: 10px;" class="text-14 color-4F4F4F d-flex align-center justify-between">
                     <div>Delivery charge</div>
-                    <div>￥5.00</div>
+                    <div>$5.00</div>
                 </div>
                 <div style="margin-top: 10px;" class="text-14 color-4F4F4F d-flex align-center justify-between">
                     <div>favorable</div>
-                    <div>￥0.00</div>
+                    <div>$0.00</div>
                 </div>
                 <div style="margin-top: 10px; padding-bottom: 7px; border-bottom: 1px solid #E0E0E0;"
                     class="text-14 color-4F4F4F d-flex align-center justify-between">
                     <div>commission</div>
-                    <div>￥{$order.commission}</div>
+                    <div>${$order.commission}</div>
                 </div>
                 <div style="margin-top: 8px" class="text-14 color-4F4F4F d-flex align-center justify-between">
                     <div>total</div>
-                    <div>￥{$total_amount}</div>
+                    <div>${$total_amount}</div>
                 </div>
             </div>
             <div class="order-detail-delivery-container">
