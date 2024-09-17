@@ -1,0 +1,135 @@
+.top-up-container {
+    padding: 16px;
+}
+
+.top-up-header {
+    font-family: PingFangSC-Semibold, PingFangSC-Semibold;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2B2B2B;
+    text-align: left;
+    font-style: normal;
+    text-transform: none;
+    border-bottom: 1px solid #E0E0E0;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.address-container {
+    height: 432px;
+    background: #F9F9F9;
+    border-radius: 4px 4px 24px 24px;
+    position: relative;
+}
+
+.erc20-header {
+    height: 40px;
+    background: #FF5035;
+    border-radius: 4px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 11px;
+    font-size: 14px;
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.qrcode-img {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.wallet-address {
+    text-align: center;
+    line-height: 38px;
+    margin: 24px 16px;
+    height: 40px;
+    background: #F2F0F1;
+    border-radius: 8px 8px 8px 8px;
+    font-size: 16px;
+    color: #FF5035;
+}
+
+.wallet-address-copy-btn {
+    width: 200px;
+    height: 40px;
+    background: #FF5035;
+    border-radius: 8px 8px 8px 8px;
+    text-align: center;
+    border: unset !important;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+.recharge-container {
+    margin-top: 24px;
+    height: 267px;
+    background: #F9F9F9;
+    border-radius: 24px 24px 24px 24px;
+    padding: 24px 16px;
+}
+
+.recharge-amount-input-form {
+    margin-top: 10px;
+    height: 50px;
+    background: #F2F0F1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.recharge-amount-input {
+    height: 50px;
+    width: 100%;
+    background: #F2F0F1;
+    border: unset !important;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0px 8px;
+}
+
+.certificate-upload {
+    width: 88px;
+    height: 88px;
+    border-radius: 4px;
+    border: 2px dashed #999999;
+    position: relative;
+    cursor: pointer;
+}
+
+.certificate-upload-add {
+    font-size: 48px !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.uploaded-img {
+    width: 88px;
+    height: 88px;
+    margin-left: 8px;
+}
+
+.submit-btn {
+    font-size: 16px;
+    color: #FFFFFF;
+    height: 40px;
+    background: #FF5035;
+    border-radius: 8px 8px 8px 8px;
+    border: unset !important;
+    width: 100%;
+}
+
+.qrcode-img img{
+    border: 10px solid #FF5035;
+    border-radius: 8px;
+}

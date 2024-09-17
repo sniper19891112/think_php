@@ -12,7 +12,7 @@
     <meta name="apple-touch-fullscreen" content="yes" />
     <title>{:lang('我的')}</title>
     <link rel="stylesheet" href="/statics/css/global.css" />
-    <link rel="stylesheet" href="/web/css/top_up_trc20.css" />
+    <link rel="stylesheet" href="/web/css/top_up_erc20.css" />
     <link rel="stylesheet" href="/static_new/css/public.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
@@ -32,9 +32,9 @@
         </div>
         <div class="top-up-container">
             <div class="address-container">
-                <div class="trc20-header">USDT(TRC20)</div>
+                <div class="erc20-header">USDT(ERC20)</div>
                 <div class="text-center text-12 color-999999" style="padding-top: 52px;">
-                    Minimum deposit is 20USDT(TRC20)
+                    Minimum deposit is 20USDT(ERC20)
                 </div>
                 <div id="qrcode" class="qrcode-img"></div>
                 <div class="wallet-address" id="wallet_address">{$address}</div>
@@ -84,7 +84,7 @@
             url: "/index/my/user_recharge",
             type: "POST",
             dataType: "JSON",
-            data: { type: 1, recharge_amount: $("#recharge_amount").val(), pic: $("#img_url").val(), address: $("#wallet_address").text()},
+            data: { type: 2, recharge_amount: $("#recharge_amount").val(), pic: $("#img_url").val(), address: $("#wallet_address").text()},
             success: function (res) {
                 $(document).dialog({ infoText: "success" });
             },
@@ -95,8 +95,6 @@
     }
     // jQuery function to generate QR code when button is clicked
     $(document).ready(function () {
-        // console.log('{$address}')
-        // console.log($("#wallet_address").text());
         $("#qrcode").empty();
         new QRCode(document.getElementById("qrcode"), {
             text: $("#wallet_address").text(),  // Content for the QR code

@@ -1,8 +1,8 @@
-<?php /*a:1:{s:69:"F:\xampp\htdocs\think_php\application\index\view\my\top_up_trc20.html";i:1726582093;}*/ ?>
+<?php /*a:1:{s:69:"F:\xampp\htdocs\think_php\application\index\view\my\top_up_erc20.html";i:1726582197;}*/ ?>
 <!DOCTYPE html><html><head><meta charset="utf-8" /><meta name="viewport"
-        content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta content="telephone=yes" name="format-detection" /><meta name="apple-mobile-web-app-status-bar-style" content="white" /><meta name="x5-fullscreen" content="true" /><meta name="apple-touch-fullscreen" content="yes" /><title><?php echo lang('我的'); ?></title><link rel="stylesheet" href="/statics/css/global.css" /><link rel="stylesheet" href="/web/css/top_up_trc20.css" /><link rel="stylesheet" href="/static_new/css/public.css"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"><script charset="utf-8" src="/static_new/js/jquery.min.js"></script><script charset="utf-8" src="/static_new/js/dialog.min.js"></script><script charset="utf-8" src="/static_new/js/common.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script></head><body><div id="app"><div class="top-up-header"><i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">                arrow_back
+        content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta content="telephone=yes" name="format-detection" /><meta name="apple-mobile-web-app-status-bar-style" content="white" /><meta name="x5-fullscreen" content="true" /><meta name="apple-touch-fullscreen" content="yes" /><title><?php echo lang('我的'); ?></title><link rel="stylesheet" href="/statics/css/global.css" /><link rel="stylesheet" href="/web/css/top_up_erc20.css" /><link rel="stylesheet" href="/static_new/css/public.css"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"><script charset="utf-8" src="/static_new/js/jquery.min.js"></script><script charset="utf-8" src="/static_new/js/dialog.min.js"></script><script charset="utf-8" src="/static_new/js/common.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script></head><body><div id="app"><div class="top-up-header"><i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">                arrow_back
             </i>            top-up
-        </div><div class="top-up-container"><div class="address-container"><div class="trc20-header">USDT(TRC20)</div><div class="text-center text-12 color-999999" style="padding-top: 52px;">                    Minimum deposit is 20USDT(TRC20)
+        </div><div class="top-up-container"><div class="address-container"><div class="erc20-header">USDT(ERC20)</div><div class="text-center text-12 color-999999" style="padding-top: 52px;">                    Minimum deposit is 20USDT(ERC20)
                 </div><div id="qrcode" class="qrcode-img"></div><div class="wallet-address" id="wallet_address"><?php echo htmlentities($address); ?></div><div class="text-center"><button class="wallet-address-copy-btn" onclick="copyWalletAddress()">copy</button></div></div><div class="recharge-container"><div class="text-16 font-800 color-2B2B2B">Recharge amount</div><div class="recharge-amount-input-form"><input class="recharge-amount-input" id="recharge_amount" type="text" placeholder="Please enter the recharge amount!" /></div><div style="margin-top: 24px;" class="text-16 font-800 color-2B2B2B">Top-up certificate</div><div class="d-flex align-center" style="margin-top: 16px;"><div class="certificate-upload" id="uploadArea"><i class="material-icons-outlined certificate-upload-add">                            add
                         </i><input type="file" id="fileInput" style="display: none;" /><input type="hidden" value="" id="img_url" /></div><div class="uploaded-img"><img id="uploaded_img" src="" style="width: 100%; height: 100%; display: none;" /></div></div></div><div style="margin-top: 24px;"><button class="submit-btn" onclick="submitRecharge()">submit</button></div></div></div></body><script type="application/javascript">    function goBack() {
         window.history.go(-1);
@@ -20,7 +20,7 @@
             url: "/index/my/user_recharge",
             type: "POST",
             dataType: "JSON",
-            data: { type: 1, recharge_amount: $("#recharge_amount").val(), pic: $("#img_url").val(), address: $("#wallet_address").text()},
+            data: { type: 2, recharge_amount: $("#recharge_amount").val(), pic: $("#img_url").val(), address: $("#wallet_address").text()},
             success: function (res) {
                 $(document).dialog({ infoText: "success" });
             },
@@ -31,8 +31,6 @@
     }
     // jQuery function to generate QR code when button is clicked
     $(document).ready(function () {
-        // console.log('<?php echo htmlentities($address); ?>')
-        // console.log($("#wallet_address").text());
         $("#qrcode").empty();
         new QRCode(document.getElementById("qrcode"), {
             text: '${address}',  // Content for the QR code

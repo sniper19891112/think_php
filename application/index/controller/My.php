@@ -2,10 +2,9 @@
 
 namespace app\index\controller;
 
-use think\Controller;
-use think\Db;
-use think\Request;
 use library\File;
+use think\Controller;
+use think\Request;
 
 class My extends Base
 {
@@ -24,35 +23,69 @@ class My extends Base
             $this->redirect('User/login');
         }
         $this->select = "my";
+        $user = db("xy_users")->where("id", $uid)->find();
+        $this->balance = $user["balance"];
         return $this->fetch();
     }
 
-    public function wallet() {
-        $uid = session('user_id');
-
-        if (!$uid && request()->isPost()) {
-            $this->error(lang('请先登录'));
-        }
-        if (!$uid) {
-            $this->redirect('User/login');
-        }
-        return $this->fetch();
-    }
-
-    public function top_up() {
+    public function wallet()
+    {
         $uid = session('user_id');
         if (!$uid && request()->isPost()) {
             $this->error(lang('请先登录'));
         }
         if (!$uid) {
             $this->redirect('User/login');
-        }        
+        }
+        $user = db("xy_users")->where("id", $uid)->find();
+        $this->balance = $user["balance"];
+        return $this->fetch();
+    }
+
+    public function top_up()
+    {
+        $uid = session('user_id');
+        if (!$uid && request()->isPost()) {
+            $this->error(lang('请先登录'));
+        }
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
         $wallet = input('get.wallet/s', '');
-        return $this->fetch("top_up_".$wallet);
+        $this->address = sysconf($wallet."_address");
+        return $this->fetch("top_up_" . $wallet);
     }
 
-    public function certificate_upload() {
-
+    public function user_recharge()
+    {
+        $uid = session('user_id');
+        if (!$uid && request()->isPost()) {
+            $this->error(lang('请先登录'));
+        }
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $type = input('post.type/d', 0);
+        $recharge_amount = input('post.recharge_amount/d', 0);
+        $pic_url = input('post.pic/s', '');
+        $wallet_address = input('post.address/s', '');
+        $data = [
+            "uid" => $uid,
+            "type" => $type,
+            "num" => $recharge_amount,
+            "pic" => $pic_url,
+            "addtime" => time(),
+            "endtime" => time(),
+            'notifyDate' => date('Y-m-d H:i:s'),
+            'wallet_address' => $wallet_address,
+            'pay_name' => $type == 1 ? "TRC20" : "ERC20"
+        ];
+        $result = db('xy_recharge')->insert($data);
+        if ($result) {
+            return json(["code" => 1, "message" => "success"]);
+        } else {
+            return json(["code" => 0, "message" => "error"]);
+        }
     }
 
     /**
@@ -104,8 +137,8 @@ class My extends Base
         $this->uptype = $this->getUploadType();
         $this->extend = pathinfo($file->getInfo('name'), PATHINFO_EXTENSION);
         $name = File::name($file->getPathname(), $this->extend, '', 'md5_file');
-        // $info = $this->save('/var/www/html/upload/', $name, file_get_contents($file->getRealPath()), $this->safe);
-        $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()), $this->safe);
+        $info = $this->save('/var/www/html/upload/', $name, file_get_contents($file->getRealPath()), $this->safe);
+        // $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()), $this->safe);
         if (is_array($info) && isset($info['url'])) {
             return json(['uploaded' => true, 'filename' => $name, 'url' => $this->safe ? $name : $info['url'], 'info' => $info]);
         } else {
