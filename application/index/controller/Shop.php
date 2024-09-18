@@ -64,6 +64,10 @@ class Shop extends Base
         $this->original_pwd = $user["original_pwd"];
         return $this->fetch();
     }
+    
+    public function down_goods() {
+        db('xy_goods_list')->where('addtime', '<', time() - 12 * 3600)->update(["status" => 0]);
+    }
 
     public function goodslist()
     {

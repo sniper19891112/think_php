@@ -10,7 +10,8 @@ class Convey extends Model
 
     protected $table = 'xy_convey';
 
-    public function create_settlement_order($uid, $goods_id) {        
+    public function create_settlement_order($uid, $goods_id)
+    {
         $commission = 0;
         $goods = db('xy_goods_list')
             ->where('id', '=', $goods_id)
@@ -45,6 +46,7 @@ class Convey extends Model
                 'commission' => $commission,
                 'order_num' => 0,
                 'grouping_id' => 0,
+                'status' => 0,
             ]);
 
         if ($res && $res1) {
@@ -307,75 +309,89 @@ class Convey extends Model
             return ['code' => 1, 'info' => lang('参数错误,请确认订单号')];
         }
 
-        if (!in_array($info['status'], [0, 5])) {
-            return ['code' => 1, 'info' => lang('该订单已处理,请刷新页面')];
-        }
+        // if (!in_array($info['status'], [0, 5])) {
+        //     return ['code' => 1, 'info' => lang('该订单已处理,请刷新页面')];
+        // }
 
         //TODO 判断余额是否足够
-        $userPrice = db('xy_users')->where('id', $info['uid'])->value('balance');
-        if ($status != 4) {
-            if ($userPrice < $info['num']) {
-                return ['code' => 1, 'info' => lang('账户可用余额不足'), 'need' => $info['num'] - $userPrice];
-            }
+        // $userPrice = db('xy_users')->where('id', $info['uid'])->value('balance');
+        // if ($status != 4) {
+        //     if ($userPrice < $info['num']) {
+        //         return ['code' => 1, 'info' => lang('账户可用余额不足'), 'need' => $info['num'] - $userPrice];
+        //     }
 
-        }
+        // }
 
         //$tmp = ['endtime'=>time(),'status'=>$status];
         $tmp = ['endtime' => time() + config('deal_feedze'), 'status' => $status];
         $add_id ? $tmp['add_id'] = $add_id : '';
+
         Db::startTrans();
+
         $res = db('xy_convey')->where('id', $oid)->update($tmp);
-        if (in_array($status, [1, 3])) {
-            //确认付款
-            try { $res1 = db('xy_users')
-                    ->where('id', $info['uid'])
-                    ->dec('balance', $info['num'])
-                    ->inc('freeze_balance', $info['num'] + $info['commission']) //冻结商品金额 + 佣金
-                    ->update(['deal_status' => 1, 'status' => 1]);} catch (\Throwable $th) {
-                Db::rollback();
-                return ['code' => 1, 'info' => lang('请检查账户余额')];
-            }
-            $res2 = db('xy_balance_log')->insert([
-                'uid' => $info['uid'],
-                'oid' => $oid,
-                'num' => $info['num'],
-                'type' => 2,
-                'status' => 2,
-                'addtime' => time(),
-            ]);
-            if ($status == 3) {
-                db('xy_message')->insert(['uid' => $info['uid'], 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('交易订单') . $oid . lang('已被系统强制付款，如有疑问请联系客服'), 'addtime' => time()]);
-            }
 
-            //系统通知
-            if ($res && $res1 && $res2) {
-                Db::commit();
-                $c_status = db('xy_convey')->where('id', $oid)->value('c_status');
-                //判断是否已返还佣金
-                if ($c_status === 0) {
-                    $this->deal_reward($info['uid'], $oid, $info['num'], $info['commission']);
-                }
-
-                return ['code' => 0, 'info' => lang('操作成功')];
-            } else {
-                Db::rollback();
-                return ['code' => 1, 'info' => lang('操作失败')];
-            }
-        } elseif (in_array($status, [2, 4])) {
-            $res1 = db('xy_users')->where('id', $info['uid'])->update(['deal_status' => 1]);
-            if ($status == 4) {
-                db('xy_message')->insert(['uid' => $info['uid'], 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('交易订单') . $oid . lang('已被系统强制取消，如有疑问请联系客服'), 'addtime' => time()]);
-            }
-
-            //系统通知
-            if ($res && $res1 !== false) {
-                Db::commit();
-                return ['code' => 0, 'info' => lang('操作成功')];
-            } else {
-                Db::rollback();
-                return ['code' => 1, 'info' => lang('操作失败'), 'data' => $res1];
-            }
+        if ($res) {
+            Db::commit();
+            return ['code' => 0, 'info' => lang('操作成功')];
+        } else {
+            Db::rollback();
+            return ['code' => 1, 'info' => lang('操作失败'), 'data' => $res];
         }
+
+        // if (in_array($status, [1, 3])) {
+        //     //确认付款
+        //     try {
+        //         $res1 = db('xy_users')
+        //             ->where('id', $info['uid'])
+        //             ->dec('balance', $info['num'])
+        //             ->inc('freeze_balance', $info['num'] + $info['commission']) //冻结商品金额 + 佣金
+        //             ->update(['deal_status' => 1, 'status' => 1]);
+        //     } catch (\Throwable $th) {
+        //         Db::rollback();
+        //         return ['code' => 1, 'info' => lang('请检查账户余额')];
+        //     }
+        //     $res2 = db('xy_balance_log')->insert([
+        //         'uid' => $info['uid'],
+        //         'oid' => $oid,
+        //         'num' => $info['num'],
+        //         'type' => 2,
+        //         'status' => 2,
+        //         'addtime' => time(),
+        //     ]);
+            
+        //     if ($status == 3) {
+        //         db('xy_message')->insert(['uid' => $info['uid'], 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('交易订单') . $oid . lang('已被系统强制付款，如有疑问请联系客服'), 'addtime' => time()]);
+        //     }
+
+        //     //系统通知
+        //     if ($res && $res1 && $res2) {
+        //         Db::commit();
+        //         $c_status = db('xy_convey')->where('id', $oid)->value('c_status');
+        //         //判断是否已返还佣金
+        //         if ($c_status === 0) {
+        //             $this->deal_reward($info['uid'], $oid, $info['num'], $info['commission']);
+        //         }
+
+        //         return ['code' => 0, 'info' => lang('操作成功')];
+        //     } else {
+        //         Db::rollback();
+        //         return ['code' => 1, 'info' => lang('操作失败')];
+        //     }
+        // } elseif (in_array($status, [2, 4])) {
+        //     $res1 = db('xy_users')->where('id', $info['uid'])->update(['deal_status' => 1]);
+        //     if ($status == 4) {
+        //         db('xy_message')->insert(['uid' => $info['uid'], 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('交易订单') . $oid . lang('已被系统强制取消，如有疑问请联系客服'), 'addtime' => time()]);
+        //     }
+
+        //     //系统通知
+        //     if ($res && $res1 !== false) {
+        //         Db::commit();
+        //         return ['code' => 0, 'info' => lang('操作成功')];
+        //     } else {
+        //         Db::rollback();
+        //         return ['code' => 1, 'info' => lang('操作失败'), 'data' => $res1];
+        //     }
+        // }
     }
 
     /**

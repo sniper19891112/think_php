@@ -29,6 +29,10 @@
                 <th class='text-left nowrap'>总价佣金</th>
                 <th class='text-left nowrap'>下单时间 解冻时间</th>
                 <th class='text-left nowrap'>交易状态</th>
+                <th class='text-left nowrap'>物品质量</th>
+                <th class='text-left nowrap'>物品服务</th>
+                <th class='text-left nowrap'>态度服务</th>
+                <th class='text-left nowrap'>传买家秀</th>
                 <th class='text-left nowrap'>操作</th>
                 <th class='text-left nowrap'>商品名称</th>
             </tr>
@@ -50,27 +54,39 @@
                     <p>佣金&nbsp;${$vo.commission}
                 </td>
                 <td class='text-left nowrap'>
-                    {$vo.addtime|format_datetime}<p>{$vo.endtime|format_datetime}</td>
-                <td class='text-left nowrap'>
+                    {$vo.addtime|format_datetime}<p>{$vo.endtime|format_datetime}
+
+                </td>
+                <td class='text-left nowrap'>{$vo.good_quality} </td>
+                <td class='text-left nowrap'>{$vo.good_service} </td>
+                <td class='text-left nowrap'>{$vo.attitude_service} </td>
+                <td class='text-left nowrap'>                    
+                    <a data-title="查看图片" data-modal='{:url("admin/users/picinfo")}?pic={$vo.buyer_show_img}'>
+                        <img src="{$vo.buyer_show_img}" style="width:150px;height:100px;">
+                    </a>
+                </td>
+                <td class='text-left nowrap' style="color: red;">
                     {switch $vo.status}
-                        {case 0}
-                            {literal}
-                            等待付款
-                            {/literal}
-                        {/case}
-                        {case 1}完成付款{/case}
-                        {case 2}用户取消{/case}
-                        {case 3}强制付款{/case}
-                        {case 4}系统取消{/case}
-                        {case 5}订单冻结{/case}
+                    {case 0}
+                    {literal}
+                    等待付款
+                    {/literal}
+                    {/case}
+                    {case 1}已付款{/case}
+                    {case 2}待发货{/case}
+                    {case 3}已发货{/case}
+                    {case 4}待收货{/case}
+                    {case 5}已收货{/case}
+                    {case 6}待评价{/case}
+                    {case 7}评价完成{/case}
                     {/switch}
                 </td>
                 <td class='text-left nowrap'>
-                    {if $vo.status==0}
+                    {if $vo.status==2}
                     <a data-csrf="{:systoken('admin/deal/do_user_order')}" class="layui-btn layui-btn-xs layui-btn"
-                        data-action="{:url('do_user_order')}" data-value="id#{$vo.id};status#3">强制付款</a>
-                    <a data-csrf="{:systoken('admin/deal/do_user_order')}" class="layui-btn layui-btn-xs layui-btn-warm"
-                        data-action="{:url('do_user_order')}" data-value="id#{$vo.id};status#4">取消订单</a>
+                        data-action="{:url('do_user_order')}" data-value="id#{$vo.id};status#4">发货</a>
+                    <!-- <a data-csrf="{:systoken('admin/deal/do_user_order')}" class="layui-btn layui-btn-xs layui-btn-warm"
+                        data-action="{:url('do_user_order')}" data-value="id#{$vo.id};status#4">取消订单</a> -->
                     {/if}
                 </td>
                 <td class='text-left nowrap'>{$vo.goods_name} </td>

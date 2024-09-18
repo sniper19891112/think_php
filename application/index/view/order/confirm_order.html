@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta content="telephone=yes" name="format-detection" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <title>{:lang('订单确认')}</title>
+    <link rel="stylesheet" href="/statics/css/global.css" />
+    <link rel="stylesheet" href="/web/css/order_confirm.css" />
+    <link rel="stylesheet" href="/static_new/css/public.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+    <script charset="utf-8" src="/static_new/js/jquery.min.js"></script>
+    <script charset="utf-8" src="/static_new/js/dialog.min.js"></script>
+    <script charset="utf-8" src="/static_new/js/common.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="order-confirm-header">
+            <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
+                arrow_back
+            </i>
+            Order Confirmation
+        </div>
+        <div class="order-confirm-container">
+            {php}
+            $sub_total_amount = $order['goods_price'] * $order['goods_count'];
+            {/php}
+            <div class="text-16 font-800 color-2B2B2B">Delivery Address</div>
+            <div class="order-delivery-address">
+                <div class="d-flex align-center">
+                    <i class="material-icons-outlined"> house </i>
+                    <div class="text-16 color-2B2B2B" style="margin-left: 4px;">{$order['username']}</div>
+                </div>
+                <div class="text-16 color-2B2B2B" style="margin-left: 26px;">{$order['tel']}</div>
+                <div class="text-16 color-2B2B2B" style="margin-left: 26px;">{$order['address']}</div>
+            </div>
+            <div style="margin-top: 24px;" class="text-16 font-800 color-2B2B2B">Purchased goods</div>
+            <div class="purchased-good-container">
+                <img src="{$order['goods_pic']}" style="width: 80px; height: 90px; border-radius: 8px;" />
+                <div style="margin-left: 8px; width: 100%;">
+                    <div class="text-14 font-800 color-2B2B2B">{$order['goods_name']}</div>
+                    <div class="text-14 font-800 color-2B2B2B"
+                        style="padding-bottom: 4px; border-bottom: 1px solid #E0E0E0;">${$order['goods_price']}</div>
+                    <div class="d-flex align-center justify-between" style="margin-top: 8px;">
+                        <div class="text-14 font-800 color-2B2B2B">
+                            ${$order.goods_price}&nbsp;&nbsp;X&nbsp;&nbsp;{$order.goods_count}</div>
+                        <div class="text-14 font-800 color-2B2B2B">${$sub_total_amount}</div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 24px;" class="text-16 font-800 color-2B2B2B">Order amount</div>
+            <div class="order-amount-container">
+                <div class="d-flex align-center justify-between">
+                    <div class="text-14 font-800 color-2B2B2B">Subtotal</div>
+                    <div class="text-14 font-800 color-2B2B2B">${$sub_total_amount}</div>
+                </div>
+                <div class="d-flex align-center justify-between" style="margin-top: 4px; padding-bottom: 4px; border-bottom: 1px solid #E0E0E0;">
+                    <div class="text-14 font-800 color-2B2B2B">Delivery Fee</div>
+                    <div class="text-14 font-800 color-2B2B2B">$0</div>
+                </div>
+                <div class="d-flex align-center justify-between" style="margin-top: 4px;">
+                    <div class="text-14 font-800 color-2B2B2B">Total</div>
+                    <div class="text-14 font-800 color-2B2B2B">${$sub_total_amount}</div>
+                </div>
+            </div>
+            <div style="margin-top: 24px;">
+                <button class="submit-btn-form" id="submitOpenModal">Submit Order</button>
+            </div>
+            <input type="hidden" id="balance" value="{$order.balance}"/>
+            <input type="hidden" id="total_amount" value="{$sub_total_amount}"/>
+        </div>
+        <!-- password Modal -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="password-modal">
+                <i class="material-icons-outlined" style="position: absolute; top: 6px; right: 6px; cursor: pointer;" id="closeModal">close</i>
+                <div class="user-password-input-form">
+                    <i class="material-icons-outlined">lock</i>
+                    <input class="user-password-input" type="password" name="pwd" placeholder="Password" />
+                    <i class="material-icons-outlined password-icon-eye" style="cursor: pointer;">visibility</i>
+                </div>
+                <div class="payment-password-input-form">
+                    <i class="material-icons-outlined">payments</i>
+                    <input class="payment-password-input" type="password" name="pwd2" placeholder="Payment password" />
+                    <i class="material-icons-outlined payment-icon-eye" style="cursor: pointer;">visibility</i>
+                </div>
+                <button class="confirm-btn-form" onclick="submitOrder('{$order.id}')">Confirm Order</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="application/javascript">
+    function goBack() {
+        window.history.go(-1);
+    }
+    function submitOrder(id) {
+        if (Number($("#balance").val()) < Number($("#total_amount").val())) {
+            $(document).dialog({ infoText: "Insufficient Balance!" });
+            return;
+        }
+        if (!$("input[name=pwd]").val().trim()) {
+            $(document).dialog({ infoText: "Please input password" });
+            return;
+        }
+        if (!$("input[name=pwd2]").val().trim()) {
+            $(document).dialog({ infoText: "Please input payment password" });
+            return;
+        }
+        let pwd = $("input[name=pwd]").val();
+        let pwd2 = $("input[name=pwd2]").val();
+        $.ajax({
+            url: "/index/order/submit_order",
+            type: "POST",
+            dataType: "JSON",
+            data: { oid: id, pwd: pwd, pwd2: pwd2 },
+            success: function (res) {
+                if (res.code == 0) {
+                    $(document).dialog({ infoText: "success" });
+                    setTimeout(function () {
+                        location.href = "{:url('order/order')}"
+                    }, 3000);
+                } else {
+                    $(document).dialog({ infoText: res.info });
+                }
+            },
+            error: function (err) {
+                $(document).dialog({ infoText: "error" });
+            }
+        })
+    }
+    // jQuery logic to open and close the modal
+    $(document).ready(function () {
+        // Open the modal when the button is clicked
+        $("#submitOpenModal").on("click", function () {
+            $("#modalOverlay").show();
+        });
+        // Close the modal when the close button is clicked
+        $("#closeModal").on("click", function () {
+            $("#modalOverlay").hide();
+        });
+        // Close the modal when clicking outside the modal (on the overlay)
+        $("#modalOverlay").on("click", function (event) {
+            if ($(event.target).is("#modalOverlay")) { // Check if the click was on the overlay
+                $(this).hide();
+            }
+        });
+    });
+    /*显示or隐藏密码*/
+    $(".password-icon-eye").on('click', function () {
+        var input = $("input[name=pwd]");
+        var icon = $(this);
+
+        // Toggle the input type between password and text
+        if (input.attr("type") === 'password') {
+            input.attr('type', 'text');
+            icon.text('visibility_off'); // Change the icon to "visibility_off"
+        } else {
+            input.attr('type', 'password');
+            icon.text('visibility'); // Change the icon back to "visibility"
+        }
+    });
+    /*显示or隐藏密码*/
+    $(".payment-icon-eye").on('click', function () {
+        var input = $("input[name=pwd2]");
+        var icon = $(this);
+
+        // Toggle the input type between password and text
+        if (input.attr("type") === 'password') {
+            input.attr('type', 'text');
+            icon.text('visibility_off'); // Change the icon to "visibility_off"
+        } else {
+            input.attr('type', 'password');
+            icon.text('visibility'); // Change the icon back to "visibility"
+        }
+    });
+</script>
+
+</html>

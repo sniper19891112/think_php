@@ -29,13 +29,22 @@
             {volist name='list' id='v'}
             {php}
             $status_text = '';
-            if($v['status']==0) $status_text = 'Placed an order';
-            if($v['status']==1) $status_text = 'Confirmed';
-            if($v['status']==2) $status_text = 'Shipped';
-            if($v['status']==3) $status_text = 'Rated';
+            if($v['status']==0) $status_text = 'Waiting for payment';
+            // if($v['status']==1) $status_text = 'Paid';
+            // if($v['status']==2) $status_text = 'Waiting for shipment';
+            if($v['status']==1 || $v['status']==2) $status_text = 'Paid';
+            // if($v['status']==3) $status_text = 'Shipped';
+            // if($v['status']==4) $status_text = 'Waiting for receipt';
+            if($v['status']==3 || $v['status']==4) $status_text = 'Shipped';
+            // if($v['status']==5) $status_text = 'Received';
+            // if($v['status']==6) $status_text = 'Waiting for evaluation';
+            if($v['status']==5 || $v['status']==6) $status_text = 'Received';
+            if($v['status']==7) $status_text = 'Rated';
             $settlement_value = round($v['goods_price'] * $v['goods_count'], 2);
             {/php}
+            {if $v['status'] > 1}
             <a href="{:url('order/settlement_order_detail')}?oid={$v.id}">
+            {/if}
                 <div class="order-item">
                     <div class="order-item-title-container">
                         <div class="order-item-title">Product:
@@ -50,8 +59,9 @@
                     <div class="order-item-status-container">
                         <div class="order-item-status-text">
                             Order status:
-                            <span
-                                class="order-item-status {if condition='$v.status eq 0'}bg-2595e8{else /}bg-26d28b{/if}">{$status_text}</span>
+                            <span class="order-item-status {if condition='$v.status eq 0'}bg-2595e8{else /}bg-26d28b{/if}">
+                                {$status_text}
+                            </span>
                         </div>
                     </div>
                     <div class="order-settlement-container">
@@ -60,13 +70,23 @@
                             <span class="order-settlement-value">${$settlement_value}</span>
                         </div>
                         {if $v['status'] == 0}
+                        <a href="{:url('order/confirm_order')}?oid={$v.id}">
+                            <button class="order-settlement-confirm">Submit Order</button>
+                        </a>
+                        {elseif $v['status'] == 3 || $v['status'] == 4}
                         <a href="{:url('order/settlement_order_detail')}?oid={$v.id}">
-                            <button class="order-settlement-confirm">Confirm receipt</button>
+                            <button class="order-settlement-confirm">Confirm Receipt</button>
+                        </a>
+                        {elseif $v['status'] == 5 || $v['status'] == 6}
+                        <a href="{:url('order/settlement_order_detail')}?oid={$v.id}">
+                            <button class="order-settlement-confirm">Submit evaluation</button>
                         </a>
                         {/if}
                     </div>
                 </div>
+            {if $v['status'] > 1}
             </a>
+            {/if}
             {/volist}
             {else/}
             {/if}

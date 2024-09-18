@@ -32,7 +32,7 @@
         <div class="order-detail-container">
             {php}
             $sub_total_amount = $order['goods_price'] * $order['goods_count'];
-            $total_amount = $sub_total_amount + $order['commission'] + 5;
+            $total_amount = $sub_total_amount + $order['commission'];
             {/php}
             <div class="order-detail-number">
                 <div>The order number is <font style="font-weight: bold;">{$order['id']}</font>
@@ -43,33 +43,33 @@
                 <div class="order-detail-status-line"></div>
                 <div style="z-index: 2;">
                     <div
-                        class="order-detail-status-checkbox {if condition='$order.status eq 0'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
+                        class="order-detail-status-checkbox {if condition='$order.status == 1 || $order.status == 2'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
                         <i
-                            class="material-icons-outlined {if condition='$order.status eq 0'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                            class="material-icons-outlined {if condition='$order.status == 1 || $order.status == 2'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
                     </div>
                     <div class="order-detail-status-text">Placed an order</div>
                 </div>
                 <div style="z-index: 2;">
                     <div
-                        class="order-detail-status-checkbox {if condition='$order.status eq 1'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
+                        class="order-detail-status-checkbox {if condition='$order.status==3 || $order.status==4'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
                         <i
-                            class="material-icons-outlined {if condition='$order.status eq 1'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
-                    </div>
-                    <div class="order-detail-status-text">confirmed</div>
-                </div>
-                <div style="z-index: 2;">
-                    <div
-                        class="order-detail-status-checkbox {if condition='$order.status eq 2'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
-                        <i
-                            class="material-icons-outlined {if condition='$order.status eq 2'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                            class="material-icons-outlined {if condition='$order.status==3 || $order.status==4'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
                     </div>
                     <div class="order-detail-status-text">shipped</div>
                 </div>
                 <div style="z-index: 2;">
                     <div
-                        class="order-detail-status-checkbox {if condition='$order.status eq 3'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
+                        class="order-detail-status-checkbox {if condition='$order.status == 5 || $order.status == 6'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
                         <i
-                            class="material-icons-outlined {if condition='$order.status eq 3'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                            class="material-icons-outlined {if condition='$order.status == 5 || $order.status == 6'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                    </div>
+                    <div class="order-detail-status-text">confirmed</div>
+                </div>
+                <div style="z-index: 2;">
+                    <div
+                        class="order-detail-status-checkbox {if condition='$order.status eq 7'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
+                        <i
+                            class="material-icons-outlined {if condition='$order.status eq 7'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
                     </div>
                     <div class="order-detail-status-text">Rated</div>
                 </div>
@@ -96,12 +96,12 @@
                 </div>
                 <div style="margin-top: 10px;" class="text-14 color-4F4F4F d-flex align-center justify-between">
                     <div>Delivery charge</div>
-                    <div>$5.00</div>
-                </div>
-                <div style="margin-top: 10px;" class="text-14 color-4F4F4F d-flex align-center justify-between">
-                    <div>favorable</div>
                     <div>$0.00</div>
                 </div>
+                <!-- <div style="margin-top: 10px;" class="text-14 color-4F4F4F d-flex align-center justify-between">
+                    <div>favorable</div>
+                    <div>$0.00</div>
+                </div> -->
                 <div style="margin-top: 10px; padding-bottom: 7px; border-bottom: 1px solid #E0E0E0;"
                     class="text-14 color-4F4F4F d-flex align-center justify-between">
                     <div>commission</div>
@@ -114,26 +114,109 @@
             </div>
             <div class="order-detail-delivery-container">
                 <div class="text-14 color-2B2B2B">Delivery address</div>
-                <div style="margin-top: 14px;" class="text-14 color-4F4F4F">Little bamboo shoots</div>
-                <div class="text-14 color-4F4F4F">15800000000</div>
-                <div class="text-14 color-4F4F4F">
-                    Beijing here is the detailed receiving address information,
-                    up to two lines of folding
+                <div style="margin-top: 14px;" class="text-14 color-4F4F4F">{$order['username']}</div>
+                <div class="text-14 color-4F4F4F">{$order['tel']}</div>
+                <div class="text-14 color-4F4F4F">{$order['address']}</div>
+            </div>
+            <div class="commodity-evaluation-container">
+                <div class="text-14 color-2B2B2B">Commodity evaluation</div>
+                <div class="d-flex align-center">
+                    <div class="text-14 color-4F4F4F" style="margin-top: 8px; width: 120px;">1. Quality of goods</div>
+                    <div id="good-quality-rating" style="margin-left: 24px;">
+                        <span class="stars {if $order.good_quality >= 1}selected{/if}" data-value="1">&#9733;</span>
+                        <span class="stars {if $order.good_quality >= 2}selected{/if}" data-value="2">&#9733;</span>
+                        <span class="stars {if $order.good_quality >= 3}selected{/if}" data-value="3">&#9733;</span>
+                        <span class="stars {if $order.good_quality >= 4}selected{/if}" data-value="4">&#9733;</span>
+                        <span class="stars {if $order.good_quality >= 5}selected{/if}" data-value="5">&#9733;</span>
+                    </div>
+                </div>
+                <div class="d-flex align-center">
+                    <div class="text-14 color-4F4F4F" style="margin-top: 8px; width: 120px;">2. Goods service</div>
+                    <div id="good-service-rating" style="margin-left: 24px;">
+                        <span class="stars {if $order.good_service >= 1}selected{/if}" data-value="1">&#9733;</span>
+                        <span class="stars {if $order.good_service >= 2}selected{/if}" data-value="2">&#9733;</span>
+                        <span class="stars {if $order.good_service >= 3}selected{/if}" data-value="3">&#9733;</span>
+                        <span class="stars {if $order.good_service >= 4}selected{/if}" data-value="4">&#9733;</span>
+                        <span class="stars {if $order.good_service >= 5}selected{/if}" data-value="5">&#9733;</span>
+                    </div>
+                </div>
+                <div class="d-flex align-center">
+                    <div class="text-14 color-4F4F4F" style="margin-top: 8px; width: 120px;">3. Attitude service</div>
+                    <div id="attitude-service-rating" style="margin-left: 24px;">
+                        <span class="stars {if $order.attitude_service >= 1}selected{/if}" data-value="1">&#9733;</span>
+                        <span class="stars {if $order.attitude_service >= 2}selected{/if}" data-value="2">&#9733;</span>
+                        <span class="stars {if $order.attitude_service >= 3}selected{/if}" data-value="3">&#9733;</span>
+                        <span class="stars {if $order.attitude_service >= 4}selected{/if}" data-value="4">&#9733;</span>
+                        <span class="stars {if $order.attitude_service >= 5}selected{/if}" data-value="5">&#9733;</span>
+                    </div>
+                </div>
+                <div class="buyer-show-upload" id="uploadArea">
+                    <div class="text-center" id="buyer_show_upload" style="display: {if condition="!$order.buyer_show_img"}block{else}none{/if};">
+                        <i class="material-icons-outlined color-C2C2C2" style="font-size: 48px;">image</i>
+                        <div class="color-C2C2C2">Please upload the buyer show first</div>
+                    </div>
+                    <img src="{$order.buyer_show_img}" id="buyer_show_img" style="display: {if condition="$order.buyer_show_img"}block{else}none{/if};" width="100" height="100" />
+                    <input type="file" id="fileInput" style="display: none;" />
+                    <input type="hidden" value="" id="buyer_show_url" />
                 </div>
             </div>
-            {if $order.status == 0}
+            {if $order.status == 3 || $order.status == 4}
             <button class="order-detail-confirm-receipt" onclick="confirmReceipt('{$order.id}')">
                 Confirm receipt of goods
+            </button>
+            {elseif $order.status == 5 || $order.status == 6}
+            <button class="order-detail-confirm-receipt" onclick="submitEvaluation('{$order.id}')">
+                Submit evaluation
             </button>
             {/if}
         </div>
     </div>
 </body>
 <script type="application/javascript">
+    var goodQualityRating = 0;
+    var goodServiceRating = 0;
+    var attitudeServiceRating = 0;
     function goBack() {
         window.history.go(-1);
     }
+    // Get references to the elements
+    const uploadArea = document.getElementById("uploadArea");
+    const fileInput = document.getElementById("fileInput");
 
+    // When clicking the upload area, trigger the file input dialog
+    uploadArea.addEventListener("click", function () {
+        fileInput.click();  // Open file dialog
+    });
+
+    // Display the selected file name
+    fileInput.addEventListener("change", function () {
+        const file = fileInput.files[0];
+        if (file) {
+            uploadFile(file);
+        }
+    });
+
+    // Function to upload file using AJAX
+    function uploadFile(file) {
+        // Create FormData object to send the file data
+        const formData = new FormData();
+        formData.append('file', file);
+        // Perform AJAX request
+        $.ajax({
+            url: '/index/my/upload',  // Replace with your server upload URL
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#buyer_show_img").attr('src', response.url).show();
+                $("#buyer_show_upload").hide();
+                $("#buyer_show_url").val(response.url);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
     function confirmReceipt(id) {
         $.ajax({
             url: "/index/order/confirm_receipt",
@@ -141,13 +224,128 @@
             dataType: "JSON",
             data: { order_id: id },
             success: function (res) {
-                $(document).dialog({ infoText: "success" });
+                if (res.code == 0) {
+                    $(document).dialog({ infoText: "success" });
+                    setTimeout(function () {
+                        location.href = "{:url('order/order')}"
+                    }, 3000);
+                } else {
+                    $(document).dialog({ infoText: res.info });
+                }
             },
             error: function (err) {
                 $(document).dialog({ infoText: "error" });
             }
         })
     }
+    function submitEvaluation(id) {
+        $.ajax({
+            url: "/index/order/submit_evaluation",
+            type: "POST",
+            dataType: "JSON",
+            data: { order_id: id, "good_quality": goodQualityRating, "good_service": goodServiceRating, "attitude_service": attitudeServiceRating, "buyer_show_img": $("#buyer_show_url").val() },
+            success: function (res) {
+                if (res.code == 0) {
+                    $(document).dialog({ infoText: "success" });
+                    setTimeout(function () {
+                        location.href = "{:url('order/order')}"
+                    }, 3000);
+                } else {
+                    $(document).dialog({ infoText: res.info });
+                }
+            },
+            error: function (err) {
+                $(document).dialog({ infoText: "error" });
+            }
+        })
+    }
+
+    $(document).ready(function () {
+
+        // Event listener for hover effect
+        $('#good-quality-rating .stars').on('mouseover', function () {
+            const value = $(this).data('value');
+            highlightGoodQualityStars(value);
+        });
+
+        // Event listener for click to select rating
+        $('#good-quality-rating .stars').on('click', function () {
+            goodQualityRating = $(this).data('value');
+            $('#rating-value').text(goodQualityRating);
+        });
+
+        // Event listener to reset the stars if the user stops hovering
+        $('#good-quality-rating').on('mouseleave', function () {
+            highlightGoodQualityStars(goodQualityRating);  // Keep the selected rating
+        });
+
+        function highlightGoodQualityStars(stars) {
+            $('#good-quality-rating .stars').each(function () {
+                const value = $(this).data('value');
+                if (value <= stars) {
+                    $(this).addClass('selected');
+                } else {
+                    $(this).removeClass('selected');
+                }
+            });
+        }
+
+        // Event listener for hover effect
+        $('#good-service-rating .stars').on('mouseover', function () {
+            const value = $(this).data('value');
+            highlightGoodServiceStars(value);
+        });
+
+        // Event listener for click to select rating
+        $('#good-service-rating .stars').on('click', function () {
+            goodServiceRating = $(this).data('value');
+            $('#rating-value').text(goodServiceRating);
+        });
+
+        // Event listener to reset the stars if the user stops hovering
+        $('#good-service-rating').on('mouseleave', function () {
+            highlightGoodServiceStars(goodServiceRating);  // Keep the selected rating
+        });
+
+        function highlightGoodServiceStars(stars) {
+            $('#good-service-rating .stars').each(function () {
+                const value = $(this).data('value');
+                if (value <= stars) {
+                    $(this).addClass('selected');
+                } else {
+                    $(this).removeClass('selected');
+                }
+            });
+        }
+
+        // Event listener for hover effect
+        $('#attitude-service-rating .stars').on('mouseover', function () {
+            const value = $(this).data('value');
+            highlightAttitudeServiceStars(value);
+        });
+
+        // Event listener for click to select rating
+        $('#attitude-service-rating .stars').on('click', function () {
+            attitudeServiceRating = $(this).data('value');
+            $('#rating-value').text(attitudeServiceRating);
+        });
+
+        // Event listener to reset the stars if the user stops hovering
+        $('#attitude-service-rating').on('mouseleave', function () {
+            highlightAttitudeServiceStars(attitudeServiceRating);  // Keep the selected rating
+        });
+
+        function highlightAttitudeServiceStars(stars) {
+            $('#attitude-service-rating .stars').each(function () {
+                const value = $(this).data('value');
+                if (value <= stars) {
+                    $(this).addClass('selected');
+                } else {
+                    $(this).removeClass('selected');
+                }
+            });
+        }
+    });
 </script>
 
 </html>

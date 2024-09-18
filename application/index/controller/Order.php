@@ -44,7 +44,6 @@ class Order extends Base
         if ($color) {
             return $this->fetch('index-' . $color);
         } else {
-
             return $this->fetch('index-blue');
         }
     }
@@ -77,7 +76,7 @@ class Order extends Base
         if (request()->isPost()) {
             $goods_id = input('post.goods_id/d', 0);
             if ($goods_id == 0) {
-                json(['code' => 1, 'info' => lang('参数错误')]);
+                return json(['code' => 1, 'info' => lang('参数错误')]);
             }
             $res = model('admin/Convey')->create_settlement_order(session('user_id'), $goods_id);
             return json($res);
@@ -99,19 +98,110 @@ class Order extends Base
             ->where('xc.id', $order_id)
             ->alias('xc')
             ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
-            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic')
+            ->leftJoin('xy_users xu', 'xc.uid=xu.id')
+            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xu.username,xu.tel,xu.address,xu.balance')
             ->find();
         $this->order = $order;
         return $this->fetch();
     }
 
     public function confirm_receipt() {
+        $uid = session('user_id');
         $order_id = input('post.order_id/s', '');
-        $result = db('xy_convey')->where('id', $order_id)->update(['status' => 1]);
+        $result = db('xy_convey')->where('id', $order_id)->update(['status' => 6]);
+        $orderinfo = db('xy_convey')->field("num, commission")->find($order_id);
+        $this->deal_reward($uid, $order_id, $orderinfo['num'], $orderinfo['commission']);
         if (!$result) {
             json(['code' => 1, 'info' => lang('error')]);
         }
         return json(['code' => 0, 'info' => lang('success')]);        
+    }
+
+    public function submit_evaluation() {
+        $uid = session('user_id');
+        $order_id = input('post.order_id/s', '');
+        $good_quality = input('post.good_quality/d', 0);
+        $good_service = input('post.good_service/d', 0);
+        $attitude_service = input('post.attitude_service/d', 0);
+        $buyer_show_img = input('post.buyer_show_img/s', '');
+        $data = [
+            'status' => 7,
+            'good_quality' => $good_quality,
+            'good_service' => $good_service,
+            'attitude_service' => $attitude_service,
+            'buyer_show_img' => $buyer_show_img,
+        ];
+        $result = db('xy_convey')->where('id', $order_id)->update($data);
+        $orderinfo = db('xy_convey')->field("num, commission")->find($order_id);
+        $this->deal_reward($uid, $order_id, $orderinfo['num'], $orderinfo['commission']);
+        if (!$result) {
+            json(['code' => 1, 'info' => lang('error')]);
+        }
+        return json(['code' => 0, 'info' => lang('success')]);  
+    }
+
+    public function confirm_order() {
+        $uid = session('user_id');
+        if (!$uid && request()->isPost()) {
+            $this->error(lang('请先登录'));
+        }
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $order_id = input('get.oid/s', '');
+        $order = db('xy_convey')
+            ->where('xc.id', $order_id)
+            ->alias('xc')
+            ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
+            ->leftJoin('xy_users xu', 'xc.uid=xu.id')
+            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xu.username,xu.tel,xu.address,xu.balance')
+            ->find();
+        $this->order = $order;
+        return $this->fetch();
+    }
+
+    public function submit_order() {
+        $order_id = input('post.oid/s', '');
+        $pwd = input('post.pwd/s', '');
+        $pwd2 = input('post.pwd2/s', '');
+        if ($order_id == '') {
+            return json(['code' => 1, 'info' => lang('参数错误')]);
+        }
+        $uid = session('user_id');
+        $userinfo = db("xy_users")->field("pwd, salt, pwd2, salt2")->find($uid);
+
+        if ($userinfo['pwd'] != sha1($pwd . $userinfo['salt'] . config('pwd_str'))) {
+            return json(['code' => 1, 'info' => lang('密码错误')]);
+        }
+
+        if ($userinfo['pwd2'] != sha1($pwd2 . $userinfo['salt2'] . config('pwd_str'))) {
+            return json(['code' => 1, 'info' => lang('Wrong payment password')]);
+        }
+
+        $info = db('xy_convey')->find($order_id);
+        if ($info['status'] == 1 || $info['status'] == 2) {
+            return json(['code' => 1, 'info' => lang('Paid already')]);
+        }
+        $tmp = ['endtime' => time() + config('deal_feedze'), 'status' => 2];
+        $res = db('xy_convey')->where('id', $order_id)->update($tmp);
+        $res1 = db('xy_users')
+            ->where('id', $info['uid'])
+            ->dec('balance', $info['num'])
+            ->inc('freeze_balance', $info['num'] + $info['commission']) //冻结商品金额 + 佣金
+            ->update(['deal_status' => 1, 'status' => 1]);
+        $res2 = db('xy_balance_log')->insert([
+            'uid' => $info['uid'],
+            'oid' => $order_id,
+            'num' => $info['num'],
+            'type' => 2,
+            'status' => 2,
+            'addtime' => time(),
+        ]);
+        if ($res && $res1 && $res2) {
+            return json(['code' => 0, 'info' => lang('success')]);
+        } else {
+            return json(['code' => 1, 'info' => lang('error')]);
+        }
     }
 
     public function get_order_info()
@@ -262,5 +352,67 @@ class Order extends Base
         }
 
         return json(['code' => 0, 'info' => lang('验证通过')]);
+    }
+
+    /**
+     * 交易返佣
+     *
+     * @return void
+     */
+    public function deal_reward($uid, $oid, $num, $cnum)
+    {
+        $res = db('xy_users')->where('id', $uid)->where('status', 1)->setInc('balance', $num + $cnum);
+        $res2 = db('xy_users')->where('id', $uid)->where('status', 1)->setDec('freeze_balance', $num + $cnum);
+
+        if ($res) {
+            $res1 = db('xy_balance_log')->insert([
+                //记录返佣信息
+                'uid' => $uid,
+                'oid' => $oid,
+                'num' => $cnum,
+                'type' => 3,
+                'addtime' => time(),
+            ]);
+            //将订单状态改为已返回佣金
+            // db('xy_convey')->where('id', $oid)->update(['c_status' => 1, 'status' => 1]);
+            db('xy_reward_log')->insert(['oid' => $oid, 'uid' => $uid, 'num' => $num, 'addtime' => time(), 'type' => 2]); //记录充值返佣订单
+            /************* 发放交易奖励 *********/
+            $userList = model('admin/Users')->parent_user($uid, 5);
+            if ($userList) {
+                foreach ($userList as $v) {
+                    if ($v['status'] === 1) {
+                        db('xy_reward_log')
+                            ->insert([
+                                'uid' => $v['id'],
+                                'sid' => $uid,
+                                'oid' => $oid,
+                                'num' => $cnum * config($v['lv'] . '_d_reward'),
+                                'lv' => $v['lv'],
+                                'type' => 2,
+                                'status' => 1,
+                                'addtime' => time(),
+                            ]);
+                        db('xy_balance_log')->insert([
+                            //记录返佣信息
+                            'uid' => $v['id'],
+                            'oid' => $oid,
+                            'sid' => $uid,
+                            'num' => $cnum * config($v['lv'] . '_d_reward'),
+                            'type' => 6,
+                            'status' => 1,
+                            'f_lv' => $v['lv'],
+                            'addtime' => time(),
+                        ]);
+
+                        $num3 = $cnum * config($v['lv'] . '_d_reward'); //佣金
+                        $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $num3);
+                    }
+                }
+            }
+            /************* 发放交易奖励 *********/
+        } else {
+            $res1 = db('xy_convey')->where('id', $oid)->update(['c_status' => 2]); //记录账号异常
+        }
+
     }
 }

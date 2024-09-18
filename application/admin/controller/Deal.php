@@ -87,18 +87,15 @@ class Deal extends Controller
     public function edit_order_goods_list()
     {
         $this->title = '商品列表';
-
         $this->cate = Db::table('xy_goods_cate')->order('addtime asc')->select();
         $where = [];
         $query = $this->_query('xy_goods_list');
         if (input('title/s', '')) {
             $where[] = ['goods_name', 'like', '%' . input('title/s', '') . '%'];
         }
-
         if (input('cid/d', '')) {
             $where[] = ['cid', '=', input('cid/d', '')];
         }
-
         $query->where($where)->page();
 
     }
@@ -161,8 +158,6 @@ class Deal extends Controller
                             'addtime' => time(),
                         ]);
                 }
-
-                //
                 $num3 = $num * config($v['lv'] . '_d_reward'); //佣金
                 $res = Db::name('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $num3);
                 $res2 = Db::name('xy_balance_log')->insert([

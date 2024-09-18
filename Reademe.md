@@ -51,3 +51,8 @@ sudo systemctl restart redis6
 
 redis6-cli -h 51.20.74.52 -p 6379
 redis6-cli -h 51.20.189.23 -p 6379
+
+================== crontab ====================
+0 0 * * * curl http://localhost/index/shop/down_goods  // every day
+* * * * * curl http://51.20.74.52:8008/index/shop/down_goods  // every minute -------------- don't working
+* * * * * /usr/bin/wget -O - http://51.20.74.52:8008/index/shop/down_goods > /dev/null 2>&1
