@@ -105,9 +105,9 @@ class Users extends Model
     public function add_users_email($tel, $user_name, $email, $pwd, $parent_id, $token = '', $pwd2 = '')
     {
 
-        $tmp = Db::table($this->table)->where(['username' => $user_name])->count();
+        $tmp = Db::table($this->table)->where(['email' => $email])->count();
         if ($tmp) {
-            return ['code' => 1, 'info' => lang('用户名重复')];
+            return ['code' => 1, 'info' => lang('Duplicated Email!')];
         }
         if (!$user_name) {
             $user_name = get_username();
@@ -119,6 +119,7 @@ class Users extends Model
             'email' => $email,
             'pwd' => $pwd,
             'parent_id' => $parent_id,
+            'level' => 0,
         ];
         if ($token) {
             $data['__token__'] = $token;

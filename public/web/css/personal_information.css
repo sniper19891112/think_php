@@ -1,0 +1,183 @@
+.personal-container {
+    padding: 16px;
+}
+
+.personal-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2B2B2B;
+    text-align: left;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 16px 16px 8px 16px;
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    margin-top: 62px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+}
+
+.user-avatar-container {
+    width: 64px;
+    height: 64px;
+    position: relative;
+}
+
+.user-avatar-edit {
+    width: 24px;
+    height: 24px;
+    background: #2B2B2B;
+    position: absolute;
+    bottom: -2px;
+    right: -4px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.personal-information {
+    margin: 24px;
+}
+
+.user-name-input-form {
+    margin-top: 18px;
+    height: 40px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.user-name-input {
+    height: 40px;
+    width: 100%;
+    background: #F5F5F5;
+    border: unset !important;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0px 8px;
+}
+
+.user-address-input-form {
+    margin-top: 18px;
+    height: 40px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.user-address-input {
+    height: 40px;
+    width: 100%;
+    background: #F5F5F5;
+    border: unset !important;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0px 8px;
+}
+
+.user-password-input-form {
+    margin-top: 18px;
+    height: 40px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.user-password-input {
+    height: 40px;
+    width: 100%;
+    background: #F5F5F5;
+    border: unset !important;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0px 8px;
+}
+
+.payment-password-input-form {
+    margin-top: 18px;
+    height: 40px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.payment-password-input {
+    height: 40px;
+    width: 100%;
+    background: #F5F5F5;
+    border: unset !important;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0px 8px;
+}
+
+.submit-form {
+    margin-top: 24px;
+}
+
+.user-tel-input-form {
+    margin-top: 18px;
+    height: 40px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.user-tel-input {
+    height: 40px;
+    width: 100%;
+    background: #F5F5F5;
+    border: unset !important;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0px 8px;
+}
+
+.user-email-input-form {
+    margin-top: 18px;
+    height: 40px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.user-email-input {
+    height: 40px;
+    width: 100%;
+    background: #F5F5F5;
+    border: unset !important;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0px 8px;
+}
+
+.submit-form-btn {    
+    font-size: 24px;
+    color: #FFFFFF;
+    line-height: 18px;
+    text-align: center;
+    font-style: normal;
+    text-transform: none;
+    width: 100%;
+    height: 50px;
+    background: #FF5035;
+    border-radius: 10px;
+    border: unset !important;
+}

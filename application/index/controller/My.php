@@ -23,8 +23,8 @@ class My extends Base
             $this->redirect('User/login');
         }
         $this->select = "my";
-        $user = db("xy_users")->where("id", $uid)->find();
-        $this->balance = $user["balance"];
+        $user = db('xy_users')->field('username, tel, headpic, balance')->find($uid);
+        $this->user = $user;
         return $this->fetch();
     }
 
@@ -52,7 +52,7 @@ class My extends Base
             $this->redirect('User/login');
         }
         $wallet = input('get.wallet/s', '');
-        $this->address = sysconf($wallet."_address");
+        $this->address = sysconf($wallet . "_address");
         return $this->fetch("top_up_" . $wallet);
     }
 
@@ -78,13 +78,65 @@ class My extends Base
             "endtime" => time(),
             'notifyDate' => date('Y-m-d H:i:s'),
             'wallet_address' => $wallet_address,
-            'pay_name' => $type == 1 ? "TRC20" : "ERC20"
+            'pay_name' => $type == 1 ? "TRC20" : "ERC20",
         ];
         $result = db('xy_recharge')->insert($data);
         if ($result) {
             return json(["code" => 1, "message" => "success"]);
         } else {
             return json(["code" => 0, "message" => "error"]);
+        }
+    }
+
+    public function personal_information()
+    {
+        $uid = session('user_id');
+        if (!$uid && request()->isPost()) {
+            $this->error(lang('请先登录'));
+        }
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $user = db('xy_users')->field('username, tel, headpic, address')->find($uid);
+        $this->user = $user;
+        return $this->fetch();
+    }
+
+    public function update_personal_info()
+    {
+
+        $uid = session('user_id');
+        $user = db('xy_users')->field('username, tel, headpic, address')->find($uid);
+
+        $username = input("post.username/s", "");
+        $tel = input("post.tel/s", "");
+        $address = input("post.address/s", "");
+        $pwd = input("post.pwd/s", "");
+        $pwd2 = input("post.pwd2/s", "");
+        $headpic = input("post.headpic/s", "");
+
+        $data = [
+            "username" => $username ? $username : $user["username"],
+            "tel" => $tel ? $tel : $user["tel"],
+            "address" => $address ? $address : $user["address"],
+            "headpic" => $headpic ? $headpic : $user["headpic"],
+        ];
+
+        if ($pwd) {
+            $salt = rand(0, 99999); //生成盐
+            $data['pwd'] = sha1($pwd . $salt . config('pwd_str'));
+            $data['salt'] = $salt;
+        }
+        if ($pwd2) {
+            $salt2 = rand(0, 99999); //生成盐
+            $data['pwd2'] = sha1($pwd2 . $salt2 . config('pwd_str'));
+            $data['salt2'] = $salt2;
+        }
+        $res = db('xy_users')->where('id', $uid)->update($data);
+        if ($res) {
+            return ['code' => 0, 'info' => '编辑成功'];
+        } else {
+            return ['code' => 1, 'info' => '操作失败'];
         }
     }
 

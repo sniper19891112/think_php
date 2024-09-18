@@ -19,7 +19,7 @@ class Convey extends Model
         Db::startTrans();
         $uinfo = db('xy_users')->field('deal_status,balance,level,deal_min_num,deal_max_num,pipei_type,pipei_grouping')->find($uid);
         $res = db('xy_users')->where('id', $uid)->update(['deal_status' => 3, 'deal_time' => strtotime(date('Y-m-d')), 'deal_count' => Db::raw('deal_count+1')]);
-        $ulevel = db('xy_level')->where('level', 0)->find();
+        $ulevel = db('xy_level')->where('level', $uinfo['level'])->find();
 
         $add_id = db('xy_member_address')->where('uid', 12229)->value('id');
 
@@ -46,7 +46,7 @@ class Convey extends Model
                 'order_num' => 0,
                 'grouping_id' => 0,
             ]);
-            
+
         if ($res && $res1) {
             Db::commit();
             return ['code' => 0, 'info' => lang('抢单成功'), 'oid' => $id];

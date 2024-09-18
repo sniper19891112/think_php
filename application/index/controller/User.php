@@ -38,7 +38,7 @@ class User extends Base
     {
         $email = input('post.email/s', '');
 
-        $num = db($this->table)->where(['username' => $email])->count();
+        $num = db($this->table)->where(['email' => $email])->count();
         if (!$num) {
             return json(['code' => 1, 'info' => lang('账号不存在')]);
         }
@@ -47,7 +47,7 @@ class User extends Base
         $keep = input('post.keep/b', false);
         $remember_me = input('post.remember_me/b', false);
 
-        $userinfo = Db::table($this->table)->field('id,pwd,salt,pwd_error_num,allow_login_time,status,login_status,headpic')->where('username', $email)->find();
+        $userinfo = Db::table($this->table)->field('id,pwd,salt,pwd_error_num,allow_login_time,status,login_status,headpic')->where('email', $email)->find();
         if (!$userinfo) {
             return json(['code' => 1, 'info' => lang('用户不存在')]);
         }
@@ -149,7 +149,7 @@ class User extends Base
             $pid = $parentinfo['id'];
         }
 
-        $res = model('admin/Users')->add_users_email('', $email, $email, $pwd, $pid, '', '');
+        $res = model('admin/Users')->add_users_email('', '', $email, $pwd, $pid, '', '');
         session('verify_code', null);
         return json($res);
     }

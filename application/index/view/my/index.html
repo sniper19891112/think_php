@@ -26,17 +26,17 @@
         <div class="my-container">
             <div class="my-container-header">
                 <div class="d-flex align-center">
-                    <img src="/web/img/USER_item.png" width="64" height="64">
+                    <img src="{if $user.headpic}{$user.headpic}{else/}/web/img/USER_item.png{/if}" width="64" height="64" style="border-radius: 32px;">
                     <div style="margin-left: 10px;">
-                        <div class="text-18 font-800">Little bamboo shoots</div>
-                        <div class="text-14 color-2B2B2B">15800000000</div>
+                        <div class="text-18 font-800">{$user['username'] | default='Little bamboo shoots'}</div>
+                        <div class="text-14 color-2B2B2B" style="margin-top: 4px;">{$user['tel'] | default='15800000000'}</div>
                     </div>
                 </div>
                 <img src="/public/img/图层_832.png" />
             </div>
             <div class="my-account-balance">
                 <div class="text-14 font-800 color-white">Account balance</div>
-                <div class="text-32 font-800 color-white" style="margin-top: 12px;">{$balance}</div>
+                <div class="text-32 font-800 color-white" style="margin-top: 12px;">{$user['balance']}</div>
             </div>
             <div class="my-order">
                 <div class="text-16 font-800 color-2B2B2B">My order</div>
@@ -86,10 +86,12 @@
                         <img src="/public/img/组_46.png" />
                         <div class="text-14 color-2B2B2B">Online customer service</div>
                     </div>
-                    <div style="text-align: center;" class="cursor-pointer">
-                        <img src="/public/img/组_47.png" />
-                        <div class="text-14 color-2B2B2B">Account setting</div>
-                    </div>
+                    <a href="/index/my/personal_information">
+                        <div style="text-align: center;" class="cursor-pointer">
+                            <img src="/public/img/组_47.png" />
+                            <div class="text-14 color-2B2B2B">Account setting</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
