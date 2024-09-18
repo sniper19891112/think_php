@@ -109,8 +109,8 @@ class Order extends Base
         $uid = session('user_id');
         $order_id = input('post.order_id/s', '');
         $result = db('xy_convey')->where('id', $order_id)->update(['status' => 6]);
-        $orderinfo = db('xy_convey')->field("num, commission")->find($order_id);
-        $this->deal_reward($uid, $order_id, $orderinfo['num'], $orderinfo['commission']);
+        // $orderinfo = db('xy_convey')->field("num, commission")->find($order_id);
+        // $this->deal_reward($uid, $order_id, $orderinfo['num'], $orderinfo['commission']);
         if (!$result) {
             json(['code' => 1, 'info' => lang('error')]);
         }

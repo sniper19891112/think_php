@@ -1,0 +1,25 @@
+<form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
+    <div class="layui-card-body">
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">公司名称</label>
+            <div class="layui-input-block">
+                <input name="company_name" type="text" required placeholder="请输入公司名称" class="layui-input">
+            </div>
+        </div>  
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">追踪号码</label>
+            <div class="layui-input-block">
+                <input name="tracking_number" type="text" required placeholder="请输入追踪号码" class="layui-input">
+            </div>
+        </div>  
+    </div>
+    <input name="id" type="hidden" value="{$info.id}">
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-close>取消</button>
+    </div>
+    <script>
+        window.form.render();
+    </script>
+</form>

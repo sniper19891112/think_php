@@ -118,6 +118,13 @@
                 <div class="text-14 color-4F4F4F">{$order['tel']}</div>
                 <div class="text-14 color-4F4F4F">{$order['address']}</div>
             </div>
+            {if $order.status >= 3}
+            <div style="margin-top: 24px;">                
+                <div class="text-14 color-2B2B2B font-bold">Shipping Address</div>
+                <div style="margin-top: 14px;" class="text-14 color-4F4F4F"><font class="font-bold">CompanyName: </font>{$order['company_name']}</div>
+                <div class="text-14 color-4F4F4F"><font class="font-bold">Tracking Number: </font>{$order['tracking_number']}</div>
+            </div>
+            {/if}
             {if $order.status > 4}
             <div class="commodity-evaluation-container">
                 <div class="text-14 color-2B2B2B">Commodity evaluation</div>
@@ -241,6 +248,18 @@
         })
     }
     function submitEvaluation(id) {
+        if (goodQualityRating < 4) {
+            $(document).dialog({ infoText: "you need to click on more than 4 stars to rate" });
+            return
+        }
+        if (goodServiceRating < 4) {
+            $(document).dialog({ infoText: "you need to click on more than 4 stars to rate" });
+            return
+        }
+        if (attitudeServiceRating < 4) {
+            $(document).dialog({ infoText: "you need to click on more than 4 stars to rate" });
+            return
+        }
         $.ajax({
             url: "/index/order/submit_evaluation",
             type: "POST",

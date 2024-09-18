@@ -14,6 +14,30 @@ use think\Db;
  */
 class Deal extends Controller
 {
+    public function shipping()
+    {
+        $oid = input('get.id', '');
+        if(request()->isPost()){
+            $oid = input('post.id/s', '');
+            // $status = input('post.status/d', 1);
+            $status = 4;
+            $company_name = input('post.company_name/s', '');
+            $tracking_number = input('post.tracking_number/s', '');
+            if (!\in_array($status, [3, 4])) {
+                return $this->error('参数错误');
+            }
+            $tmp = ['endtime' => time() + config('deal_feedze'), "status" => $status, "company_name" => $company_name, "tracking_number" => $tracking_number];
+            $res = db('xy_convey')->where('id', $oid)->update($tmp);
+            if ($res) {
+                return $this->success('操作成功');
+            } else {
+                return $this->error($res);
+            }
+        }
+        if(!$oid) $this->error('参数错误');
+        $this->info = db('xy_convey')->find($oid);
+        return $this->fetch();
+    }
 
     /**
      * 订单列表
@@ -192,7 +216,6 @@ class Deal extends Controller
         } else {
             return $this->error($res['info']);
         }
-
     }
 
     /**
