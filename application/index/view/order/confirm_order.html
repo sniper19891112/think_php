@@ -81,11 +81,11 @@
         <div class="modal-overlay" id="modalOverlay">
             <div class="password-modal">
                 <i class="material-icons-outlined" style="position: absolute; top: 6px; right: 6px; cursor: pointer;" id="closeModal">close</i>
-                <div class="user-password-input-form">
+                <!-- <div class="user-password-input-form">
                     <i class="material-icons-outlined">lock</i>
                     <input class="user-password-input" type="password" name="pwd" placeholder="Password" />
                     <i class="material-icons-outlined password-icon-eye" style="cursor: pointer;">visibility</i>
-                </div>
+                </div> -->
                 <div class="payment-password-input-form">
                     <i class="material-icons-outlined">payments</i>
                     <input class="payment-password-input" type="password" name="pwd2" placeholder="Payment password" />
@@ -105,21 +105,21 @@
             $(document).dialog({ infoText: "Insufficient Balance!" });
             return;
         }
-        if (!$("input[name=pwd]").val().trim()) {
-            $(document).dialog({ infoText: "Please input password" });
-            return;
-        }
+        // if (!$("input[name=pwd]").val().trim()) {
+        //     $(document).dialog({ infoText: "Please input password" });
+        //     return;
+        // }
         if (!$("input[name=pwd2]").val().trim()) {
             $(document).dialog({ infoText: "Please input payment password" });
             return;
         }
-        let pwd = $("input[name=pwd]").val();
+        // let pwd = $("input[name=pwd]").val();
         let pwd2 = $("input[name=pwd2]").val();
         $.ajax({
             url: "/index/order/submit_order",
             type: "POST",
             dataType: "JSON",
-            data: { oid: id, pwd: pwd, pwd2: pwd2 },
+            data: { oid: id, pwd2: pwd2 },
             success: function (res) {
                 if (res.code == 0) {
                     $(document).dialog({ infoText: "success" });
@@ -153,19 +153,19 @@
         });
     });
     /*显示or隐藏密码*/
-    $(".password-icon-eye").on('click', function () {
-        var input = $("input[name=pwd]");
-        var icon = $(this);
+    // $(".password-icon-eye").on('click', function () {
+    //     var input = $("input[name=pwd]");
+    //     var icon = $(this);
 
-        // Toggle the input type between password and text
-        if (input.attr("type") === 'password') {
-            input.attr('type', 'text');
-            icon.text('visibility_off'); // Change the icon to "visibility_off"
-        } else {
-            input.attr('type', 'password');
-            icon.text('visibility'); // Change the icon back to "visibility"
-        }
-    });
+    //     // Toggle the input type between password and text
+    //     if (input.attr("type") === 'password') {
+    //         input.attr('type', 'text');
+    //         icon.text('visibility_off'); // Change the icon to "visibility_off"
+    //     } else {
+    //         input.attr('type', 'password');
+    //         icon.text('visibility'); // Change the icon back to "visibility"
+    //     }
+    // });
     /*显示or隐藏密码*/
     $(".payment-icon-eye").on('click', function () {
         var input = $("input[name=pwd2]");

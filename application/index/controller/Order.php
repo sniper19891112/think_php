@@ -162,7 +162,7 @@ class Order extends Base
 
     public function submit_order() {
         $order_id = input('post.oid/s', '');
-        $pwd = input('post.pwd/s', '');
+        // $pwd = input('post.pwd/s', '');
         $pwd2 = input('post.pwd2/s', '');
         if ($order_id == '') {
             return json(['code' => 1, 'info' => lang('参数错误')]);
@@ -170,9 +170,9 @@ class Order extends Base
         $uid = session('user_id');
         $userinfo = db("xy_users")->field("pwd, salt, pwd2, salt2")->find($uid);
 
-        if ($userinfo['pwd'] != sha1($pwd . $userinfo['salt'] . config('pwd_str'))) {
-            return json(['code' => 1, 'info' => lang('密码错误')]);
-        }
+        // if ($userinfo['pwd'] != sha1($pwd . $userinfo['salt'] . config('pwd_str'))) {
+        //     return json(['code' => 1, 'info' => lang('密码错误')]);
+        // }
 
         if ($userinfo['pwd2'] != sha1($pwd2 . $userinfo['salt2'] . config('pwd_str'))) {
             return json(['code' => 1, 'info' => lang('Wrong payment password')]);

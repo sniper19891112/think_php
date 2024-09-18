@@ -118,6 +118,7 @@
                 <div class="text-14 color-4F4F4F">{$order['tel']}</div>
                 <div class="text-14 color-4F4F4F">{$order['address']}</div>
             </div>
+            {if $order.status > 4}
             <div class="commodity-evaluation-container">
                 <div class="text-14 color-2B2B2B">Commodity evaluation</div>
                 <div class="d-flex align-center">
@@ -160,6 +161,7 @@
                     <input type="hidden" value="" id="buyer_show_url" />
                 </div>
             </div>
+            {/if}
             {if $order.status == 3 || $order.status == 4}
             <button class="order-detail-confirm-receipt" onclick="confirmReceipt('{$order.id}')">
                 Confirm receipt of goods
