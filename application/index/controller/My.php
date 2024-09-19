@@ -89,13 +89,20 @@ class My extends Base
                 "is_default" => 0,
                 "addtime" => time(),
             ];
-            $result = db("xy_member_address")->insert($data);
+            $item = db("xy_member_address")->where("uid", $uid)->find();
+            if ($item) {
+                $result = db("xy_member_address")->where("uid", $uid)->update($data);
+            } else {
+                $result = db("xy_member_address")->insert($data);
+            }
             if ($result) {
                 return json(["code" => 0, "info" => "success"]);
             } else {
                 return json(["code" => 1, "info" => "error"]);
             }
         }
+        $item = db("xy_member_address")->where("uid", $uid)->find();
+        $this->delivery = $item;
         return $this->fetch();
     }
 

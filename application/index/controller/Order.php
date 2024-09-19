@@ -108,7 +108,8 @@ class Order extends Base
             ->alias('xc')
             ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
             ->leftJoin('xy_users xu', 'xc.uid=xu.id')
-            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xu.username,xu.tel,xu.address,xu.balance')
+            ->leftJoin('xy_member_address xm', 'xc.uid=xm.uid')
+            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xm.name,xm.tel,xm.address,xu.balance')
             ->find();
         $this->order = $order;
         return $this->fetch();
@@ -164,7 +165,8 @@ class Order extends Base
             ->alias('xc')
             ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
             ->leftJoin('xy_users xu', 'xc.uid=xu.id')
-            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xu.username,xu.tel,xu.address,xu.balance')
+            ->leftJoin('xy_member_address xm', 'xc.uid=xm.uid')
+            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xm.name,xm.tel,xm.address,xu.balance')
             ->find();
         $this->order = $order;
         return $this->fetch();
