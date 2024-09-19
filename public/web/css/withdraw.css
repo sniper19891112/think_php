@@ -1,0 +1,93 @@
+.withdraw-body {
+    padding: 16px;
+}
+
+.withdraw-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2B2B2B;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 16px 16px 8px 16px;
+    display: flex;
+    align-items: center;
+}
+
+.withdraw-container {
+    margin-top: 24px;
+    background: #F9F9F9;
+    border-radius: 24px 24px 24px 24px;
+    padding: 24px 16px;
+}
+
+.wallet-address-input-form {
+    margin-top: 10px;
+    height: 50px;
+    background: #F2F0F1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.wallet-address-input {
+    height: 50px;
+    width: 100%;
+    background: #F2F0F1;
+    border: unset !important;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0px 8px;
+}
+
+.withdraw-amount-input-form {
+    margin-top: 10px;
+    height: 50px;
+    background: #F2F0F1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.withdraw-amount-input {
+    height: 50px;
+    width: 100%;
+    background: #F2F0F1;
+    border: unset !important;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0px 8px;
+}
+
+.certificate-upload {
+    width: 88px;
+    height: 88px;
+    border-radius: 4px;
+    border: 2px dashed #999999;
+    position: relative;
+    cursor: pointer;
+}
+
+.certificate-upload-add {
+    font-size: 48px !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.uploaded-img {
+    width: 88px;
+    height: 88px;
+    margin-left: 8px;
+}
+
+.submit-btn {
+    font-size: 16px;
+    color: #FFFFFF;
+    height: 40px;
+    background: #FF5035;
+    border-radius: 8px 8px 8px 8px;
+    border: unset !important;
+    width: 100%;
+}

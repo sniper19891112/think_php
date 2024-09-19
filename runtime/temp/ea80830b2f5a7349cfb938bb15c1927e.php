@@ -1,2 +1,0 @@
-<?php /*a:1:{s:67:"F:\xampp\htdocs\think_php\application\admin\view\users\picinfo.html";i:1575947686;}*/ ?>
-<img src='<?php echo htmlentities($pic); ?>' style="margin:20px auto;display:block;height:460px;" >

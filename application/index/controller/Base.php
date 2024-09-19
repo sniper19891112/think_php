@@ -17,6 +17,8 @@ class Base extends Controller
 
         parent::__construct();
 
+        // cookie('think_var', 'en-us', time() + 3600 * 24);
+
         if (!cookie('think_var')) {
             $url = $this->getUrl();
             cookie('think_var', 'en-us', time() + 3600 * 24);

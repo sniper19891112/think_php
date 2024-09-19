@@ -56,6 +56,49 @@ class My extends Base
         return $this->fetch("top_up_" . $wallet);
     }
 
+    public function withdraw()
+    {
+        $uid = session('user_id');
+        if (!$uid && request()->isPost()) {
+            $this->error(lang('请先登录'));
+        }
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $wallet = input('get.wallet/s', '');
+        $this->type = $wallet == "trc20" ? 1 : 2;
+        return $this->fetch();
+    }
+
+    public function user_withdraw()
+    {
+        $uid = session('user_id');
+        $type = input('post.type/d', 0);
+        $withdraw_amount = input('post.withdraw_amount/d', 0);
+        $wallet_address = input('post.address/s', '');
+        $id = getSn('CO');
+        $data = [
+            "id" => $id,
+            "uid" => $uid,
+            "type" => $type,
+            "num" => $withdraw_amount,
+            "addtime" => time(),
+            "endtime" => time(),
+            'notifyDate' => date('Y-m-d H:i:s'),
+        ];
+        if ($type == 1) {
+            $data["trc20_address"] = $wallet_address;
+        } else {
+            $data["erc20_address"] = $wallet_address;
+        }
+        $result = db('xy_deposit')->insert($data);
+        if ($result) {
+            return json(["code" => 0, "info" => "success"]);
+        } else {
+            return json(["code" => 1, "info" => "error"]);
+        }
+    }
+
     public function user_recharge()
     {
         $uid = session('user_id');
@@ -82,9 +125,9 @@ class My extends Base
         ];
         $result = db('xy_recharge')->insert($data);
         if ($result) {
-            return json(["code" => 1, "message" => "success"]);
+            return json(["code" => 0, "info" => "success"]);
         } else {
-            return json(["code" => 0, "message" => "error"]);
+            return json(["code" => 1, "info" => "error"]);
         }
     }
 

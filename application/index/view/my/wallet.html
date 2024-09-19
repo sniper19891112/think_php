@@ -80,6 +80,21 @@
                 <div class="wallet-modal-item" style="margin-top: 8px;" id="usdc_erc20">USDC(ERC20)</div>
             </div>
         </div>
+        <!-- withdraw wallet Modal Structure -->
+        <div class="modal-overlay" id="withdrawModalOverlay">
+            <div class="wallet-modal">
+                <div class="wallet-modal-item" id="online_recharge">Online Withdraw</div>
+                <div class="wallet-modal-item" style="margin-top: 8px;" id="bitcoin">Bitcoin</div>
+                <a href="/index/my/withdraw?wallet=erc20">
+                    <div class="wallet-modal-item" style="margin-top: 8px;" id="usdt_erc20">USDT(ERC20)</div>
+                </a>
+                <a href="/index/my/withdraw?wallet=trc20">
+                    <div class="wallet-modal-item" style="margin-top: 8px;" id="usdt_trc20">USDT(TRC20)</div>
+                </a>
+                <div class="wallet-modal-item" style="margin-top: 8px;" id="eth">ETH</div>
+                <div class="wallet-modal-item" style="margin-top: 8px;" id="usdc_erc20">USDC(ERC20)</div>
+            </div>
+        </div>
     </div>
 </body>
 <script type="application/javascript">
@@ -94,17 +109,25 @@
         });
         // Open the modal when the button is clicked
         $("#withdrawOpenModal").on("click", function () {
-            $("#modalOverlay").show();
+            $("#withdrawModalOverlay").show();
         });
 
         // Close the modal when the close button is clicked
         $("#closeModal").on("click", function () {
             $("#modalOverlay").hide();
+            $("#withdrawModalOverlay").hide();
         });
 
         // Close the modal when clicking outside the modal (on the overlay)
         $("#modalOverlay").on("click", function (event) {
             if ($(event.target).is("#modalOverlay")) { // Check if the click was on the overlay
+                $(this).hide();
+            }
+        });
+
+        // Close the modal when clicking outside the modal (on the overlay)
+        $("#withdrawModalOverlay").on("click", function (event) {
+            if ($(event.target).is("#withdrawModalOverlay")) { // Check if the click was on the overlay
                 $(this).hide();
             }
         });
