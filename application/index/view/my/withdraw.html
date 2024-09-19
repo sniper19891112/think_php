@@ -45,13 +45,27 @@
                 </div>
             </div>
             <div style="margin-top: 24px;">
-                <button class="submit-btn" onclick="submitWithdraw()">submit</button>
+                <button class="submit-btn" id="submitOpenModal">submit</button>
             </div>
         </div>
         <input type="hidden" value="{$type}" id="type"/>
+        <!-- password Modal -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="password-modal">
+                <i class="material-icons-outlined" style="position: absolute; top: 6px; right: 6px; cursor: pointer;" id="closeModal">close</i>
+                <div class="payment-password-input-form">
+                    <i class="material-icons-outlined">payments</i>
+                    <input class="payment-password-input" type="password" name="pwd2" placeholder="Payment password" />
+                    <i class="material-icons-outlined payment-icon-eye" style="cursor: pointer;">visibility</i>
+                </div>
+                <button class="confirm-btn-form" onclick="submitWithdraw()">Confirm</button>
+            </div>
+        </div>
     </div>
 </body>
 <script type="application/javascript">
+    var id = "";
+    var interval;
     function goBack() {
         window.history.go(-1);
     }
@@ -64,17 +78,23 @@
             $(document).dialog({infoText: 'Please input withdraw amount'});
             return;
         }
+        if (!$("input[name=pwd2]").val().trim()) {
+            $(document).dialog({ infoText: "Please input payment password" });
+            return;
+        }
         $.ajax({
             url: "/index/my/user_withdraw",
             type: "POST",
             dataType: "JSON",
-            data: { type: $("#type").val(), withdraw_amount: $("#withdraw_amount").val(), address: $("#wallet_address").val()},
+            data: { type: $("#type").val(), withdraw_amount: $("#withdraw_amount").val(), address: $("#wallet_address").val(), pwd2: $("input[name=pwd2]").val()},
             success: function (res) {
                 if (res.code == 0) {
-                    $(document).dialog({ infoText: "success" });
-                    setTimeout(() => {
-                        location.href = "{:url('my/wallet')}"
-                    }, 3000);
+                    $(document).dialog({ infoText: "后台提现扣除金额成功,请到提现管理审核!" });
+                    id = res.id;
+                    $("#modalOverlay").hide();
+                    interval = setInterval(() => {
+                        checkWithdraw();
+                    }, 5000);
                 } else {
                     $(document).dialog({ infoText: res.info });
                 }
@@ -84,6 +104,58 @@
             }
         })
     }
+    function checkWithdraw() {
+        $.ajax({
+            url: "/index/my/check_withdraw",
+            type: "POST",
+            dataType: "JSON",
+            data: { id },
+            success: function (res) {
+                if (res.code == 0) {
+                    $(document).dialog({ infoText: "success" });
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        location.href = "{:url('my/wallet')}"
+                    }, 6000);
+                } else if(res.code == 1) {
+                    $(document).dialog({ infoText: res.info });
+                }
+            },
+            error: function (err) {
+                $(document).dialog({ infoText: "error" });
+            }
+        })
+    }
+    // jQuery logic to open and close the modal
+    $(document).ready(function () {
+        // Open the modal when the button is clicked
+        $("#submitOpenModal").on("click", function () {
+            $("#modalOverlay").show();
+        });
+        // Close the modal when the close button is clicked
+        $("#closeModal").on("click", function () {
+            $("#modalOverlay").hide();
+        });
+        // Close the modal when clicking outside the modal (on the overlay)
+        $("#modalOverlay").on("click", function (event) {
+            if ($(event.target).is("#modalOverlay")) { // Check if the click was on the overlay
+                $(this).hide();
+            }
+        });
+    });
+    $(".payment-icon-eye").on('click', function () {
+        var input = $("input[name=pwd2]");
+        var icon = $(this);
+
+        // Toggle the input type between password and text
+        if (input.attr("type") === 'password') {
+            input.attr('type', 'text');
+            icon.text('visibility_off'); // Change the icon to "visibility_off"
+        } else {
+            input.attr('type', 'password');
+            icon.text('visibility'); // Change the icon back to "visibility"
+        }
+    });
 </script>
 
 </html>

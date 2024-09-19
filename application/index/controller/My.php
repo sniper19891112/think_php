@@ -112,6 +112,14 @@ class My extends Base
         $type = input('post.type/s', 'trc');
         $withdraw_amount = input('post.withdraw_amount/d', 0);
         $wallet_address = input('post.address/s', '');
+        $pwd2 = input('post.pwd2/s', '');
+
+        $userinfo = db("xy_users")->field("pwd, salt, pwd2, salt2")->find($uid);
+
+        if ($userinfo['pwd2'] != sha1($pwd2 . $userinfo['salt2'] . config('pwd_str'))) {
+            return json(['code' => 1, 'info' => lang('Wrong payment password')]);
+        }
+
         $id = getSn('CO');
         $data = [
             "id" => $id,
@@ -134,7 +142,7 @@ class My extends Base
         $result = db('xy_deposit')->insert($data);
 
         //提现日志
-        $res2 = db('xy_balance_log')
+        $res1 = db('xy_balance_log')
             ->insert([
                 'uid' => $uid,
                 'oid' => $id,
@@ -144,13 +152,23 @@ class My extends Base
                 'addtime' => time(),
             ]);
 
-        $res1 = db('xy_users')->where('id', $uid)->setDec('balance', $withdraw_amount);
-
-        if ($result && $res2 && $res1) {
-            return json(["code" => 0, "info" => "后台提现扣除金额成功,请到提现管理审核!"]);
+        if ($result && $res1) {
+            return json(["code" => 0, "info" => "后台提现扣除金额成功,请到提现管理审核!", "id" => $id]);
         } else {
             return json(["code" => 1, "info" => "后台操作失败!"]);
         }
+    }
+
+    public function check_withdraw() {
+        $id = input('post.id/s', '');
+        $result = db('xy_deposit')->find($id);
+        if ($result["status"] == 2) {
+            return json(["code" => 0, "info" => "success"]);
+        }
+        if ($result["status"] == 3) {
+            return json(["code" => 1, "info" => "订单异常请联系客服"]);
+        }
+        return json(["code" => 2, "info" => "pending"]);
     }
 
     public function user_recharge()

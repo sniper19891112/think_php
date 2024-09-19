@@ -58,9 +58,17 @@ class Order extends Base
         if (!$uid) {
             $this->redirect('User/login');
         }
+        $status = input("get.status/s", "");
         $itemsPerPage = 10;
         $order_list = db('xy_convey')
-            ->where('xc.uid', session('user_id'))
+            ->where('xc.uid', session('user_id'));
+        if ($status == "processing") {
+            $order_list = $order_list->where("xc.status", "<>", 7);
+        }
+        if ($status == "completed") {
+            $order_list = $order_list->where("xc.status", 7);
+        }
+        $order_list = $order_list
             ->alias('xc')
             ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
             ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic')
@@ -72,7 +80,8 @@ class Order extends Base
         return $this->fetch();
     }
 
-    public function create_settlement_order() {
+    public function create_settlement_order()
+    {
         if (request()->isPost()) {
             $goods_id = input('post.goods_id/d', 0);
             if ($goods_id == 0) {
@@ -93,7 +102,8 @@ class Order extends Base
         return json(['code' => 1, 'info' => lang('错误请求')]);
     }
 
-    public function settlement_order_detail() {
+    public function settlement_order_detail()
+    {
         $uid = session('user_id');
 
         if (!$uid && request()->isPost()) {
@@ -115,7 +125,8 @@ class Order extends Base
         return $this->fetch();
     }
 
-    public function confirm_receipt() {
+    public function confirm_receipt()
+    {
         $uid = session('user_id');
         $order_id = input('post.order_id/s', '');
         $result = db('xy_convey')->where('id', $order_id)->update(['status' => 6]);
@@ -124,10 +135,11 @@ class Order extends Base
         if (!$result) {
             json(['code' => 1, 'info' => lang('error')]);
         }
-        return json(['code' => 0, 'info' => lang('success')]);        
+        return json(['code' => 0, 'info' => lang('success')]);
     }
 
-    public function submit_evaluation() {
+    public function submit_evaluation()
+    {
         $uid = session('user_id');
         $order_id = input('post.order_id/s', '');
         $good_quality = input('post.good_quality/d', 0);
@@ -143,15 +155,16 @@ class Order extends Base
         ];
         $result = db('xy_convey')->where('id', $order_id)->update($data);
         $orderinfo = db('xy_convey')->field("num, commission")->find($order_id);
-        $this->deal_reward($uid, $order_id, $orderinfo['num'], $orderinfo['commission']);        
+        $this->deal_reward($uid, $order_id, $orderinfo['num'], $orderinfo['commission']);
         model('admin/Users')->auto_check_up_vip_by_order($uid);
         if (!$result) {
             json(['code' => 1, 'info' => lang('error')]);
         }
-        return json(['code' => 0, 'info' => lang('success')]);  
+        return json(['code' => 0, 'info' => lang('success')]);
     }
 
-    public function confirm_order() {
+    public function confirm_order()
+    {
         $uid = session('user_id');
         if (!$uid && request()->isPost()) {
             $this->error(lang('请先登录'));
@@ -172,7 +185,8 @@ class Order extends Base
         return $this->fetch();
     }
 
-    public function submit_order() {
+    public function submit_order()
+    {
         $order_id = input('post.oid/s', '');
         // $pwd = input('post.pwd/s', '');
         $pwd2 = input('post.pwd2/s', '');

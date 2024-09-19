@@ -1038,14 +1038,13 @@ class Deal extends Controller
         $this->applyCsrfToken();
         $status = input('post.status/d', 1);
         $oinfo = Db::name('xy_deposit')->where('id', input('post.id', 0))->find();
-
-        if ($status == 3) {
-            //驳回订单的业务逻辑
-            Db::name('xy_users')->where('id', $oinfo['uid'])->setInc('balance', input('num/f', 0));
-        }
         if ($status == 2) {
             $oid = input('post.id', 0);
             Db::name('xy_balance_log')->where('oid', $oid)->update(['status' => 1]);
+            db('xy_users')->where('id', $oinfo['uid'])->setDec('balance', input('num/f', 0));
+        }
+        if ($status == 3) {
+            //驳回订单的业务逻辑
         }
         $this->_save('xy_deposit', ['status' => $status, 'endtime' => time()]);
 
