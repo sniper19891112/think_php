@@ -39,8 +39,8 @@
                 {else}
                 {volist name="cartlist" id="item"}
                 {php}
-                    $ulevel = db('xy_level')->where('level', 0)->find();
-                    $commission = $item['goods_price'] * $ulevel['bili'];
+                $ulevel = db('xy_level')->where('level', 0)->find();
+                $commission = $item['goods_price'] * $ulevel['bili'];
                 {/php}
                 <div class="cartlist-item" onclick="itemActive('{$item.id}', '{$item.addtime}')">
                     <div class="cartlist-item-timecount display-none" id="cartlist-item-timecount-{$item.id}">
@@ -120,10 +120,14 @@
             dataType: "JSON",
             data: { goods_id: id },
             success: function (res) {
-                console.log(shop_name, $('#username').val(), $('#pwd').val());
-                window.open(`${shop_name}?user_name=${$('#username').val()}&pwd=${btoa($('#pwd').val())}`, '_blank');
+                if (res.code == 0) {
+                    window.open(`${shop_name}?user_name=${$('#username').val()}&pwd=${btoa($('#pwd').val())}`, '_blank');
+                } else {
+                    $(document).dialog({ infoText: res.info });
+                }
             },
             error: function (err) {
+                $(document).dialog({ infoText: err });
             }
         })
     }

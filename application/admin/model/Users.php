@@ -656,12 +656,12 @@ class Users extends Model
 
         $order_count = db('xy_convey')->where(["uid" => $uid, "status" => 7])->count();
 
-        $user = db('xy_user')->find($uid);
+        $user = db('xy_users')->find($uid);
 
         $newlevel = 0;
 
         foreach ($levelinfo as $key => $info) {
-            if ($order_count >= $info['auto_vip_xu_num']) {
+            if ($order_count >= $info['auto_vip_order_num']) {
                 $newlevel = $info['level'];
                 break;
             }

@@ -78,6 +78,15 @@ class Order extends Base
             if ($goods_id == 0) {
                 return json(['code' => 1, 'info' => lang('参数错误')]);
             }
+            $start_time = strtotime('today'); // Start of today (00:00:00)
+            $end_time = strtotime('tomorrow') - 1; // End of today (23:59:59)
+            $order_count = db("xy_convey")->whereBetween('addtime', [$start_time, $end_time])->count();
+            $uid = session('user_id');
+            $user = db("xy_users")->find($uid);
+            $vip_item = db("xy_level")->where("level", $user['level'])->find();
+            if ($order_count >= $vip_item["auto_vip_order_num"]) {
+                return json(["code" => 1, "info" => "Today order limited"]);
+            }
             $res = model('admin/Convey')->create_settlement_order(session('user_id'), $goods_id);
             return json($res);
         }

@@ -22,7 +22,7 @@ class Convey extends Model
         $res = db('xy_users')->where('id', $uid)->update(['deal_status' => 3, 'deal_time' => strtotime(date('Y-m-d')), 'deal_count' => Db::raw('deal_count+1')]);
         $ulevel = db('xy_level')->where('level', $uinfo['level'])->find();
 
-        $add_id = db('xy_member_address')->where('uid', 12229)->value('id');
+        $add_id = db('xy_member_address')->where('uid', $uid)->value('id');
 
         if (!$add_id) {
             return ['code' => 1, 'info' => lang('还没有设置收货地址')];
