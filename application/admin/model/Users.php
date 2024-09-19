@@ -642,7 +642,7 @@ class Users extends Model
             }
         }
 
-        if ($can_vip_info['level'] < $newlevel) {
+        if ($can_vip_info['level'] < $newlevel && $newlevel < 4) {
             Db::name('xy_users')->where('id', $uid)->update(['level' => $newlevel]);
             Db::name('xy_message')->insert(['uid' => $uid, 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('您已达到升级标准，已自动升级'), 'addtime' => time()]);
             return true;

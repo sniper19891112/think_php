@@ -1303,6 +1303,7 @@ class Users extends Controller
             $tixian_min   = input('post.tixian_min/s','');
             $tixian_max   = input('post.tixian_max/s','');
             $auto_vip_xu_num   = input('post.auto_vip_xu_num/s','');
+            $auto_vip_order_num   = input('post.auto_vip_order_num/s','');
             $num_min   = input('post.num_min/s','');
             $tixian_nim_order   = input('post.tixian_nim_order/d',0);
             $tixian_shouxu   = input('post.tixian_shouxu/f',0);
@@ -1335,6 +1336,7 @@ class Users extends Controller
                     'cids' => $cidsstr,
                     'tixian_nim_order' => $tixian_nim_order,
                     'auto_vip_xu_num' => $auto_vip_xu_num,
+                    'auto_vip_order_num' => $auto_vip_order_num,
                     'tixian_shouxu' => $tixian_shouxu
                 ]);
             if($res!==false){

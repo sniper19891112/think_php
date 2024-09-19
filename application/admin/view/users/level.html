@@ -20,6 +20,7 @@
             <th lay-data="{field:'name',width:120}" class='text-left nowrap'>名称</th>
             <th lay-data="{field:'pic',width:80}" class='text-left nowrap'>图标</th>
             <th lay-data="{field:'num',width:120}" class='text-left nowrap'>升级条件(余额)</th>
+            <th lay-data="{field:'auto_vip_order_num',width:120}" class='text-left nowrap'>升级条件(接单)</th>
             <th lay-data="{field:'auto_vip_xu_num',width:120}" class='text-left nowrap'>升级条件(邀请)</th>
             <th lay-data="{field:'bili',width:80}" class='text-left nowrap'>佣金比例</th>
             <th lay-data="{field:'num_min',width:120}" class='text-left nowrap'>最小余额</th>
@@ -34,11 +35,11 @@
         <tbody>
         {foreach $list as $key=>$vo}
         <tr>
-
             <td class='text-left nowrap'>{$vo.id}</td>
             <td class='text-left nowrap'>{$vo.name}</td>
             <td class='text-left nowrap'><img src="{$vo.pic}" alt="" style="width: 100%"></td>
             <td class='text-left nowrap'>{$vo.num}</td>
+            <td class='text-left nowrap'>{$vo.auto_vip_order_num}</td>
             <td class='text-left nowrap'>{$vo.auto_vip_xu_num}</td>
             <td class='text-left nowrap'>{$vo.bili}</td>
             <td class='text-left nowrap'>{$vo.num_min}</td>
@@ -48,8 +49,7 @@
             <td class='text-left nowrap'>{$vo.tixian_max}</td>
             <td class='text-left nowrap'>
                 <a data-dbclick class="layui-btn layui-btn-xs" data-title="会员等级" data-modal='{:url("admin/users/edit_users_level")}?id={$vo.id}'>编辑</a>
-                <a class="layui-btn layui-btn-xs layui-btn" onClick="del_user({$vo.id})" style='background:red;'>删除</a>
-
+                <a class="layui-btn layui-btn-xs layui-btn" onClick="del_user('{$vo.id}')" style='background:red;'>删除</a>
             </td>
         </tr>
         {/foreach}
