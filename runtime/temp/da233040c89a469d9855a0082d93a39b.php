@@ -1,4 +1,4 @@
-<?php /*a:2:{s:65:"F:\xampp\htdocs\think_php\application\admin\view\users\level.html";i:1726730402;s:58:"F:\xampp\htdocs\think_php\application\admin\view\main.html";i:1615971252;}*/ ?>
+<?php /*a:2:{s:65:"F:\xampp\htdocs\think_php\application\admin\view\users\level.html";i:1726732715;s:58:"F:\xampp\htdocs\think_php\application\admin\view\main.html";i:1615971252;}*/ ?>
 <div class="layui-card layui-bg-gray"><style>        .layui-tab-card>.layui-tab-title .layui-this {
             background-color: #fff;
         }

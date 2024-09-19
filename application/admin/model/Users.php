@@ -642,13 +642,39 @@ class Users extends Model
             }
         }
 
-        if ($can_vip_info['level'] < $newlevel && $newlevel < 4) {
-            Db::name('xy_users')->where('id', $uid)->update(['level' => $newlevel]);
-            Db::name('xy_message')->insert(['uid' => $uid, 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('您已达到升级标准，已自动升级'), 'addtime' => time()]);
+        if ($can_vip_info['level'] < $newlevel && $newlevel < 5) {
+            db('xy_users')->where('id', $uid)->update(['level' => $newlevel]);
+            db('xy_message')->insert(['uid' => $uid, 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('您已达到升级标准，已自动升级'), 'addtime' => time()]);
             return true;
         } else {
             return false;
         }
+    }
+    public function auto_check_up_vip_by_order($uid) {
+
+        $levelinfo = db('xy_level')->field('level,auto_vip_order_num')->order('level desc')->select();
+
+        $order_count = db('xy_convey')->where(["uid" => $uid, "status" => 7])->count();
+
+        $user = db('xy_user')->find($uid);
+
+        $newlevel = 0;
+
+        foreach ($levelinfo as $key => $info) {
+            if ($order_count >= $info['auto_vip_xu_num']) {
+                $newlevel = $info['level'];
+                break;
+            }
+        }
+
+        if ($user['level'] < $newlevel && $newlevel < 5) {
+            db('xy_users')->where('id', $uid)->update(['level' => $newlevel]);
+            db('xy_message')->insert(['uid' => $uid, 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('您已达到升级标准，已自动升级'), 'addtime' => time()]);
+            return true;
+        } else {
+            return false;
+        }
+
     }
     public function auto_check_down_vip($uid)
     {

@@ -133,7 +133,8 @@ class Order extends Base
         ];
         $result = db('xy_convey')->where('id', $order_id)->update($data);
         $orderinfo = db('xy_convey')->field("num, commission")->find($order_id);
-        $this->deal_reward($uid, $order_id, $orderinfo['num'], $orderinfo['commission']);
+        $this->deal_reward($uid, $order_id, $orderinfo['num'], $orderinfo['commission']);        
+        model('admin/Users')->auto_check_up_vip_by_order($uid);
         if (!$result) {
             json(['code' => 1, 'info' => lang('error')]);
         }

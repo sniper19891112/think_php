@@ -29,6 +29,7 @@ class Base extends Controller
         }
         if ($uid) {
             model('admin/Users')->auto_check_up_vip($uid);
+            model('admin/Users')->auto_check_up_vip_by_order($uid);
         }
         if (sysconf('isopenpcindex')) {
             $dev = new \org\Mobile();
