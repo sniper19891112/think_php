@@ -26,10 +26,12 @@
         <div class="my-container">
             <div class="my-container-header">
                 <div class="d-flex align-center">
-                    <img src="{if $user.headpic}{$user.headpic}{else/}/web/img/USER_item.png{/if}" width="64" height="64" style="border-radius: 32px;">
+                    <img src="{if $user.headpic}{$user.headpic}{else/}/web/img/USER_item.png{/if}" width="64"
+                        height="64" style="border-radius: 32px;">
                     <div style="margin-left: 10px;">
                         <div class="text-18 font-800">{$user['username'] | default='Little bamboo shoots'}</div>
-                        <div class="text-14 color-2B2B2B" style="margin-top: 4px;">{$user['tel'] | default='15800000000'}</div>
+                        <div class="text-14 color-2B2B2B" style="margin-top: 4px;">{$user['tel'] |
+                            default='15800000000'}</div>
                     </div>
                 </div>
                 <img src="/public/img/图层_832.png" />
@@ -68,10 +70,12 @@
                             <div class="text-14 color-2B2B2B">Wallet</div>
                         </div>
                     </a>
-                    <div style="text-align: center;" class="cursor-pointer">
-                        <img src="/public/img/组_37.png" />
-                        <div class="text-14 color-2B2B2B">Delivery address</div>
-                    </div>
+                    <a href="/index/my/delivery_address">
+                        <div style="text-align: center;" class="cursor-pointer">
+                            <img src="/public/img/组_37.png" />
+                            <div class="text-14 color-2B2B2B">Delivery address</div>
+                        </div>
+                    </a>
                     <div style="text-align: center;" class="cursor-pointer">
                         <img src="/public/img/组_38.png" />
                         <div class="text-14 color-2B2B2B">My team</div>

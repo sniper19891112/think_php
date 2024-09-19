@@ -24,56 +24,66 @@
 
 <body>
     <div id="app">
-        <div class="withdraw-header">
+        <div class="delivery-header">
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
             Delivery Address
         </div>
-        <div class="withdraw-body">
-            <div class="withdraw-container">
-                <div class="text-16 font-800 color-2B2B2B" style="margin-top: 14px;">Wallet address</div>
-                <div class="wallet-address-input-form">
+        <div class="delivery-body">
+            <div class="delivery-container">
+                <div class="delivery-name-input-form">
                     <i class="material-icons-outlined">
-                        wallet
+                        person
                     </i>
-                    <input class="wallet-address-input" id="wallet_address" type="text" placeholder="Please enter the wallet address" />
+                    <input class="delivery-name-input" id="name" type="text" placeholder="Please enter the name" />
                 </div>
-                <div class="text-16 font-800 color-2B2B2B" style="margin-top: 14px;">Withdraw amount</div>
-                <div class="withdraw-amount-input-form">
-                    <input class="withdraw-amount-input" id="withdraw_amount" type="text" placeholder="Please enter the withdraw amount" />
+                <div class="delivery-phone-input-form">
+                    <i class="material-icons-outlined">
+                        call
+                    </i>
+                    <input class="delivery-phone-input" id="tel" type="text" placeholder="Please enter your phone number" />
+                </div>
+                <div class="delivery-address-input-form">
+                    <i class="material-icons-outlined">
+                        location_on
+                    </i>
+                    <input class="delivery-address-input" id="address" type="text" placeholder="Please enter the address" />
                 </div>
             </div>
-            <div style="margin-top: 24px;">
-                <button class="submit-btn" onclick="submitWithdraw()">submit</button>
+            <div style="margin-top: 48px;">
+                <button class="submit-btn" onclick="submitDeliveryAddress()">submit</button>
             </div>
         </div>
-        <input type="hidden" value="{$type}" id="type"/>
     </div>
 </body>
 <script type="application/javascript">
     function goBack() {
         window.history.go(-1);
     }
-    function submitWithdraw() {
-        if (!$("#wallet_address").val().trim()) {
-            $(document).dialog({infoText: 'Please input wallet address'});
+    function submitDeliveryAddress() {
+        if (!$("#name").val().trim()) {
+            $(document).dialog({infoText: 'Please input name'});
             return;
         }
-        if (!$("#withdraw_amount").val().trim()) {
-            $(document).dialog({infoText: 'Please input withdraw amount'});
+        if (!$("#tel").val().trim()) {
+            $(document).dialog({infoText: 'Please input tel'});
+            return;
+        }
+        if (!$("#address").val().trim()) {
+            $(document).dialog({infoText: 'Please input address'});
             return;
         }
         $.ajax({
-            url: "/index/my/user_withdraw",
+            url: "{:request()->url()}",
             type: "POST",
             dataType: "JSON",
-            data: { type: $("#type").val(), withdraw_amount: $("#withdraw_amount").val(), address: $("#wallet_address").val()},
+            data: { name: $("#name").val(), tel: $("#tel").val(), address: $("#address").val()},
             success: function (res) {
                 if (res.code == 0) {
                     $(document).dialog({ infoText: "success" });
                     setTimeout(() => {
-                        location.href = "{:url('my/wallet')}"
+                        location.href = "{:url('my/index')}"
                     }, 3000);
                 } else {
                     $(document).dialog({ infoText: res.info });

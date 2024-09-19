@@ -70,6 +70,35 @@ class My extends Base
         return $this->fetch();
     }
 
+    public function delivery_address()
+    {
+        $uid = session('user_id');
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        if (request()->isPost()) {
+            $name = input("post.name");
+            $tel = input("post.tel");
+            $address = input("post.address");
+            $data = [
+                "uid" => $uid,
+                "name" => $name,
+                "tel" => $tel,
+                "area" => "",
+                "address" => $address,
+                "is_default" => 0,
+                "addtime" => time(),
+            ];
+            $result = db("xy_member_address")->insert($data);
+            if ($result) {
+                return json(["code" => 0, "info" => "success"]);
+            } else {
+                return json(["code" => 1, "info" => "error"]);
+            }
+        }
+        return $this->fetch();
+    }
+
     public function user_withdraw()
     {
         $uid = session('user_id');
@@ -88,7 +117,7 @@ class My extends Base
             'notifyDate' => date('Y-m-d H:i:s'),
             'real_num' => $withdraw_amount,
         ];
-        
+
         if ($type == "trc") {
             $data["trc20_address"] = $wallet_address;
         } else {
