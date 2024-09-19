@@ -66,36 +66,54 @@ class My extends Base
             $this->redirect('User/login');
         }
         $wallet = input('get.wallet/s', '');
-        $this->type = $wallet == "trc20" ? 1 : 2;
+        $this->type = $wallet == "trc20" ? "trc" : "erc";
         return $this->fetch();
     }
 
     public function user_withdraw()
     {
         $uid = session('user_id');
-        $type = input('post.type/d', 0);
+        $type = input('post.type/s', 'trc');
         $withdraw_amount = input('post.withdraw_amount/d', 0);
         $wallet_address = input('post.address/s', '');
         $id = getSn('CO');
         $data = [
             "id" => $id,
             "uid" => $uid,
+            'bk_id' => 0,
             "type" => $type,
             "num" => $withdraw_amount,
             "addtime" => time(),
             "endtime" => time(),
             'notifyDate' => date('Y-m-d H:i:s'),
+            'real_num' => $withdraw_amount,
         ];
-        if ($type == 1) {
+        
+        if ($type == "trc") {
             $data["trc20_address"] = $wallet_address;
         } else {
             $data["erc20_address"] = $wallet_address;
         }
+
         $result = db('xy_deposit')->insert($data);
-        if ($result) {
-            return json(["code" => 0, "info" => "success"]);
+
+        //提现日志
+        $res2 = db('xy_balance_log')
+            ->insert([
+                'uid' => $uid,
+                'oid' => $id,
+                'num' => $withdraw_amount,
+                'type' => 7, //TODO 7提现
+                'status' => 2,
+                'addtime' => time(),
+            ]);
+
+        $res1 = db('xy_users')->where('id', $uid)->setDec('balance', $withdraw_amount);
+
+        if ($result && $res2 && $res1) {
+            return json(["code" => 0, "info" => "后台提现扣除金额成功,请到提现管理审核!"]);
         } else {
-            return json(["code" => 1, "info" => "error"]);
+            return json(["code" => 1, "info" => "后台操作失败!"]);
         }
     }
 

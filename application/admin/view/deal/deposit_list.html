@@ -6,7 +6,6 @@
     <fieldset>
         <legend>条件搜索</legend>
 
-
         <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
             {if auth("do_deposit") }
             <div class="layui-form-item layui-inline" style="margin-right: 10px">
@@ -44,17 +43,16 @@
                 </select>
             </div>
         </div>
-        <script>
-        
-    var test = {$Think.get.status|default='0'};
-    $("#selectList").find("option[value="+test+"]").prop("selected",true);
+        <script>        
+            var test = {$Think.get.status|default='0'};
+            $("#selectList").find("option[value="+test+"]").prop("selected",true);
         </script>
-            <div class="layui-form-item layui-inline">
-                <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
-                {if auth("do_deposit") }
-                <a href="/admin/deal/daochu.html" class="layui-btn layui-btn-danger" ><i class="layui-icon">&#xe615;</i> 导 出</a>
-                {/if}
-            </div>
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+            {if auth("do_deposit") }
+            <a href="/admin/deal/daochu.html" class="layui-btn layui-btn-danger" ><i class="layui-icon">&#xe615;</i> 导 出</a>
+            {/if}
+        </div>
         </form>
     </fieldset>
     
@@ -109,31 +107,31 @@
             </td>
             <td class='text-left nowrap'>{$vo.type}</td>
             <td class='text-left nowrap'>
-      {if ($vo.type == 'trc')}
-      <p >TRC:   
-    {notempty name='vo.trc20_address'}{$vo.trc20_address}{else}未填写{/notempty}
-    </p>
-    {/if}
-    
-      {if ($vo.type == 'erc')} 
-      <p >ERC:
-    {notempty name='vo.erc20_address'}{$vo.erc20_address}{else}未填写{/notempty}
-    </p>
-     {/if}
-     
-      {if ($vo.type == 'card')}  
-    {notempty name='vo.bk_id'}
-    <p >
-    银行:{:model('Users')->get_bank_info($vo.bk_id,'bankname');}<hr>
-    银行编码:{:model('Users')->get_bank_info($vo.bk_id,'bankcode');}<hr>
-    IFSC:{:model('Users')->get_bank_info($vo.bk_id,'ifsc');}<hr>
-    卡号:{:model('Users')->get_bank_info($vo.bk_id,'cardnum');}<hr>
-    用户名:{:model('Users')->get_bank_info($vo.bk_id,'username');}<hr>
-    备注:{:model('Users')->get_bank_info($vo.bk_id,'remark');}<hr>
-    </p>
-    
-    {/notempty}
-    {/if}
+            {if ($vo.type == 'trc')}
+            <p >TRC:   
+            {notempty name='vo.trc20_address'}{$vo.trc20_address}{else}未填写{/notempty}
+            </p>
+            {/if}
+            
+            {if ($vo.type == 'erc')} 
+            <p >ERC:
+            {notempty name='vo.erc20_address'}{$vo.erc20_address}{else}未填写{/notempty}
+            </p>
+            {/if}
+            
+            {if ($vo.type == 'card')}  
+            {notempty name='vo.bk_id'}
+            <p >
+            银行:{:model('Users')->get_bank_info($vo.bk_id,'bankname');}<hr>
+            银行编码:{:model('Users')->get_bank_info($vo.bk_id,'bankcode');}<hr>
+            IFSC:{:model('Users')->get_bank_info($vo.bk_id,'ifsc');}<hr>
+            卡号:{:model('Users')->get_bank_info($vo.bk_id,'cardnum');}<hr>
+            用户名:{:model('Users')->get_bank_info($vo.bk_id,'username');}<hr>
+            备注:{:model('Users')->get_bank_info($vo.bk_id,'remark');}<hr>
+            </p>
+            
+            {/notempty}
+            {/if}
 			</td>
             <td class='text-left nowrap'>创建{$vo.addtime|format_datetime}<p>处理{$vo.endtime|format_datetime}</td>
             <td class='text-left nowrap'>
@@ -149,10 +147,9 @@
                 <a class="layui-btn layui-btn-xs layui-btn-warm" data-csrf="{:systoken('admin/deal/do_deposit')}" data-action="{:url('do_deposit')}" data-value="id#{$vo.id};status#3;uid#{$vo.uid};num#{$vo.num}">驳回</a>
             {/if}
             
-             {if ($vo.status == 2) and auth("disbursement") and ($vo.tradeResult != 'SUCCESS') and (!$vo.tradeNo)}
-             
+             {if ($vo.status == 2) and auth("disbursement") and ($vo.tradeResult != 'SUCCESS') and (!$vo.tradeNo)}             
                 
- <a data-dbclick class="layui-btn layui-btn-xs" data-title="银行卡信息" data-modal='{:url("admin/users/edit_users_bk")}?id={$vo.uid}'>修改银行卡</a>
+                <a data-dbclick class="layui-btn layui-btn-xs" data-title="银行卡信息" data-modal='{:url("admin/users/edit_users_bk")}?id={$vo.uid}'>修改银行卡</a>
  
                 <a class="layui-btn layui-btn-xs layui-btn-warm" data-csrf="{:systoken('admin/deal/disbursement')}" data-action="{:url('disbursement')}" data-value="id#{$vo.id};uid#{$vo.uid};num#{$vo.num}">发起代付</a>
             {/if}

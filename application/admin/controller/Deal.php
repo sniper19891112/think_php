@@ -1046,15 +1046,6 @@ class Deal extends Controller
         if ($status == 2) {
             $oid = input('post.id', 0);
             Db::name('xy_balance_log')->where('oid', $oid)->update(['status' => 1]);
-//            $res2 = Db::name('xy_balance_log')
-            //                ->insert([
-            //                    'uid' => $oinfo['uid'],
-            //                    'oid' => $oinfo['id'],
-            //                    'num' => $oinfo['num'],
-            //                    'type' => 3,
-            //                    'status' => 1,
-            //                    'addtime' => time(),
-            //                ]);
         }
         $this->_save('xy_deposit', ['status' => $status, 'endtime' => time()]);
 

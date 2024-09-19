@@ -99,7 +99,8 @@
 </body>
 <script type="application/javascript">
     function goBack() {
-        window.history.go(-1);
+        // window.history.go(-1);
+        location.href = "{:url('my/index')}"
     }
     // jQuery logic to open and close the modal
     $(document).ready(function () {

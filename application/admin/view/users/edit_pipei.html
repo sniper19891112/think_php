@@ -7,7 +7,7 @@
           <div class="layui-form-item">
                 <label class="layui-form-label label-required">模式选项</label>
                 <div class="layui-input-block">
- <select class="layui-select" name="pipei_type" lay-ignore class="opt" lay-filter='test2' lay-verify="required" onchange="choosetype()"  id="choose">
+                  <select class="layui-select" name="pipei_type" lay-ignore class="opt" lay-filter='test2' lay-verify="required" onchange="choosetype()"  id="choose">
                     <option {if $info['pipei_type']==2}selected{/if} value="2">分组配置</option>
                     <option {if $info['pipei_type']==0}selected{/if} value="0">百分比</option>
                     <option {if $info['pipei_type']==1}selected{/if} value="1">固定值</option>
