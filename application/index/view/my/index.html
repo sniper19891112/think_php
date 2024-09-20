@@ -30,8 +30,9 @@
                         height="64" style="border-radius: 32px;">
                     <div style="margin-left: 10px;">
                         <div class="text-18 font-800">{$user['username'] | default='Little bamboo shoots'}</div>
-                        <div class="text-14 color-2B2B2B" style="margin-top: 4px;">{$user['tel'] |
-                            default='15800000000'}</div>
+                        <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
+                            {$user['tel'] | default='15800000000'}
+                        </div>
                     </div>
                 </div>
                 {php}
@@ -91,10 +92,12 @@
                             <div class="text-14 color-2B2B2B">Delivery address</div>
                         </div>
                     </a>
-                    <div style="text-align: center;" class="cursor-pointer">
-                        <img src="/public/img/组_38.png" />
-                        <div class="text-14 color-2B2B2B">My team</div>
-                    </div>
+                    <a href="/index/my/team">
+                        <div style="text-align: center;" class="cursor-pointer">
+                            <img src="/public/img/组_38.png" />
+                            <div class="text-14 color-2B2B2B">My team</div>
+                        </div>
+                    </a>
                 </div>
                 <div style="padding: 13px;" class="d-flex align-center justify-between">
                     <a href="/index/my/invite">

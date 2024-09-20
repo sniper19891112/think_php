@@ -1,0 +1,67 @@
+.team-container {
+    padding: 16px;
+}
+
+.team-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2B2B2B;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 16px 16px 8px 16px;
+    display: flex;
+    align-items: center;
+}
+
+#app {
+    height: 100vh;
+    background: linear-gradient(180deg, #FFEAEB 0%, #FFFFFF 100%);
+    border-radius: 0px 0px 0px 0px;
+}
+
+.team-number-container {
+    height: 144px;
+    background: linear-gradient(#FFFFFF 0%, rgba(255, 235, 232, 0.99) 69%, rgba(255, 157, 141, 0.98) 100%);
+    box-shadow: 0px 3px 6px 1px rgba(255, 229, 225, 0.53);
+    border-radius: 8px 8px 8px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.51);
+    padding: 14px;
+}
+
+.color-F2593B {
+    color: #F2593B;
+}
+
+.team-report-container {
+    margin-top: 12px;
+    height: 248px;
+    background: linear-gradient(180deg, rgba(254, 241, 239, 0.92) 0%, #FFFFFF 100%);
+    box-shadow: 0px 3px 6px 1px rgba(0, 0, 0, 0.16);
+    border-radius: 8px 8px 8px 8px;
+    border: 2px solid #FFFFFF;
+    padding: 10px 14px
+}
+
+.color-030303 {
+    color: #030303;
+}
+
+.team-report-card {
+    width: 50%;
+    height: 90px;
+    background: #FFFFFF;
+    box-shadow: 0px 3px 6px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 8px 8px 8px 8px;
+    margin: 0px 6px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.team-level-container {
+    margin-top: 16px;
+    height: 158px;
+    background: #FFFFFF;
+    box-shadow: 0px 3px 6px 1px rgba(0, 0, 0, 0.16);
+    border-radius: 8px 8px 8px 8px;
+    min-height: 360px;
+    overflow-y: scroll;
+}

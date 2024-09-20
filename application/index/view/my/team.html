@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta content="telephone=yes" name="format-detection" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <title>{:lang('team')}</title>
+    <link rel="stylesheet" href="/statics/css/global.css" />
+    <link rel="stylesheet" href="/web/css/team.css" />
+    <link rel="stylesheet" href="/static_new/css/public.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+    <script charset="utf-8" src="/static_new/js/jquery.min.js"></script>
+    <script charset="utf-8" src="/static_new/js/dialog.min.js"></script>
+    <script charset="utf-8" src="/static_new/js/common.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="team-header">
+            <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
+                arrow_back
+            </i>
+            My team
+        </div>
+        <div class="team-container">
+            <div class="team-number-container">
+                <div class="d-flex align-center justify-between">
+                    <div class="d-flex align-center">
+                        <img src="{if $user.headpic}{$user.headpic}{else/}/web/img/USER_item.png{/if}" width="64"
+                            height="64" style="border-radius: 32px;">
+                        <div style="margin-left: 10px;">
+                            <div class="text-18 font-800">{$user['username'] | default='Little bamboo shoots'}</div>
+                            <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
+                                {$user['tel'] | default='15800000000'}
+                            </div>
+                        </div>
+                    </div>
+                    {php}
+                    $level = $user['level'] + 1;
+                    $level = "VIP".$level;
+                    {/php}
+                    <div style="position: relative;">
+                        <img src="/public/img/图层_832.png" />
+                        <!-- <div class="level-position">{$level}</div> -->
+                    </div>
+                </div>
+                <div class="d-flex align-center justify-around" style="margin-top: 12px;">
+                    <div class="text-center">
+                        <div class="text-14 color-F2593B">
+                            USDT<font class="text-32 font-800">116.50</font>
+                        </div>
+                        <div class="d-flex align-center">
+                            <i class="material-icons-outlined color-F2593B">attach_money</i>
+                            Cumulative income
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-32 color-F2593B font-800">
+                            104
+                        </div>
+                        <div class="d-flex align-center">
+                            <i class="material-icons-outlined color-F2593B">group</i>
+                            Cumulative number of people
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-report-container">
+                <div class="text-16 color-030303">Team report</div>
+                <div class="d-flex align-center justify-around" style="margin-top: 20px;">
+                    <div class="team-report-card">
+                        <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Team balance</div>
+                        <div class="text-14 color-F2593B">
+                            USDT<font class="text-32 font-800">116.50</font>
+                        </div>
+                    </div>
+                    <div class="team-report-card">
+                        <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Team flow</div>
+                        <div class="text-14 color-F2593B">
+                            USDT<font class="text-32 font-800">116.50</font>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-center justify-around" style="margin-top: 20px;">
+                    <div class="team-report-card">
+                        <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Team total top-up</div>
+                        <div class="text-14 color-F2593B">
+                            USDT<font class="text-32 font-800">116.50</font>
+                        </div>
+                    </div>
+                    <div class="team-report-card">
+                        <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Team order commission</div>
+                        <div class="text-14 color-F2593B">
+                            USDT<font class="text-32 font-800">116.50</font>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-level-container">
+                <div class="d-flex align-center justify-around text-14 font-800"
+                    style="height: 40px; border-bottom: 1px solid #F5F5F5;">
+                    <div class="color-F2593B cursor-pointer">first-level</div>
+                    <div class="cursor-pointer">second-level</div>
+                    <div class="cursor-pointer">three-level</div>
+                    <div class="cursor-pointer">four-level</div>
+                </div>
+                <div style="padding: 8px;">
+                    <div class="d-flex align-center justify-between" style="margin-bottom: 8px; border-bottom: 1px solid #F5F5F5;">
+                        <div class="d-flex align-center">
+                            <img src="{if $user.headpic}{$user.headpic}{else/}/web/img/USER_item.png{/if}" width="64"
+                                height="64" style="border-radius: 32px;">
+                            <div style="margin-left: 10px;">
+                                <div class="text-14 font-800 color-F2593B">Name: {$user['username'] | default='Little bamboo shoots'}</div>
+                                <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
+                                    Phone: {$user['tel'] | default='15800000000'}
+                                </div>
+                                <div class="text-14 color-2B2B2B" style="margin-top: 4px;">Recommended number :15</div>
+                            </div>
+                        </div>
+                        <div style="position: relative;">
+                            <div class="text-14 color-2B2B2B">
+                                Recharge :15
+                            </div>
+                            <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
+                                Withdrawal :15
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="application/javascript">
+</script>
+
+</html>

@@ -106,6 +106,19 @@ class My extends Base
         return $this->fetch();
     }
 
+    public function team() {
+        $uid = session('user_id');
+        if (!$uid && request()->isPost()) {
+            $this->error(lang('请先登录'));
+        }
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $user = db('xy_users')->field('username, tel, headpic, balance, level')->find($uid);
+        $this->user = $user;
+        return $this->fetch();
+    }
+
     public function delivery_address()
     {
         $uid = session('user_id');
