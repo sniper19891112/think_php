@@ -1040,11 +1040,12 @@ class Deal extends Controller
         $oinfo = Db::name('xy_deposit')->where('id', input('post.id', 0))->find();
         if ($status == 2) {
             $oid = input('post.id', 0);
-            Db::name('xy_balance_log')->where('oid', $oid)->update(['status' => 1]);
-            db('xy_users')->where('id', $oinfo['uid'])->setDec('balance', input('num/f', 0));
+            Db::name('xy_balance_log')->where('oid', $oid)->update(['status' => 2]);
+            db('xy_users')->where('id', $oinfo['uid'])->setDec('balance', $oinfo["num"]);
         }
         if ($status == 3) {
             //驳回订单的业务逻辑
+            Db::name('xy_balance_log')->where('oid', $oid)->update(['status' => 3]);
         }
         $this->_save('xy_deposit', ['status' => $status, 'endtime' => time()]);
 

@@ -23,7 +23,7 @@ class My extends Base
             $this->redirect('User/login');
         }
         $this->select = "my";
-        $user = db('xy_users')->field('username, tel, headpic, balance')->find($uid);
+        $user = db('xy_users')->field('username, tel, headpic, balance, level')->find($uid);
         $this->user = $user;
         return $this->fetch();
     }
@@ -39,6 +39,10 @@ class My extends Base
         }
         $user = db("xy_users")->where("id", $uid)->find();
         $this->balance = $user["balance"];
+        $itemsPerPage = 10; 
+        $logs = db("xy_balance_log")->where("uid", $uid)->paginate($itemsPerPage);
+        $this->assign('logs', $logs);
+        $this->assign('pagination', $logs->render());
         return $this->fetch();
     }
 

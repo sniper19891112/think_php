@@ -33,3 +33,12 @@
 .my-other-functions{
     margin-top: 24px;
 }
+
+.level-position {
+    position: absolute;
+    top: 31px;
+    left: 20px;
+    text-wrap: nowrap;
+    color: #203120;
+    font-weight: bold;
+}

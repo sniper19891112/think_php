@@ -42,26 +42,37 @@
                 </div>
             </div>
             <div class="wallet-log-container">
+                {volist name="logs" id="item"}
+                {php}
+                $title = "";
+                if ($item['type'] == 1) {
+                    $title = "Recharge amount";
+                }
+                if ($item['type'] == 2) {
+                    $title = "Customer orders";
+                }
+                if ($item['type'] == 3) {
+                    $title = "Receive orders and return commission";
+                }
+                if ($item['type'] == 6) {
+                    $title = "Subcommission";
+                }
+                if ($item['type'] == 7) {
+                    $title = "Withdrawal amount";
+                }
+                $amount = $item['type']  == 2 || $item['type'] == 7 ? "-".$item['num'] : "+".$item['num']
+                {/php}
                 <div class="wallet-log-item">
                     <div>
-                        <div class="text-18 color-4F4F4F">Recharge amount</div>
-                        <div class="text-10 color-666666" style="margin-top: 8px;">September 2, 2024 at 16:48:56</div>
+                        <div class="text-18 color-4F4F4F">{$title}</div>
+                        <div class="text-10 color-666666" style="margin-top: 8px;">{$item['addtime']|format_datetime='Y-m-d H:i:s'}</div>
                     </div>
-                    <div class="text-16 color-FF0000 font-bold">+5.00</div>
+                    <div class="text-16 {if $item['type']  == 2 || $item['type'] == 7}color-00FF33{else}color-FF0000{/if} font-bold">{$amount}</div>
                 </div>
-                <div class="wallet-log-item">
-                    <div>
-                        <div class="text-18 color-4F4F4F">Recharge amount</div>
-                        <div class="text-10 color-666666" style="margin-top: 8px;">September 2, 2024 at 16:48:56</div>
-                    </div>
-                    <div class="text-16 color-FF0000 font-bold">+5.00</div>
-                </div>
-                <div class="wallet-log-item">
-                    <div>
-                        <div class="text-18 color-4F4F4F">Recharge amount</div>
-                        <div class="text-10 color-666666" style="margin-top: 8px;">September 2, 2024 at 16:48:56</div>
-                    </div>
-                    <div class="text-16 color-FF0000 font-bold">+5.00</div>
+                {/volist}
+                <!-- Display pagination links -->
+                <div>
+                    {$pagination|raw}
                 </div>
             </div>
         </div>
