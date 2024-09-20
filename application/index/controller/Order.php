@@ -391,14 +391,7 @@ class Order extends Base
         $res2 = db('xy_users')->where('id', $uid)->where('status', 1)->setDec('freeze_balance', $num + $cnum);
 
         if ($res) {
-            $res1 = db('xy_balance_log')->insert([
-                //记录返佣信息
-                'uid' => $uid,
-                'oid' => $oid,
-                'num' => $cnum,
-                'type' => 3,
-                'addtime' => time(),
-            ]);
+            db('xy_balance_log')->where("oid", $oid)->update(["status" => 1]);
             //将订单状态改为已返回佣金
             // db('xy_convey')->where('id', $oid)->update(['c_status' => 1, 'status' => 1]);
             db('xy_reward_log')->insert(['oid' => $oid, 'uid' => $uid, 'num' => $num, 'addtime' => time(), 'type' => 2]); //记录充值返佣订单

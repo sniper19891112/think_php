@@ -145,18 +145,7 @@ class My extends Base
 
         $result = db('xy_deposit')->insert($data);
 
-        //提现日志
-        $res1 = db('xy_balance_log')
-            ->insert([
-                'uid' => $uid,
-                'oid' => $id,
-                'num' => $withdraw_amount,
-                'type' => 7, //TODO 7提现
-                'status' => 2,
-                'addtime' => time(),
-            ]);
-
-        if ($result && $res1) {
+        if ($result) {
             return json(["code" => 0, "info" => "后台提现扣除金额成功,请到提现管理审核!", "id" => $id]);
         } else {
             return json(["code" => 1, "info" => "后台操作失败!"]);

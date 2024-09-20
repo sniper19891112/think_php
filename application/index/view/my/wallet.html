@@ -45,22 +45,27 @@
                 {volist name="logs" id="item"}
                 {php}
                 $title = "";
+                $amount = "";
                 if ($item['type'] == 1) {
                     $title = "Recharge amount";
+                    $amount = "+".$item['num'];
                 }
                 if ($item['type'] == 2) {
                     $title = "Customer orders";
+                    $amount = $item['status']  == 2 ? "-".$item['num'] : "+".$item['num'];
                 }
                 if ($item['type'] == 3) {
                     $title = "Receive orders and return commission";
+                    $amount = "+".$item['num'];
                 }
                 if ($item['type'] == 6) {
                     $title = "Subcommission";
+                    $amount = "+".$item['num'];
                 }
                 if ($item['type'] == 7) {
                     $title = "Withdrawal amount";
+                    $amount = "-".$item['num'];
                 }
-                $amount = $item['type']  == 2 || $item['type'] == 7 ? "-".$item['num'] : "+".$item['num']
                 {/php}
                 <div class="wallet-log-item">
                     <div>

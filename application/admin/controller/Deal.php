@@ -17,7 +17,7 @@ class Deal extends Controller
     public function shipping()
     {
         $oid = input('get.id', '');
-        if(request()->isPost()){
+        if (request()->isPost()) {
             $oid = input('post.id/s', '');
             // $status = input('post.status/d', 1);
             $status = 4;
@@ -34,7 +34,10 @@ class Deal extends Controller
                 return $this->error($res);
             }
         }
-        if(!$oid) $this->error('参数错误');
+        if (!$oid) {
+            $this->error('参数错误');
+        }
+
         $this->info = db('xy_convey')->find($oid);
         return $this->fetch();
     }
@@ -652,14 +655,15 @@ class Deal extends Controller
             $res = Db::name('xy_recharge')->where('id', $oid)->update(['endtime' => time(), 'status' => $status]);
             if ($status == 2) {
 
-                if ($oinfo['is_vip']) {
-                    $res1 = Db::name('xy_users')->where('id', $oinfo['uid'])->update(['level' => $oinfo['level']]);
-                } else {
-                    $res1 = Db::name('xy_users')->where('id', $oinfo['uid'])->setInc('balance', $oinfo['num']);
+                // if ($oinfo['is_vip']) {
+                //     $res1 = Db::name('xy_users')->where('id', $oinfo['uid'])->update(['level' => $oinfo['level']]);
+                // } else {
+                //     $res1 = Db::name('xy_users')->where('id', $oinfo['uid'])->setInc('balance', $oinfo['num']);
+                // }
 
-                }
+                $res1 = Db::name('xy_users')->where('id', $oinfo['uid'])->setInc('balance', $oinfo['num']);
 
-                $res2 = Db::name('xy_balance_log')
+                $res = Db::name('xy_balance_log')
                     ->insert([
                         'uid' => $oinfo['uid'],
                         'oid' => $oid,
@@ -1037,15 +1041,31 @@ class Deal extends Controller
     {
         $this->applyCsrfToken();
         $status = input('post.status/d', 1);
-        $oinfo = Db::name('xy_deposit')->where('id', input('post.id', 0))->find();
+        $oinfo = db('xy_deposit')->where('id', input('post.id', 0))->find();
         if ($status == 2) {
             $oid = input('post.id', 0);
-            Db::name('xy_balance_log')->where('oid', $oid)->update(['status' => 2]);
             db('xy_users')->where('id', $oinfo['uid'])->setDec('balance', $oinfo["num"]);
+            //提现日志
+            $res = db('xy_balance_log')
+                ->insert([
+                    'uid' => $oinfo['uid'],
+                    'oid' => $oinfo["id"],
+                    'num' => $oinfo["num"],
+                    'type' => 7, //TODO 7提现
+                    'status' => 2,
+                    'addtime' => time(),
+                ]);
         }
         if ($status == 3) {
             //驳回订单的业务逻辑
-            Db::name('xy_balance_log')->where('oid', $oid)->update(['status' => 3]);
+            $res = db('xy_message')
+                ->insert([
+                    'uid' => $oinfo['uid'],
+                    'type' => 1,
+                    'title' => 'System notification',
+                    'content' => 'withdrawal order' . $oid . 'has been returned. If you have any questions, please contact customer service',
+                    'addtime' => time(),
+                ]);
         }
         $this->_save('xy_deposit', ['status' => $status, 'endtime' => time()]);
 

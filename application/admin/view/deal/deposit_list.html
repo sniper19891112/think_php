@@ -149,9 +149,9 @@
             
              {if ($vo.status == 2) and auth("disbursement") and ($vo.tradeResult != 'SUCCESS') and (!$vo.tradeNo)}             
                 
-                <a data-dbclick class="layui-btn layui-btn-xs" data-title="银行卡信息" data-modal='{:url("admin/users/edit_users_bk")}?id={$vo.uid}'>修改银行卡</a>
+                <!-- <a data-dbclick class="layui-btn layui-btn-xs" data-title="银行卡信息" data-modal='{:url("admin/users/edit_users_bk")}?id={$vo.uid}'>修改银行卡</a>
  
-                <a class="layui-btn layui-btn-xs layui-btn-warm" data-csrf="{:systoken('admin/deal/disbursement')}" data-action="{:url('disbursement')}" data-value="id#{$vo.id};uid#{$vo.uid};num#{$vo.num}">发起代付</a>
+                <a class="layui-btn layui-btn-xs layui-btn-warm" data-csrf="{:systoken('admin/deal/disbursement')}" data-action="{:url('disbursement')}" data-value="id#{$vo.id};uid#{$vo.uid};num#{$vo.num}">发起代付</a> -->
             {/if}
             </td>
         </tr>
