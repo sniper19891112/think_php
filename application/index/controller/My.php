@@ -74,6 +74,38 @@ class My extends Base
         return $this->fetch();
     }
 
+    public function earning() {
+        $uid = session('user_id');
+        if (!$uid && request()->isPost()) {
+            $this->error(lang('请先登录'));
+        }
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $this->earning_balance = db("xy_balance_log")->where("uid", $uid)->where('type', 'in', [3, 6])->sum('num');
+        $itemsPerPage = 10; 
+        $logs = db("xy_balance_log")->where("uid", $uid)->where('type', 'in', [3, 6])->paginate($itemsPerPage);
+        $this->assign('logs', $logs);
+        $this->assign('pagination', $logs->render());
+        return $this->fetch();
+    }
+
+    //邀请界面
+    public function invite()
+    {
+        $uid = session('user_id');
+        $this->assign('pic', '/upload/qrcode/user/' . ($uid % 20) . '/' . $uid . '.png');
+        $user = db('xy_users')->find($uid);
+        if (cookie('think_var')) {
+            $url = SITE_URL . url('@index/user/register/invite_code/' . $user['invite_code'] . '/lang/' . cookie('think_var'));
+        } else {
+            $url = SITE_URL . url('@index/user/register/invite_code/' . $user['invite_code']);
+        }
+        $this->assign('url', $url);
+        $this->assign('invite_code', $user['invite_code']);        
+        return $this->fetch();
+    }
+
     public function delivery_address()
     {
         $uid = session('user_id');

@@ -1,0 +1,67 @@
+.invitation-container {
+    padding: 16px;
+}
+
+.invitation-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2B2B2B;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 16px 16px 8px 16px;
+    display: flex;
+    align-items: center;
+}
+
+.invitation-link-container {
+    height: 432px;
+    background: #F9F9F9;
+    border-radius: 4px 4px 24px 24px;
+    position: relative;
+}
+
+.invitation-link-header {
+    height: 40px;
+    background: #FF5035;
+    border-radius: 4px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 11px;
+    font-size: 14px;
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.qrcode-img {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.invitation-code {
+    text-align: center;
+    line-height: 38px;
+    margin: 24px 16px;
+    height: 40px;
+    background: #F2F0F1;
+    border-radius: 8px 8px 8px 8px;
+    font-size: 16px;
+    color: #FF5035;
+}
+
+.invitation-link-copy-btn {
+    width: 200px;
+    height: 40px;
+    background: #FF5035;
+    border-radius: 8px 8px 8px 8px;
+    text-align: center;
+    border: unset !important;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+.qrcode-img img{
+    border: 10px solid #FF5035;
+    border-radius: 8px;
+}
