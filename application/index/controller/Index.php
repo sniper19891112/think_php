@@ -34,6 +34,7 @@ class Index extends Base
             $this->redirect('User/login');
         }
         $this->scrolling_content = db('xy_index_msg')->where('id', 8)->find();
+        $this->service_url = sysconf("service_url");
         $this->total_income = db('xy_balance_log')->where("uid", $uid)->where("type", "in", [3, 6])->sum('num');
         $this->select = "home";
         return $this->fetch();
