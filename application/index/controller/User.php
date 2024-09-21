@@ -120,10 +120,10 @@ class User extends Base
         $verify_code = input('post.verify_code/s', '');
         $invite_code = input('post.invite_code/s', ''); //邀请码
 
-        $session_code = session('verify_code');
-        if ($session_code != $verify_code) {
-            return json(['code' => 1, 'info' => lang('邮箱验证码错误')]);
-        }
+        // $session_code = session('verify_code');
+        // if ($session_code != $verify_code) {
+        //     return json(['code' => 1, 'info' => lang('邮箱验证码错误')]);
+        // }
 
         $res = db('xy_verify_msg')->field('addtime,tel')->where(['tel' => $email])->find();
         if ($res && (($res['addtime'] + 60) < time())) {

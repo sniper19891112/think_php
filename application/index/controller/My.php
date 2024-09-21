@@ -39,7 +39,7 @@ class My extends Base
         }
         $user = db("xy_users")->where("id", $uid)->find();
         $this->balance = $user["balance"];
-        $itemsPerPage = 10; 
+        $itemsPerPage = 10;
         $logs = db("xy_balance_log")->where("uid", $uid)->paginate($itemsPerPage);
         $this->assign('logs', $logs);
         $this->assign('pagination', $logs->render());
@@ -74,7 +74,8 @@ class My extends Base
         return $this->fetch();
     }
 
-    public function earning() {
+    public function earning()
+    {
         $uid = session('user_id');
         if (!$uid && request()->isPost()) {
             $this->error(lang('请先登录'));
@@ -83,7 +84,7 @@ class My extends Base
             $this->redirect('User/login');
         }
         $this->earning_balance = db("xy_balance_log")->where("uid", $uid)->where('type', 'in', [3, 6])->sum('num');
-        $itemsPerPage = 10; 
+        $itemsPerPage = 10;
         $logs = db("xy_balance_log")->where("uid", $uid)->where('type', 'in', [3, 6])->paginate($itemsPerPage);
         $this->assign('logs', $logs);
         $this->assign('pagination', $logs->render());
@@ -102,11 +103,12 @@ class My extends Base
             $url = SITE_URL . url('@index/user/register/invite_code/' . $user['invite_code']);
         }
         $this->assign('url', $url);
-        $this->assign('invite_code', $user['invite_code']);        
+        $this->assign('invite_code', $user['invite_code']);
         return $this->fetch();
     }
 
-    public function team() {
+    public function team()
+    {
         $uid = session('user_id');
         if (!$uid && request()->isPost()) {
             $this->error(lang('请先登录'));
@@ -114,8 +116,33 @@ class My extends Base
         if (!$uid) {
             $this->redirect('User/login');
         }
-        $user = db('xy_users')->field('username, tel, headpic, balance, level')->find($uid);
-        $this->user = $user;
+        $uid = session('user_id');
+
+        $where = [];
+        $this->level = $level = input('get.level/d', 1);
+        $this->uinfo = db('xy_users')->where('id', $uid)->find();
+
+        //计算五级团队余额
+        $uidAlls5 = model('admin/Users')->child_user($uid, 5, 1);
+        $uidAlls5 ? $whereAll[] = ['id', 'in', $uidAlls5] : $whereAll[] = ['id', 'in', [-1]];
+        $uidAlls5 ? $whereAll2[] = ['uid', 'in', $uidAlls5] : $whereAll2[] = ['id', 'in', [-1]];
+        $this->total_balance = db('xy_users')->where($whereAll)->sum('balance');
+        $this->total_deposit = db('xy_recharge')->where($whereAll2)->where('status', 2)->sum('num');
+        $this->total_withdraw = db('xy_deposit')->where($whereAll2)->where('status', 2)->sum('num');
+        $this->total_flow = db('xy_balance_log')->where($whereAll2)->sum('num');
+        $this->total_income = db('xy_balance_log')->where($whereAll2)->where("type", "in", [3, 6])->sum('num');
+        $this->order_quantity = db('xy_convey')->where('status', 7)->where($whereAll2)->sum('num');
+
+        $uidsAll = model('admin/Users')->child_user($uid, 5, 1);
+        $this->total_people = count($uidsAll);
+
+        $itemsPerPage = 10;
+        $uids5 = model('admin/Users')->child_user($uid, $level, 0);
+        $uids5 ? $where[] = ['u.id', 'in', $uids5] : $where[] = ['u.id', 'in', [-1]];
+        $this->list = db('xy_users')->alias('u')
+            ->where($where)->order('id desc')->paginate($itemsPerPage);
+        $this->user = db('xy_users')->find($uid);
+        $this->assign('pagination', $this->list->render());
         return $this->fetch();
     }
 
@@ -197,7 +224,8 @@ class My extends Base
         }
     }
 
-    public function check_withdraw() {
+    public function check_withdraw()
+    {
         $id = input('post.id/s', '');
         $result = db('xy_deposit')->find($id);
         if ($result["status"] == 2) {
