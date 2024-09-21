@@ -31,48 +31,71 @@
         <div class="font-bold text-14 color-white">累计收益</div>
         <div style="display: flex; align-items: center;">
           <img src="/public/img/组 136.png" />
-          <div class="font-bold text-18 color-white">285.9</div>
+          <div class="font-bold text-18 color-white">{$total_income | number_format=###,2}</div>
           <div class="font-bold text-12 color-white" style="margin-top: 2px; margin-left: 2px;">USDT</div>
         </div>
       </div>
       <img src="/public/img/home.png" style="width: 100%; margin-top: 24px;" />
       <div class="home-body-3">
         <img src="/public/img/组 141.png" />
+        <marquee style="margin: 0px 10px; color: white;" behavior="scroll">
+          {if condition='$Think.cookie.think_var eq "zh-cn"'}
+          {$scrolling_content['content']|raw}
+          {elseif condition='$Think.cookie.think_var eq "jp-jp"'}
+          {$scrolling_content['jp_content']|raw}
+          {elseif condition='$Think.cookie.think_var eq "kr-kr"'}
+          {$scrolling_content['kr_content']|raw}
+          {elseif condition='$Think.cookie.think_var eq "fr-fr"'}
+          {$scrolling_content['fr_content']|raw}
+          {elseif condition='$Think.cookie.think_var eq "es-es"'}
+          {$scrolling_content['es_content']|raw}
+          {elseif condition='$Think.cookie.think_var eq "pt-pt"'}
+          {$scrolling_content['pt_content']|raw}
+          {else}
+          {$scrolling_content['en_content']|raw}
+          {/if}
+        </marquee>
       </div>
-      <div class="home-body-4-text" style="margin-top: 50px;">我的服务</div>
+      <div class="home-body-4-text" style="margin-top: 50px;">{:lang('我的服务')}</div>
       <div class="home-body-5">
         <div style="width: 50%;">
-          <div style="position: relative;">
-            <img src="/public/img/组 150.png" style="width: 100%;"/>
-            <div class="home-body-5-text-1">关于我们</div>
-          </div>
-          <div style="margin-top: 4px; position: relative;">
-            <img src="/public/img/组 149.png" style="width: 100%;"/>
-            <div class="home-body-5-text-2">帮助</div>
-          </div>
+          <a href="/index/index/about_us">
+            <div style="position: relative;">
+              <img src="/public/img/组 150.png" style="width: 100%;" />
+              <div class="home-body-5-text-1">{:lang('关于我们')}</div>
+            </div>
+          </a>
+          <a href="/index/index/help">
+            <div style="margin-top: 4px; position: relative;">
+              <img src="/public/img/组 149.png" style="width: 100%;" />
+              <div class="home-body-5-text-2">{:lang('帮助')}</div>
+            </div>
+          </a>
         </div>
         <div style="position: relative; width: 46%;">
-          <img src="/public/img/组 148.png" style="width: 100%;"/>
-          <div class="home-body-5-text-3">服务</div>
+          <a href="/index/index/service">
+            <img src="/public/img/组 148.png" style="width: 100%;" />
+            <div class="home-body-5-text-3">{:lang('服务')}</div>
+          </a>
         </div>
       </div>
-      <div class="home-body-6-text" style="margin-top: 50px;">合作伙伴</div>
+      <div class="home-body-6-text" style="margin-top: 50px;">{:lang('合作伙伴')}</div>
       <div class="home-body-7">
         <!-- <div class="d-flex align-center justify-between"> -->
-          <img src="/public/img/蒙版组 7.png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 7(1).png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 7(2).png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 7(3).png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 7(4).png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 7(5).png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7.png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7(1).png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7(2).png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7(3).png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7(4).png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7(5).png" style="margin: 4px" />
         <!-- </div> -->
         <!-- <div class="d-flex align-center justify-between"> -->
-          <img src="/public/img/蒙版组 7(6).png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 7(7).png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 7(8).png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 7.png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 8.png" style="margin: 4px" />
-          <img src="/public/img/蒙版组 8(1).png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7(6).png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7(7).png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7(8).png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 7.png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 8.png" style="margin: 4px" />
+        <img src="/public/img/蒙版组 8(1).png" style="margin: 4px" />
         <!-- </div> -->
       </div>
     </div>

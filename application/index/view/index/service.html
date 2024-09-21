@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta content="telephone=yes" name="format-detection" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <title>{:lang('service')}</title>
+    <link rel="stylesheet" href="/statics/css/global.css" />
+    <link rel="stylesheet" href="/web/css/service.css" />
+    <link rel="stylesheet" href="/static_new/css/public.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+    <script charset="utf-8" src="/static_new/js/jquery.min.js"></script>
+    <script charset="utf-8" src="/static_new/js/dialog.min.js"></script>
+    <script charset="utf-8" src="/static_new/js/common.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="service-header">
+            <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
+                arrow_back
+            </i>
+            Service
+        </div>
+        <div class="service-container">
+            {if condition='$Think.cookie.think_var eq "zh-cn"'}
+                {$service.content|raw}
+            {elseif condition='$Think.cookie.think_var eq "kr-kr"'}
+                {$service.kr_content|raw}
+            {elseif condition='$Think.cookie.think_var eq "fr-fr"'}
+                {$service.fr_content|raw}
+            {elseif condition='$Think.cookie.think_var eq "es-es"'}
+                {$service.es_content|raw}
+            {elseif condition='$Think.cookie.think_var eq "pt-pt"'}
+                {$service.pt_content|raw}
+            {else}
+                {$service.en_content|raw}
+            {/if}
+        </div>
+    </div>
+</body>
+<script type="application/javascript">
+    function goBack() {
+        window.history.go(-1);
+    }
+</script>
+
+</html>

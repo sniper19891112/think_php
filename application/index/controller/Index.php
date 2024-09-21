@@ -27,74 +27,42 @@ class Index extends Base
         return $this->fetch('landing');
     }
 
-    // public function home()
-    // {
-
-    //     $uid = session('user_id');
-
-    //     if (!$uid) {
-    //         $this->redirect('User/login');
-    //     }
-
-    //     $this->info = db('xy_index_msg')->field('content')->select();
-    //     $this->balance = db('xy_users')->where('id', session('user_id'))->sum('balance');
-    //     $this->banner = db('xy_banner')->select();
-    //     $this->notice = db('xy_index_msg')->where('id', 1)->value('content');
-    //     $this->hezuo = db('xy_index_msg')->where('id', 4)->value('content');
-    //     $this->jianjie = db('xy_index_msg')->where('id', 2)->value('content');
-    //     $this->guize = db('xy_index_msg')->where('id', 3)->value('content');
-    //     $this->gundong = db('xy_index_msg')->where('id', 8)->find();
-    //     $this->tanchunag = db('xy_index_msg')->where('id', 11)->find();
-
-    //     $this->assign('pic', '/upload/qrcode/user/' . (session('user_id') % 20) . '/' . session('user_id') . '-1.png');
-    //     $this->cate = db('xy_goods_cate')->alias('c')
-    //         ->leftJoin('xy_level u', 'u.id=c.level_id')
-    //         ->field('c.name,c.id,c.cate_info,c.cat_ico,c.bili,u.order_num,u.num,u.auto_vip_xu_num,c.cate_pic,c.deal_min_num,u.name as levelname,u.pic,u.level')
-    //         ->order('c.id asc')->select();
-
-    //     //一天的
-    //     $this->lixibao = db('xy_lixibao_list')->order('id asc')->find();
-
-    //     //
-    //     $uid = session('user_id');
-    //     if (isset($uid)) {
-    //         $yes1 = strtotime(date("Y-m-d 00:00:00", strtotime("-1 day")));
-    //         $yes2 = strtotime(date("Y-m-d 23:59:59", strtotime("-1 day")));
-    //         $this->tod_user_yongjin = db('xy_convey')->where('uid', $uid)->where('status', 1)->where('addtime', 'between', [strtotime(date("Y-m-d")), time()])->sum('commission');
-    //         $this->yes_user_yongjin = db('xy_convey')->where('uid', $uid)->where('status', 1)->where('addtime', 'between', [$yes1, $yes2])->sum('commission');
-    //         $this->user_yongjin = db('xy_convey')->where('uid', $uid)->where('status', 1)->sum('commission');
-    //         $userinfo = db('xy_users')->find($uid);
-    //         if ($userinfo['level'] == 0 && $userinfo['balance'] < 30) {$userinfo['level'] = -1;}
-    //         $this->info = $userinfo;
-    //     } else {
-    //         $this->tod_user_yongjin = 0;
-    //         $this->yes_user_yongjin = 0;
-    //         $this->user_yongjin = 0;
-    //         $info['username'] = lang("未登录用户");
-    //         $info['balance'] = "0";
-    //         $info['headpic'] = "";
-    //         $info['level'] = "";
-    //         $this->info = $info;
-    //     }
-
-    //     $percent = $this->getpercent();
-    //     $this->percent = $percent;
-
-    //     $color = sysconf('app_color');
-    //     if ($color) {
-    //         return $this->fetch('home-' . $color);
-    //     } else {
-    //         return $this->fetch('home-blue');
-    //     }
-    // }
-
     public function home()
     {
         $uid = session('user_id');
         if (!$uid) {
             $this->redirect('User/login');
         }
+        $this->scrolling_content = db('xy_index_msg')->where('id', 8)->find();
+        $this->total_income = db('xy_balance_log')->where("uid", $uid)->where("type", "in", [3, 6])->sum('num');
         $this->select = "home";
+        return $this->fetch();
+    }
+
+    public function about_us() {
+        $uid = session('user_id');
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $this->platform_introduction = db('xy_index_msg')->where('id', 2)->find();
+        return $this->fetch();
+    }
+
+    public function help() {
+        $uid = session('user_id');
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $this->help = db('xy_index_msg')->where('id', 6)->find();
+        return $this->fetch();
+    }
+
+    public function service() {
+        $uid = session('user_id');
+        if (!$uid) {
+            $this->redirect('User/login');
+        }
+        $this->service = db('xy_index_msg')->where('id', 13)->find();
         return $this->fetch();
     }
 

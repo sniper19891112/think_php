@@ -1,0 +1,13 @@
+.help-container {
+    padding: 16px;
+}
+
+.help-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2B2B2B;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 16px 16px 8px 16px;
+    display: flex;
+    align-items: center;
+}
