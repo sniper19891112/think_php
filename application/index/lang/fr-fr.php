@@ -2,7 +2,12 @@
 //{if condition='$Think.cookie.think_var eq "en-us"'}width: 100%;{/if}
 //{:lang('在线支付')}
 return [
+    "我的服务" => "My Services",
+    "帮助" => "Help",
+    "累计收益" => "Cumulative income",
     "关于我们" => "About US",
+    "合作伙伴" => "Partners",
+    "服务" => "Customer Service",
     '跳过' => 'Jump',
     '引导页' => 'Landing',
     'Language' => 'Langues',

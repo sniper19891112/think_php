@@ -61,6 +61,7 @@ class Shop extends Base
         $this->assign('pagination', $cartlist->render());
         $this->select = "cart";
         $this->user_name = $user["username"];
+        $this->email = $user["email"];
         $this->original_pwd = $user["original_pwd"];
         return $this->fetch();
     }

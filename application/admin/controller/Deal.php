@@ -1063,8 +1063,9 @@ class Deal extends Controller
                     'uid' => $oinfo['uid'],
                     'type' => 1,
                     'title' => 'System notification',
-                    'content' => 'withdrawal order' . $oid . 'has been returned. If you have any questions, please contact customer service',
+                    'content' => 'withdrawal order' . $oinfo["uid"] . 'has been returned. If you have any questions, please contact customer service',
                     'addtime' => time(),
+                    'status' => 0,
                 ]);
         }
         $this->_save('xy_deposit', ['status' => $status, 'endtime' => time()]);
