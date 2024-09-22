@@ -23,6 +23,7 @@ class My extends Base
             $this->redirect('User/login');
         }
         $this->select = "my";
+        $this->service_url = sysconf("service_url");
         $user = db('xy_users')->field('username, tel, headpic, balance, level')->find($uid);
         $this->user = $user;
         return $this->fetch();
