@@ -663,7 +663,7 @@ class Deal extends Controller
 
                 $res1 = Db::name('xy_users')->where('id', $oinfo['uid'])->setInc('balance', $oinfo['num']);
 
-                $res = Db::name('xy_balance_log')
+                $res2 = Db::name('xy_balance_log')
                     ->insert([
                         'uid' => $oinfo['uid'],
                         'oid' => $oid,
@@ -681,6 +681,7 @@ class Deal extends Controller
                         'type' => 2,
                         'title' => 'System notification',
                         'content' => 'Recharge order' . $oid . 'has been returned. If you have any questions, please contact customer service',
+                        'status' => 0,
                         'addtime' => time(),
                     ]);
             }

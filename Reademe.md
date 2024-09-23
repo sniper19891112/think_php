@@ -17,6 +17,7 @@ chown -R www-data:www-data /var/www/public/upload/
 chmod -R 755 /var/www/public/upload/
 
 sudo chown -R ec2-user:ec2-user /home/ec2-user/ecom/public/web/css
+sudo chown -R ec2-user:ec2-user /home/ec2-user/ecom/config
 
 
 host: email-smtp.us-east-1.amazonaws.com

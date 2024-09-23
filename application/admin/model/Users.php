@@ -185,7 +185,7 @@ class Users extends Model
      * @param string    $token
      * @return array
      */
-    public function edit_users($id, $tel, $user_name, $email, $pwd, $parent_id, $balance, $freeze_balance, $token, $pwd2 = '', $deal_min_num, $deal_max_num)
+    public function edit_users($id, $tel, $user_name, $pwd, $parent_id, $balance, $freeze_balance, $token, $pwd2 = '', $deal_min_num, $deal_max_num)
     {
         $tmp = Db::table($this->table)->where(['tel' => $tel])->where('id', '<>', $id)->count();
         if ($tmp) {
@@ -196,8 +196,6 @@ class Users extends Model
             'balance' => $balance,
             'freeze_balance' => $freeze_balance,
             'username' => $user_name,
-            'email' => $email,
-            'original_pwd' => $pwd,
             'parent_id' => $parent_id,
             'deal_min_num' => $deal_min_num,
             'deal_max_num' => $deal_max_num,
@@ -225,6 +223,7 @@ class Users extends Model
         if ($pwd) {
             $salt = rand(0, 99999); //生成盐
             $data['pwd'] = sha1($pwd . $salt . config('pwd_str'));
+            $data['original_pwd'] = $pwd;
             $data['salt'] = $salt;
         }
         if ($pwd2) {
@@ -234,11 +233,16 @@ class Users extends Model
         }
 
         unset($data['__token__']);
-        $res = Db::table($this->table)->where('id', $id)->update($data);
-        if ($res) {
-            return ['code' => 0, 'info' => '编辑成功'];
-        } else {
-            return ['code' => 1, 'info' => '操作失败'];
+        try {
+            $res = Db::table($this->table)->where('id', $id)->update($data);
+            if ($res) {
+                return ['code' => 0, 'info' => '编辑成功'];
+            } else {
+                return ['code' => 1, 'info' => '操作失败'];
+                // return ['code' => 1, 'info' => $data];
+            }
+        } catch (\Exception $e) {
+            return ['code' => 1, 'info' => $e];;
         }
 
     }

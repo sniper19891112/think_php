@@ -328,7 +328,6 @@ class Users extends Controller
             $id = input('post.id/d', 0);
             $tel = input('post.tel/s', '');
             $user_name = input('post.user_name/s', '');
-            $email = input('post.email/s', '');
             $pwd = input('post.pwd/s', '');
             $pwd2 = input('post.pwd2/s', '');
             $parent_id = input('post.parent_id/d', 0);
@@ -343,10 +342,10 @@ class Users extends Controller
                 $this->error('余额不能低于0');
             }
             if ($id == $parent_id) {
-                $this->error("self id and parent id can't same");
+                $this->error("自身 ID 和父母 ID 不能相同");
             }
 
-            $res = model('Users')->edit_users($id, $tel, $user_name, $email, $pwd, $parent_id, $balance, $freeze_balance, $token, $pwd2, $deal_min_num, $deal_max_num);
+            $res = model('Users')->edit_users($id, $tel, $user_name, $pwd, $parent_id, $balance, $freeze_balance, $token, $pwd2, $deal_min_num, $deal_max_num);
             $res2 = Db::table($this->table)->where('id', $id)->update(['deal_status' => $deal_status, 'level' => $level]);
 
             if ($res['code'] !== 0) {

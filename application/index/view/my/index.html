@@ -29,7 +29,7 @@
                     <img src="{if $user.headpic}{$user.headpic}{else/}/web/img/USER_item.png{/if}" width="64"
                         height="64" style="border-radius: 32px;">
                     <div style="margin-left: 10px;">
-                        <div class="text-18 font-800">{$user['username'] | default='Little bamboo shoots'}</div>
+                        <div class="text-18 font-800" style="width: 100px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{$user['username'] | default='Little bamboo shoots'}</div>
                         <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
                             {$user['tel'] | default='15800000000'}
                         </div>
