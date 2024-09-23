@@ -15,9 +15,11 @@
   <link rel="stylesheet" href="/static_new/css/public.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script charset="utf-8" src="/static_new/js/jquery.min.js"></script>
   <script charset="utf-8" src="/static_new/js/dialog.min.js"></script>
   <script charset="utf-8" src="/static_new/js/common.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 
 <body>
@@ -35,11 +37,17 @@
         <div class="font-bold text-14 color-white">{:lang('累计收益')}</div>
         <div style="display: flex; align-items: center;">
           <img src="/public/img/组 136.png" />
-          <div class="font-bold text-18 color-white">{$total_income | number_format=###,2}</div>
-          <div class="font-bold text-12 color-white" style="margin-top: 2px; margin-left: 2px;">USDT</div>
         </div>
       </div>
-      <img src="/public/img/home.png" style="width: 100%; margin-top: 24px;" />
+      <div class="swiper mySwiper swiper-h">
+        <div class="swiper-wrapper">
+          {foreach $banner as $key=>$vo}
+          <div class="swiper-slide">
+            <img src="{$vo.image}" />
+          </div>
+          {/foreach}
+        </div>
+      </div>
       <div class="home-body-3">
         <img src="/public/img/组 141.png" />
         <marquee style="margin: 0px 10px; color: white;" behavior="scroll">
@@ -107,6 +115,15 @@
   </div>
 </body>
 <script type="application/javascript">
+  var swiper = new Swiper(".mySwiper", {
+    spaceBetween: 10,
+    centeredSlides: true,
+    loop: true,
+    autoplay: {
+      delay: 2000,
+      disableOnInteraction: false,
+    },
+  });
 </script>
 
 </html>
