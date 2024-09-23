@@ -37,7 +37,7 @@
                         <img src="{if $user.headpic}{$user.headpic}{else/}/web/img/USER_item.png{/if}" width="64"
                             height="64" style="border-radius: 32px;">
                         <div style="margin-left: 10px;">
-                            <div class="text-18 font-800">{$user['username'] | default='Little bamboo shoots'}</div>
+                            <div class="text-18 font-800" style="width: 100px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{$user['username'] | default='Little bamboo shoots'}</div>
                             <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
                                 {$user['tel'] | default='15800000000'}
                             </div>
@@ -69,42 +69,42 @@
                 <div class="d-flex align-center justify-around" style="margin-top: 20px;">
                     <div class="team-report-card">
                         <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Total People</div>
-                        <div class="text-14 color-F2593B">
-                            <font class="text-32 font-800">{$total_people}</font>
+                        <div class="text-12 color-F2593B">
+                            <font class="text-18 font-800">{$total_people}</font>
                         </div>
                     </div>
                     <div class="team-report-card">
                         <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Total Balances</div>
-                        <div class="text-14 color-F2593B">
-                            USDT<font class="text-32 font-800">{$total_balance}</font>
+                        <div class="text-12 color-F2593B">
+                            USDT<font class="text-18 font-800">{$total_balance}</font>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex align-center justify-around" style="margin-top: 20px;">
                     <div class="team-report-card">
                         <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Total Deposits</div>
-                        <div class="text-14 color-F2593B">
-                            USDT<font class="text-32 font-800">{$total_deposit}</font>
+                        <div class="text-12 color-F2593B">
+                            USDT<font class="text-18 font-800">{$total_deposit}</font>
                         </div>
                     </div>
                     <div class="team-report-card">
                         <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Total Withdrawals</div>
-                        <div class="text-14 color-F2593B">
-                            USDT<font class="text-32 font-800">{$total_withdraw}</font>
+                        <div class="text-12 color-F2593B">
+                            USDT<font class="text-18 font-800">{$total_withdraw}</font>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex align-center justify-around" style="margin-top: 20px;">
                     <div class="team-report-card">
                         <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Order quantity</div>
-                        <div class="text-14 color-F2593B">
-                            USDT<font class="text-32 font-800">{$order_quantity}</font>
+                        <div class="text-12 color-F2593B">
+                            USDT<font class="text-18 font-800">{$order_quantity}</font>
                         </div>
                     </div>
                     <div class="team-report-card">
                         <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Total Flow</div>
-                        <div class="text-14 color-F2593B">
-                            USDT<font class="text-32 font-800">{$total_flow}</font>
+                        <div class="text-12 color-F2593B">
+                            USDT<font class="text-18 font-800">{$total_flow}</font>
                         </div>
                     </div>
                 </div>

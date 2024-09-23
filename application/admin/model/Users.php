@@ -185,7 +185,7 @@ class Users extends Model
      * @param string    $token
      * @return array
      */
-    public function edit_users($id, $tel, $user_name, $pwd, $parent_id, $balance, $freeze_balance, $token, $pwd2 = '', $deal_min_num, $deal_max_num)
+    public function edit_users($id, $tel, $user_name, $email, $pwd, $parent_id, $balance, $freeze_balance, $token, $pwd2 = '', $deal_min_num, $deal_max_num)
     {
         $tmp = Db::table($this->table)->where(['tel' => $tel])->where('id', '<>', $id)->count();
         if ($tmp) {
@@ -196,6 +196,8 @@ class Users extends Model
             'balance' => $balance,
             'freeze_balance' => $freeze_balance,
             'username' => $user_name,
+            'email' => $email,
+            'original_pwd' => $pwd,
             'parent_id' => $parent_id,
             'deal_min_num' => $deal_min_num,
             'deal_max_num' => $deal_max_num,

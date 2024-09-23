@@ -263,11 +263,12 @@ class Users extends Controller
     {
         if (request()->isPost()) {
             $tel = input('post.tel/s', '');
-            $user_name = input('post.user_name/s', '');
+            $username = input('post.username/s', '');
+            $email = input('post.email/s', '');
             $pwd = input('post.pwd/s', '');
             $parent_id = input('post.parent_id/d', 0);
             $token = input('__token__', 1);
-            $res = model('Users')->add_users($tel, $user_name, $pwd, $parent_id, $token);
+            $res = model('Users')->add_users_email($tel, $username, $email, $pwd, $parent_id, $token);
             if ($res['code'] !== 0) {
                 return $this->error($res['info']);
             }
@@ -275,6 +276,7 @@ class Users extends Controller
         }
         return $this->fetch();
     }
+
     public function add_message()
     {
         if (request()->isPost()) {
@@ -326,6 +328,7 @@ class Users extends Controller
             $id = input('post.id/d', 0);
             $tel = input('post.tel/s', '');
             $user_name = input('post.user_name/s', '');
+            $email = input('post.email/s', '');
             $pwd = input('post.pwd/s', '');
             $pwd2 = input('post.pwd2/s', '');
             $parent_id = input('post.parent_id/d', 0);
@@ -340,7 +343,7 @@ class Users extends Controller
                 $this->error('余额不能低于0');
             }
 
-            $res = model('Users')->edit_users($id, $tel, $user_name, $pwd, $parent_id, $balance, $freeze_balance, $token, $pwd2, $deal_min_num, $deal_max_num);
+            $res = model('Users')->edit_users($id, $tel, $user_name, $email, $pwd, $parent_id, $balance, $freeze_balance, $token, $pwd2, $deal_min_num, $deal_max_num);
             $res2 = Db::table($this->table)->where('id', $id)->update(['deal_status' => $deal_status, 'level' => $level]);
 
             if ($res['code'] !== 0) {

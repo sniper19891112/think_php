@@ -1,9 +1,15 @@
 <form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
     <div class="layui-card-body">
         <div class="layui-form-item">
-            <label class="layui-form-label">用户名称</label>
+            <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
-                <input name="user_name" placeholder="请输入用户名" class="layui-input">
+                <input name="username" type="text" placeholder="请输入用户名" class="layui-input" required>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户电子邮件</label>
+            <div class="layui-input-block">
+                <input name="email" type="email" placeholder="请输入用户电子邮件" class="layui-input" required>
                 {:token()}
             </div>
         </div>

@@ -5,7 +5,12 @@
             <div class="layui-input-block">
                 <input name="user_name" required placeholder="请输入用户名称" value="{$info.username}" class="layui-input">
                 <input type="hidden" name="_csrf_" value="{:systoken('admin/users/edit_users')}">
-
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">用户电子邮件</label>
+            <div class="layui-input-block">
+                <input name="email" required placeholder="请输入用户电子邮件" value="{$info.email}" class="layui-input" disabled>
             </div>
         </div>
 
