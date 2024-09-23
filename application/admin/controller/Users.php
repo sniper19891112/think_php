@@ -342,6 +342,9 @@ class Users extends Controller
             if ($balance < 0) {
                 $this->error('余额不能低于0');
             }
+            if ($id == $parent_id) {
+                $this->error("self id and parent id can't same");
+            }
 
             $res = model('Users')->edit_users($id, $tel, $user_name, $email, $pwd, $parent_id, $balance, $freeze_balance, $token, $pwd2, $deal_min_num, $deal_max_num);
             $res2 = Db::table($this->table)->where('id', $id)->update(['deal_status' => $deal_status, 'level' => $level]);

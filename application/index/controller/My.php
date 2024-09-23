@@ -132,9 +132,10 @@ class My extends Base
         $this->total_withdraw = db('xy_deposit')->where($whereAll2)->where('status', 2)->sum('num');
         $this->total_flow = db('xy_balance_log')->where($whereAll2)->sum('num');
         $this->total_income = db('xy_balance_log')->where($whereAll2)->where("type", "in", [3, 6])->sum('num');
-        $this->order_quantity = db('xy_convey')->where('status', 7)->where($whereAll2)->sum('num');
+        $this->order_quantity = db('xy_convey')->where('status', 7)->where($whereAll2)->count();
 
         $uidsAll = model('admin/Users')->child_user($uid, 5, 1);
+        // return json($uidsAll);
         $this->total_people = count($uidsAll);
 
         $itemsPerPage = 10;
