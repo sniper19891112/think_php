@@ -393,6 +393,14 @@ class Order extends Base
         if ($res) {
             db('xy_balance_log')->where("oid", $oid)->update(["status" => 1]);
             db('xy_reward_log')->insert(['oid' => $oid, 'uid' => $uid, 'num' => $num, 'addtime' => time(), 'type' => 2]); //记录充值返佣订单
+            db('xy_balance_log')->insert([
+                'uid'       => $uid,
+                'oid'       => $oid,
+                'num'       => $num * config('reward'),
+                'type'      => 3,
+                'addtime'   => time(),
+                'status' => 1,
+            ]);
             /************* 发放交易奖励 *********/
             $userList = model('admin/Users')->parent_user($uid, 4);
             if ($userList) {

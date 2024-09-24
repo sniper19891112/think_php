@@ -29,7 +29,7 @@ class Convey extends Model
         }
 
         if (!$commission) {
-            $commission = $goods['goods_price'] * $ulevel['bili'];
+            $commission = $goods['goods_price'] * config('reward');
         }
 
         $res1 = db($this->table)

@@ -5,13 +5,19 @@
             <div class="layui-input-block">
                 <input name="company_name" type="text" required placeholder="请输入公司名称" class="layui-input">
             </div>
-        </div>  
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label label-required">追踪号码</label>
             <div class="layui-input-block">
                 <input name="tracking_number" type="text" required placeholder="请输入追踪号码" class="layui-input">
             </div>
-        </div>  
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">运送时间</label>
+            <div class="layui-input-block">
+                <input name="shipping_time" type="datetime-local" required placeholder="请输入运送时间" class="layui-input">
+            </div>
+        </div>
     </div>
     <input name="id" type="hidden" value="{$info.id}">
     <div class="hr-line-dashed"></div>

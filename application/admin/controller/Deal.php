@@ -23,10 +23,11 @@ class Deal extends Controller
             $status = 4;
             $company_name = input('post.company_name/s', '');
             $tracking_number = input('post.tracking_number/s', '');
+            $shipping_time = input('post.shipping_time/s', '');
             if (!\in_array($status, [3, 4])) {
                 return $this->error('参数错误');
             }
-            $tmp = ['endtime' => time() + config('deal_feedze'), "status" => $status, "company_name" => $company_name, "tracking_number" => $tracking_number];
+            $tmp = ['endtime' => time() + config('deal_feedze'), "status" => $status, "company_name" => $company_name, "tracking_number" => $tracking_number, "shipping_time" => strtotime($shipping_time)];
             $res = db('xy_convey')->where('id', $oid)->update($tmp);
             if ($res) {
                 return $this->success('操作成功');
