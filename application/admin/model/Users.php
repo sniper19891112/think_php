@@ -405,7 +405,7 @@ class Users extends Model
                 $data = self::parent_user($uinfo['id'], $num - 1, $lv + 1);
             }
 
-            $data[] = ['id' => $uinfo['id'], 'pid' => $uinfo['parent_id'], 'lv' => $lv, 'status' => $uinfo['status']];
+            $data[] = ['id' => $uinfo['id'], 'pid' => $uinfo['parent_id'], 'lv' => $lv, 'status' => $uinfo['status'], 'vip_level' => $uinfo['level']];
             return $data;
         }
         return false;
@@ -648,7 +648,7 @@ class Users extends Model
             }
         }
 
-        if ($can_vip_info['level'] < $newlevel && $newlevel < 5) {
+        if ($can_vip_info['level'] < $newlevel && $newlevel < 4) {
             db('xy_users')->where('id', $uid)->update(['level' => $newlevel]);
             db('xy_message')->insert(['uid' => $uid, 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('您已达到升级标准，已自动升级'), 'addtime' => time()]);
             return true;
@@ -673,7 +673,7 @@ class Users extends Model
             }
         }
 
-        if ($user['level'] < $newlevel && $newlevel < 5) {
+        if ($user['level'] < $newlevel && $newlevel < 4) {
             db('xy_users')->where('id', $uid)->update(['level' => $newlevel]);
             db('xy_message')->insert(['uid' => $uid, 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('您已达到升级标准，已自动升级'), 'addtime' => time()]);
             return true;

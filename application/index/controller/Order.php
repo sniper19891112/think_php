@@ -398,33 +398,34 @@ class Order extends Base
             if ($userList) {
                 foreach ($userList as $v) {
                     if ($v['status'] === 1) {
-                        db('xy_reward_log')
-                            ->insert([
+                        if ($v["lv"] < 3) {
+                            db('xy_reward_log')
+                                ->insert([
+                                    'uid' => $v['id'],
+                                    'sid' => $uid,
+                                    'oid' => $oid,
+                                    'num' => $num * config($v['lv'] . '_d_reward'),
+                                    'lv' => $v['lv'],
+                                    'type' => 2,
+                                    'status' => 1,
+                                    'addtime' => time(),
+                                ]);
+                            db('xy_balance_log')->insert([
+                                //记录返佣信息
                                 'uid' => $v['id'],
-                                'sid' => $uid,
                                 'oid' => $oid,
+                                'sid' => $uid,
                                 'num' => $num * config($v['lv'] . '_d_reward'),
-                                'lv' => $v['lv'],
-                                'type' => 2,
+                                'type' => 6,
                                 'status' => 1,
+                                'f_lv' => $v['lv'],
                                 'addtime' => time(),
                             ]);
-                        db('xy_balance_log')->insert([
-                            //记录返佣信息
-                            'uid' => $v['id'],
-                            'oid' => $oid,
-                            'sid' => $uid,
-                            'num' => $num * config($v['lv'] . '_d_reward'),
-                            'type' => 6,
-                            'status' => 1,
-                            'f_lv' => $v['lv'],
-                            'addtime' => time(),
-                        ]);
-                        $sub_commission = $num * config($v['lv'] . '_d_reward'); //佣金
-                        $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
-                        if ($v["lv"] == 2) {
-                            // 1.2 * 1.2
-                            $sub_commission = $num * config('1_d_reward') * config('1_d_reward');
+                            $sub_commission = $num * config($v['lv'] . '_d_reward'); //佣金
+                            $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
+                        }
+                        if ($v["lv"] == 3 && $v['vip_level'] == 3) {
+                            $sub_commission = $num * config('3_d_reward');
                             db('xy_reward_log')
                                 ->insert([
                                     'uid' => $v['id'],
@@ -449,211 +450,8 @@ class Order extends Base
                             ]);
                             $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
                         }
-                        if ($v["lv"] == 3) {
-                            // 1.2 * 1.2 * 1.2
-                            $sub_commission = $num * config('1_d_reward') * config('1_d_reward') * config('1_d_reward');
-                            db('xy_reward_log')
-                                ->insert([
-                                    'uid' => $v['id'],
-                                    'sid' => $uid,
-                                    'oid' => $oid,
-                                    'num' => $sub_commission,
-                                    'lv' => $v['lv'],
-                                    'type' => 2,
-                                    'status' => 1,
-                                    'addtime' => time(),
-                                ]);
-                            db('xy_balance_log')->insert([
-                                //记录返佣信息
-                                'uid' => $v['id'],
-                                'oid' => $oid,
-                                'sid' => $uid,
-                                'num' => $sub_commission,
-                                'type' => 6,
-                                'status' => 1,
-                                'f_lv' => $v['lv'],
-                                'addtime' => time(),
-                            ]);
-                            $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
-                            // 1.2 * 0.8
-                            $sub_commission = $num * config('1_d_reward') * config('2_d_reward');
-                            db('xy_reward_log')
-                                ->insert([
-                                    'uid' => $v['id'],
-                                    'sid' => $uid,
-                                    'oid' => $oid,
-                                    'num' => $sub_commission,
-                                    'lv' => $v['lv'],
-                                    'type' => 2,
-                                    'status' => 1,
-                                    'addtime' => time(),
-                                ]);
-                            db('xy_balance_log')->insert([
-                                //记录返佣信息
-                                'uid' => $v['id'],
-                                'oid' => $oid,
-                                'sid' => $uid,
-                                'num' => $sub_commission,
-                                'type' => 6,
-                                'status' => 1,
-                                'f_lv' => $v['lv'],
-                                'addtime' => time(),
-                            ]);
-                            $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
-                            // 1.2 * 3
-                            $sub_commission = $num * config('1_d_reward') * config('3_d_reward');
-                            db('xy_reward_log')
-                                ->insert([
-                                    'uid' => $v['id'],
-                                    'sid' => $uid,
-                                    'oid' => $oid,
-                                    'num' => $sub_commission,
-                                    'lv' => $v['lv'],
-                                    'type' => 2,
-                                    'status' => 1,
-                                    'addtime' => time(),
-                                ]);
-                            db('xy_balance_log')->insert([
-                                //记录返佣信息
-                                'uid' => $v['id'],
-                                'oid' => $oid,
-                                'sid' => $uid,
-                                'num' => $sub_commission,
-                                'type' => 6,
-                                'status' => 1,
-                                'f_lv' => $v['lv'],
-                                'addtime' => time(),
-                            ]);
-                            $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
-                            // 1.2 * 1.2 * 3
-                            $sub_commission = $num * config('1_d_reward') * config('1_d_reward') * config('3_d_reward');
-                            db('xy_reward_log')
-                                ->insert([
-                                    'uid' => $v['id'],
-                                    'sid' => $uid,
-                                    'oid' => $oid,
-                                    'num' => $sub_commission,
-                                    'lv' => $v['lv'],
-                                    'type' => 2,
-                                    'status' => 1,
-                                    'addtime' => time(),
-                                ]);
-                            db('xy_balance_log')->insert([
-                                //记录返佣信息
-                                'uid' => $v['id'],
-                                'oid' => $oid,
-                                'sid' => $uid,
-                                'num' => $sub_commission,
-                                'type' => 6,
-                                'status' => 1,
-                                'f_lv' => $v['lv'],
-                                'addtime' => time(),
-                            ]);
-                            $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
-                        }
-                        if ($v["lv"] == 4) {
-                            // 1.2 * 1.2 * 1.2 * 1.2
-                            $sub_commission = $num * config('1_d_reward') * config('1_d_reward') * config('1_d_reward') * config('1_d_reward');
-                            db('xy_reward_log')
-                                ->insert([
-                                    'uid' => $v['id'],
-                                    'sid' => $uid,
-                                    'oid' => $oid,
-                                    'num' => $sub_commission,
-                                    'lv' => $v['lv'],
-                                    'type' => 2,
-                                    'status' => 1,
-                                    'addtime' => time(),
-                                ]);
-                            db('xy_balance_log')->insert([
-                                //记录返佣信息
-                                'uid' => $v['id'],
-                                'oid' => $oid,
-                                'sid' => $uid,
-                                'num' => $sub_commission,
-                                'type' => 6,
-                                'status' => 1,
-                                'f_lv' => $v['lv'],
-                                'addtime' => time(),
-                            ]);
-                            $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
-                            // 1.2 * 1.2 * 0.8
-                            $sub_commission = $num * config('1_d_reward') * config('1_d_reward') * config('2_d_reward');
-                            db('xy_reward_log')
-                                ->insert([
-                                    'uid' => $v['id'],
-                                    'sid' => $uid,
-                                    'oid' => $oid,
-                                    'num' => $sub_commission,
-                                    'lv' => $v['lv'],
-                                    'type' => 2,
-                                    'status' => 1,
-                                    'addtime' => time(),
-                                ]);
-                            db('xy_balance_log')->insert([
-                                //记录返佣信息
-                                'uid' => $v['id'],
-                                'oid' => $oid,
-                                'sid' => $uid,
-                                'num' => $sub_commission,
-                                'type' => 6,
-                                'status' => 1,
-                                'f_lv' => $v['lv'],
-                                'addtime' => time(),
-                            ]);
-                            $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
-                            // 1.2 * 2
-                            $sub_commission = $num * config('1_d_reward') * config('4_d_reward');
-                            db('xy_reward_log')
-                                ->insert([
-                                    'uid' => $v['id'],
-                                    'sid' => $uid,
-                                    'oid' => $oid,
-                                    'num' => $sub_commission,
-                                    'lv' => $v['lv'],
-                                    'type' => 2,
-                                    'status' => 1,
-                                    'addtime' => time(),
-                                ]);
-                            db('xy_balance_log')->insert([
-                                //记录返佣信息
-                                'uid' => $v['id'],
-                                'oid' => $oid,
-                                'sid' => $uid,
-                                'num' => $sub_commission,
-                                'type' => 6,
-                                'status' => 1,
-                                'f_lv' => $v['lv'],
-                                'addtime' => time(),
-                            ]);
-                            $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
-                            // 1.2 * 1.2 * 2
-                            $sub_commission = $num * config('1_d_reward') * config('1_d_reward') * config('4_d_reward');
-                            db('xy_reward_log')
-                                ->insert([
-                                    'uid' => $v['id'],
-                                    'sid' => $uid,
-                                    'oid' => $oid,
-                                    'num' => $sub_commission,
-                                    'lv' => $v['lv'],
-                                    'type' => 2,
-                                    'status' => 1,
-                                    'addtime' => time(),
-                                ]);
-                            db('xy_balance_log')->insert([
-                                //记录返佣信息
-                                'uid' => $v['id'],
-                                'oid' => $oid,
-                                'sid' => $uid,
-                                'num' => $sub_commission,
-                                'type' => 6,
-                                'status' => 1,
-                                'f_lv' => $v['lv'],
-                                'addtime' => time(),
-                            ]);
-                            $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
-                            // 1.2 * 1.2 * 1.2 * 2
-                            $sub_commission = $num * config('1_d_reward') * config('1_d_reward') * config('1_d_reward') * config('4_d_reward');
+                        if ($v["lv"] == 4 && $v['vip_level'] == 4) {
+                            $sub_commission = $num * config('4_d_reward');
                             db('xy_reward_log')
                                 ->insert([
                                     'uid' => $v['id'],

@@ -84,7 +84,7 @@ class User extends Base
         model('admin/Users')->auto_check_up_vip($userinfo['id']);
 
         //提现降低等级检测
-        model('admin/Users')->auto_check_down_vip($userinfo['id']);
+        // model('admin/Users')->auto_check_down_vip($userinfo['id']);
         return json(['code' => 0, 'info' => lang('登录成功')]);
     }
     public function get_real_ip()
