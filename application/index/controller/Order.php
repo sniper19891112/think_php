@@ -93,7 +93,7 @@ class Order extends Base
             $uid = session('user_id');
             $user = db("xy_users")->find($uid);
             $vip_item = db("xy_level")->where("level", $user['level'])->find();
-            if ($order_count >= $vip_item["auto_vip_order_num"]) {
+            if ($order_count >= $vip_item["tixian_nim_order"]) {
                 return json(["code" => 1, "info" => "Today order limited"]);
             }
             $res = model('admin/Convey')->create_settlement_order(session('user_id'), $goods_id);
