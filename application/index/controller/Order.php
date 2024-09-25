@@ -83,23 +83,36 @@ class Order extends Base
     public function create_settlement_order()
     {
         if (request()->isPost()) {
+            $uid = session('user_id');
             $goods_id = input('post.goods_id/d', 0);
             if ($goods_id == 0) {
                 return json(['code' => 1, 'info' => lang('参数错误')]);
             }
             $start_time = strtotime('today'); // Start of today (00:00:00)
             $end_time = strtotime('tomorrow') - 1; // End of today (23:59:59)
-            $order_count = db("xy_convey")->whereBetween('addtime', [$start_time, $end_time])->count();
-            $uid = session('user_id');
+            $order_count = db("xy_convey")->where("uid", $uid)->whereBetween('addtime', [$start_time, $end_time])->count();
             $user = db("xy_users")->find($uid);
             $vip_item = db("xy_level")->where("level", $user['level'])->find();
             if ($order_count >= $vip_item["tixian_nim_order"]) {
-                return json(["code" => 1, "info" => "Today order limited"]);
+                return json(["code" => 1, "info" => "VIP level order quantity error"]);
             }
             $res = model('admin/Convey')->create_settlement_order(session('user_id'), $goods_id);
             return json($res);
         }
         return json(['code' => 1, 'info' => lang('错误请求')]);
+    }
+
+    public function check_vip_order() {
+        $user = db("xy_users")->field("id, level")->select();
+        foreach($user as $item) {
+            $start_time = strtotime('today'); // Start of today (00:00:00)
+            $end_time = strtotime('tomorrow') - 1; // End of today (23:59:59)
+            $order_count = db("xy_convey")->where("uid", $item['id'])->whereBetween('addtime', [$start_time, $end_time])->count();
+            $vip_item = db("xy_level")->where("level", $item['level'])->find();
+            if ($order_count < $vip_item["tixian_nim_order"]) {
+                db("xy_users")->where('id', $item['id'])->update(["status" => 2]);
+            }
+        }
     }
 
     public function settlement_order_detail()
@@ -391,8 +404,15 @@ class Order extends Base
         $res2 = db('xy_users')->where('id', $uid)->where('status', 1)->setDec('freeze_balance', $num + $cnum);
 
         if ($res) {
-            db('xy_balance_log')->where("oid", $oid)->update(["status" => 1]);
             db('xy_reward_log')->insert(['oid' => $oid, 'uid' => $uid, 'num' => $num, 'addtime' => time(), 'type' => 2]); //记录充值返佣订单
+            db('xy_balance_log')->insert([
+                'uid' => $uid,
+                'oid' => $oid,
+                'num' => $num,
+                'type' => 2,
+                'status' => 1,
+                'addtime' => time(),
+            ]);
             db('xy_balance_log')->insert([
                 'uid'       => $uid,
                 'oid'       => $oid,

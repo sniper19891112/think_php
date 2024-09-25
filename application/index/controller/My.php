@@ -192,10 +192,14 @@ class My extends Base
         $wallet_address = input('post.address/s', '');
         $pwd2 = input('post.pwd2/s', '');
 
-        $userinfo = db("xy_users")->field("pwd, salt, pwd2, salt2")->find($uid);
+        $userinfo = db("xy_users")->field("pwd, salt, pwd2, salt2, balance")->find($uid);
 
         if ($userinfo['pwd2'] != sha1($pwd2 . $userinfo['salt2'] . config('pwd_str'))) {
             return json(['code' => 1, 'info' => lang('Wrong payment password')]);
+        }
+
+        if ($userinfo['balance'] < $withdraw_amount) {
+            return json(['code' => 1, 'info' => lang('Insufficient balance')]);
         }
 
         $id = getSn('CO');

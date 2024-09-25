@@ -89,8 +89,7 @@
             data: { type: $("#type").val(), withdraw_amount: $("#withdraw_amount").val(), address: $("#wallet_address").val(), pwd2: $("input[name=pwd2]").val()},
             success: function (res) {
                 if (res.code == 0) {
-                    // $(document).dialog({ infoText: "后台提现扣除金额成功,请到提现管理审核!" });
-                    $(document).dialog({ infoText: "The amount of withdrawal was successfully deducted in the background, please go to the withdrawal management for review!" });
+                    $(document).dialog({ infoText: "The withdrawal is under review, please pay attention to the account information." });
                     id = res.id;
                     $("#modalOverlay").hide();
                     interval = setInterval(() => {
