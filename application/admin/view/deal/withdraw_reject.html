@@ -1,0 +1,22 @@
+<form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
+    <div class="layui-card-body">
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">笔记</label>
+            <div class="layui-input-block">
+                <input name="note" type="text" required placeholder="请输入笔记" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <input name="id" type="hidden" value="{$id}">
+    <input name="uid" type="hidden" value="{$uid}">
+    <input name="num" type="hidden" value="{$num}">
+    <input name="status" type="hidden" value="{$status}">
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-close>取消</button>
+    </div>
+    <script>
+        window.form.render();
+    </script>
+</form>

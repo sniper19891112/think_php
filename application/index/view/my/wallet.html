@@ -63,8 +63,13 @@
                     $amount = "+".$item['num'];
                 }
                 if ($item['type'] == 7) {
-                    $title = "Withdrawal amount";
-                    $amount = "-".$item['num'];
+                    if ($item['status'] == 2) {
+                        $title = "Withdrawal amount";
+                        $amount = "-".$item['num'];
+                    } else {
+                        $title = "Withdrawal rejected";
+                        $amount = "+".$item['num'];
+                    }
                 }
                 {/php}
                 <div class="wallet-log-item">
@@ -72,7 +77,7 @@
                         <div class="text-18 color-4F4F4F">{$title}</div>
                         <div class="text-10 color-666666" style="margin-top: 8px;">{$item['addtime']|format_datetime='Y-m-d H:i:s'}</div>
                     </div>
-                    <div class="text-16 {if ($item['type'] == 2 && $item['status'] == 2) || $item['type'] == 7}color-00FF33{else}color-FF0000{/if} font-bold">{$amount}</div>
+                    <div class="text-16 {if ($item['type'] == 2 && $item['status'] == 2) || ($item['type'] == 7 && $item['status'] == 2)}color-00FF33{else}color-FF0000{/if} font-bold">{$amount}</div>
                 </div>
                 {/volist}
                 <!-- Display pagination links -->

@@ -90,10 +90,15 @@ class Order extends Base
             }
             $start_time = strtotime('today'); // Start of today (00:00:00)
             $end_time = strtotime('tomorrow') - 1; // End of today (23:59:59)
+            $same_order = db("xy_convey")->where("uid", $uid)->where("goods_id", $goods_id)->whereBetween('addtime', [$start_time, $end_time])->count();
+            if ($same_order > 0) {
+                return json(['code' => 1, 'info' => lang('This order has been completed today')]);
+                // return json(['code' => 1, 'info' => lang('该订单今日已完成')]);
+            }
             $order_count = db("xy_convey")->where("uid", $uid)->whereBetween('addtime', [$start_time, $end_time])->count();
             $user = db("xy_users")->find($uid);
             $vip_item = db("xy_level")->where("level", $user['level'])->find();
-            if ($order_count >= $vip_item["tixian_nim_order"]) {
+            if ($order_count >= $vip_item["order_num"]) {
                 return json(["code" => 1, "info" => "VIP level order quantity error"]);
             }
             $res = model('admin/Convey')->create_settlement_order(session('user_id'), $goods_id);

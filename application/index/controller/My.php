@@ -223,6 +223,19 @@ class My extends Base
 
         $result = db('xy_deposit')->insert($data);
 
+        //提现日志
+        db('xy_balance_log')
+            ->insert([
+                'uid' => $uid,
+                'oid' => $id,
+                'num' => $withdraw_amount,
+                'type' => 7, //TODO 7提现
+                'status' => 2,
+                'addtime' => time(),
+            ]);
+
+        db('xy_users')->where('id', session('user_id'))->setDec('balance', $withdraw_amount);
+
         if ($result) {
             return json(["code" => 0, "info" => "后台提现扣除金额成功,请到提现管理审核!", "id" => $id]);
         } else {

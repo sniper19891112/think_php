@@ -144,10 +144,10 @@
             <td class='text-left nowrap'>
             {if ($vo.status == 1) and auth("do_deposit")}
                 <a class="layui-btn layui-btn-xs" data-csrf="{:systoken('admin/deal/do_deposit')}" data-action="{:url('do_deposit')}" data-value="id#{$vo.id};status#2">通过</a>
-                <a class="layui-btn layui-btn-xs layui-btn-warm" data-csrf="{:systoken('admin/deal/do_deposit')}" data-action="{:url('do_deposit')}" data-value="id#{$vo.id};status#3;uid#{$vo.uid};num#{$vo.num}">驳回</a>
+                <a class="layui-btn layui-btn-xs layui-btn-warm" data-modal='{:url("admin/deal/withdraw_reject")}?id={$vo.id}&uid={$vo.uid}&num={$vo.num}&status=3' data-value="id#{$vo.id};status#3;uid#{$vo.uid};num#{$vo.num}">驳回</a>
             {/if}
             
-             {if ($vo.status == 2) and auth("disbursement") and ($vo.tradeResult != 'SUCCESS') and (!$vo.tradeNo)}             
+            {if ($vo.status == 2) and auth("disbursement") and ($vo.tradeResult != 'SUCCESS') and (!$vo.tradeNo)}             
                 
                 <!-- <a data-dbclick class="layui-btn layui-btn-xs" data-title="银行卡信息" data-modal='{:url("admin/users/edit_users_bk")}?id={$vo.uid}'>修改银行卡</a>
  

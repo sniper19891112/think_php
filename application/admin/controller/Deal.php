@@ -471,6 +471,54 @@ class Deal extends Controller
 
     }
 
+    public function withdraw_reject()
+    {
+        $id = input('get.id/s', '');
+        $uid = input('get.uid/s', '');
+        $num = input('get.num/f', 0);
+        $status = input('get.status/f', 0);
+        $this->assign('id', $id);
+        $this->assign('uid', $uid);
+        $this->assign('num', $num);
+        $this->assign('status', $status);
+        if (request()->isPost()) {
+            $id = input('post.id/s', '');
+            $uid = input('post.uid/s', '');
+            $num = input('post.num/f', 0);
+            $status = input('post.status/f', 0);
+            $note = input('post.note/s', '');
+            db('xy_users')->where('id', $uid)->setInc('balance', $num);
+            //提现日志
+            $res = db('xy_balance_log')
+                ->insert([
+                    'uid' => $uid,
+                    'oid' => $id,
+                    'num' => $num,
+                    'type' => 7, //TODO 7提现
+                    'status' => 1,
+                    'addtime' => time(),
+                    'note' => $note,
+                ]);
+            //驳回订单的业务逻辑
+            $res = db('xy_message')
+                ->insert([
+                    'uid' => $uid,
+                    'type' => 1,
+                    'title' => 'System notification',
+                    'content' => 'withdrawal order' . $uid . 'has been returned. If you have any questions, please contact customer service',
+                    'addtime' => time(),
+                    'status' => 0,
+                ]);
+            $this->_save('xy_deposit', ['status' => $status, 'endtime' => time()]);
+            if ($res) {
+                return $this->success('操作成功');
+            } else {
+                return $this->error($res);
+            }
+        }
+        return $this->fetch();
+    }
+
     /**
      * 编辑商品信息
      * @auth true
@@ -1043,35 +1091,11 @@ class Deal extends Controller
     {
         $this->applyCsrfToken();
         $status = input('post.status/d', 1);
+        $oid = input('post.id', 0);
         $oinfo = db('xy_deposit')->where('id', input('post.id', 0))->find();
         if ($status == 2) {
-            $oid = input('post.id', 0);
-            db('xy_users')->where('id', $oinfo['uid'])->setDec('balance', $oinfo["num"]);
-            //提现日志
-            $res = db('xy_balance_log')
-                ->insert([
-                    'uid' => $oinfo['uid'],
-                    'oid' => $oinfo["id"],
-                    'num' => $oinfo["num"],
-                    'type' => 7, //TODO 7提现
-                    'status' => 2,
-                    'addtime' => time(),
-                ]);
-        }
-        if ($status == 3) {
-            //驳回订单的业务逻辑
-            $res = db('xy_message')
-                ->insert([
-                    'uid' => $oinfo['uid'],
-                    'type' => 1,
-                    'title' => 'System notification',
-                    'content' => 'withdrawal order' . $oinfo["uid"] . 'has been returned. If you have any questions, please contact customer service',
-                    'addtime' => time(),
-                    'status' => 0,
-                ]);
         }
         $this->_save('xy_deposit', ['status' => $status, 'endtime' => time()]);
-
     }
 
     /**
