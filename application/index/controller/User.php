@@ -81,8 +81,7 @@ class User extends Base
             cookie('pwd', $pwd);
         }
         //检测自动升级
-        model('admin/Users')->auto_check_up_vip($userinfo['id']);
-
+        $result = model('admin/Users')->auto_check_up_vip($userinfo['id']);
         //提现降低等级检测
         // model('admin/Users')->auto_check_down_vip($userinfo['id']);
         return json(['code' => 0, 'info' => lang('登录成功')]);

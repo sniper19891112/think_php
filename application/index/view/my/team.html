@@ -44,14 +44,14 @@
                         </div>
                     </div>
                     {php}
-                    $level = $user['level'] + 1;
-                    if ($level < 4) {
+                    $vip_level = $user['level'] + 1;
+                    if ($vip_level < 4) {
                         $level_img = '/web/img/vip'.$level.'.png';
                     }
-                    if ($level == 4) {
+                    if ($vip_level == 4) {
                         $level_img = '/web/img/皇冠11.png';
                     }
-                    if ($level == 5) {
+                    if ($vip_level == 5) {
                         $level_img = '/web/img/超级皇冠11.png';
                     }
                     {/php}

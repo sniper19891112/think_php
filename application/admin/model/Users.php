@@ -462,8 +462,10 @@ class Users extends Model
         $idsAll = array_merge($ids1, $ids2, $ids3, $ids4, $ids5, $ids6, $ids7, $ids8, $ids9, $data);
 
         $mapchck[] = ['id', 'in', $idsAll];
-        $check = db('xy_users')->where($mapchck)->where('balance', 'gt', 30)->column('balance');
-        return count($check);
+        // $check = db('xy_users')->where($mapchck)->where('balance', 'gt', 30)->column('balance');
+        // return count($check);
+        $check_count = db('xy_users')->where($mapchck)->count();
+        return $check_count;
     }
     //获取下级会员
     public function child_user($uid, $num = 1, $lv = 1)
@@ -642,12 +644,15 @@ class Users extends Model
         $can_vip_info = model('admin/Users')->can_vip_info($uid);
         $newlevel = 0;
         foreach ($levelinfo as $key => $info) {
-            if ($can_vip_info['child_num'] >= $info['auto_vip_xu_num'] && $can_vip_info['balance'] >= $info['num']) {
+            // if ($can_vip_info['child_num'] >= $info['auto_vip_xu_num'] && $can_vip_info['balance'] >= $info['num']) {
+            //     $newlevel = $info['level'];
+            //     break;
+            // }
+            if ($can_vip_info['child_num'] >= $info['auto_vip_xu_num']) {
                 $newlevel = $info['level'];
                 break;
             }
         }
-
         if ($can_vip_info['level'] < $newlevel && $newlevel < 4) {
             db('xy_users')->where('id', $uid)->update(['level' => $newlevel]);
             db('xy_message')->insert(['uid' => $uid, 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('您已达到升级标准，已自动升级'), 'addtime' => time()]);
