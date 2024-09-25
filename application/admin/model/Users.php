@@ -642,6 +642,7 @@ class Users extends Model
         $levelinfo = db('xy_level')->field('level,num,auto_vip_xu_num')->order('level desc')->select();
 
         $can_vip_info = model('admin/Users')->can_vip_info($uid);
+        // return $can_vip_info;
         $newlevel = 0;
         foreach ($levelinfo as $key => $info) {
             // if ($can_vip_info['child_num'] >= $info['auto_vip_xu_num'] && $can_vip_info['balance'] >= $info['num']) {
@@ -649,11 +650,12 @@ class Users extends Model
             //     break;
             // }
             if ($can_vip_info['child_num'] >= $info['auto_vip_xu_num']) {
-                $newlevel = $info['level'];
+                $newlevel = $info['level'] + 1;
                 break;
             }
         }
-        if ($can_vip_info['level'] < $newlevel && $newlevel < 4) {
+        // return $newlevel;
+        if ($can_vip_info['level'] < $newlevel && $newlevel < 3) {
             db('xy_users')->where('id', $uid)->update(['level' => $newlevel]);
             db('xy_message')->insert(['uid' => $uid, 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('您已达到升级标准，已自动升级'), 'addtime' => time()]);
             return true;
@@ -673,12 +675,12 @@ class Users extends Model
 
         foreach ($levelinfo as $key => $info) {
             if ($order_count >= $info['auto_vip_order_num']) {
-                $newlevel = $info['level'];
+                $newlevel = $info['level'] + 1;
                 break;
             }
         }
 
-        if ($user['level'] < $newlevel && $newlevel < 4) {
+        if ($user['level'] < $newlevel && $newlevel < 3) {
             db('xy_users')->where('id', $uid)->update(['level' => $newlevel]);
             db('xy_message')->insert(['uid' => $uid, 'type' => 2, 'title' => lang('系统通知'), 'content' => lang('您已达到升级标准，已自动升级'), 'addtime' => time()]);
             return true;
