@@ -68,6 +68,8 @@
 
             <th class='text-left nowrap'>订单号</th>
             <th class='text-left nowrap'>用户姓名</th>
+            <th class='text-left nowrap'>等级</th>
+            <th class='text-left nowrap'>任务量</th>
             <th class='text-left nowrap'>提现金额</th>
             <th class='text-left nowrap'>实际到账</th>
             <th class='text-left nowrap'>提现方式</th>
@@ -84,15 +86,22 @@
         <tbody>
         {foreach $list as $key=>$vo}
         <tr>
+            {php}
+                $level = $vo['level'] + 1;
+                $level = "VIP".$level;
+                $start_time = strtotime('today'); // Start of today (00:00:00)
+                $end_time = strtotime('tomorrow') - 1; // End of today (23:59:59)
+                $order_count = db("xy_convey")->where("uid", $vo['id'])->whereBetween('addtime', [$start_time, $end_time])->count();
+            {/php}
             <td class='list-table-check-td think-checkbox'>
                 <input class="list-check-box" value='{$vo.id}' type='checkbox'>
             </td>
-
             <td class='text-left nowrap'>{$vo.id}</td>
             <td class='text-left nowrap'>用户名{$vo.username}<p>电话{$vo.tel}</td>
+            <td class='text-left nowrap'>{$level}</td>
+            <td class='text-left nowrap'>{$order_count}</td>
             <td class='text-left nowrap'>{$vo.num}<p>手续费 {if ($vo.type == 'trc')}1U {/if}{if ($vo.type == 'erc')} 10U{/if}</td>
-            <td class='text-left nowrap'>{$vo.real_num}
-            
+            <td class='text-left nowrap'>{$vo.real_num}            
              {if $vo.tradeNo}
                 <hr>
                 代付日期:{$vo.applyDate}
@@ -111,14 +120,12 @@
             <p >TRC:   
             {notempty name='vo.trc20_address'}{$vo.trc20_address}{else}未填写{/notempty}
             </p>
-            {/if}
-            
+            {/if}            
             {if ($vo.type == 'erc')} 
-            <p >ERC:
+            <p>ERC:
             {notempty name='vo.erc20_address'}{$vo.erc20_address}{else}未填写{/notempty}
             </p>
             {/if}
-            
             {if ($vo.type == 'card')}  
             {notempty name='vo.bk_id'}
             <p >
@@ -129,7 +136,6 @@
             用户名:{:model('Users')->get_bank_info($vo.bk_id,'username');}<hr>
             备注:{:model('Users')->get_bank_info($vo.bk_id,'remark');}<hr>
             </p>
-            
             {/notempty}
             {/if}
 			</td>

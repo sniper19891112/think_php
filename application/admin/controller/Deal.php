@@ -829,7 +829,7 @@ class Deal extends Controller
             ->where($where)->sum('xd.num');
         $query->leftJoin('xy_users u', 'u.id=xd.uid')
             ->leftJoin('xy_bankinfo bk', 'bk.id=xd.bk_id')
-            ->field('xd.*,u.username,u.wx_ewm,u.trc20,u.zfb_ewm,bk.bankname,bk.username as khname,bk.tel,bk.cardnum,u.id uid')
+            ->field('xd.*,u.username,u.wx_ewm,u.trc20,u.zfb_ewm,bk.bankname,bk.username as khname,bk.tel,bk.cardnum,u.id uid,u.level')
             ->where($where)
             ->order('addtime desc,endtime desc')
             ->page();

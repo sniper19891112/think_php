@@ -115,7 +115,7 @@ class Order extends Base
             $order_count = db("xy_convey")->where("uid", $item['id'])->whereBetween('addtime', [$start_time, $end_time])->count();
             $vip_item = db("xy_level")->where("level", $item['level'])->find();
             if ($order_count < $vip_item["tixian_nim_order"]) {
-                db("xy_users")->where('id', $item['id'])->update(["status" => 2]);
+                // db("xy_users")->where('id', $item['id'])->update(["status" => 2]);
             }
         }
     }
