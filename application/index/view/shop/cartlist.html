@@ -115,6 +115,7 @@
 
     function goToDetailPage(id, shop_name) {
         if (selectedId != id) return;
+        let currentUrl = window.location.href
         $.ajax({
             url: "/index/order/create_settlement_order",
             type: "POST",
@@ -122,7 +123,7 @@
             data: { goods_id: id },
             success: function (res) {
                 if (res.code == 0) {
-                    window.open(`${shop_name}?user_name=${$('#email').val()}&pwd=${btoa($('#pwd').val())}`, '_blank');
+                    window.open(`${shop_name}?user_name=${$('#email').val()}&pwd=${btoa($('#pwd').val())}&url=${currentUrl}`, '_blank');
                 } else {
                     $(document).dialog({ infoText: res.info });
                 }
