@@ -124,7 +124,7 @@
             data: { goods_id: id },
             success: function (res) {
                 if (res.code == 0) {
-                    window.open(`${shop_name}?user_name=${$('#email').val()}&pwd=${btoa($('#pwd').val())}&url=${baseUrl}/index/order/order`, '_blank');
+                    window.open(`${shop_name}&user_name=${$('#email').val()}&pwd=${btoa($('#pwd').val())}&url=${baseUrl}/index/order/order`, '_blank');
                 } else {
                     $(document).dialog({ infoText: res.info });
                 }
