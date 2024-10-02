@@ -6,6 +6,8 @@ return [
     "landing_text_2" => "We use wisdom and innovation to create efficient, transparent and safe models, and use the power of science and technology to escort your business.",
     "landing_text_3" => "Connect wealth and the future, so that wealth appreciation is no longer out of reach, convenient at your fingertips, for you to open a new journey of wealth.",
     "next" => "NEXT",
+    "email_login" => "Email login",
+    "login_text_1" => "Enter your account number to continue",
     "我的服务" => "My Services",
     "帮助" => "Help",
     "累计收益" => "Cumulative income",
@@ -690,5 +692,4 @@ return [
     '平台' => 'platform',
     '公告' => 'announcement',
     '邀好友赚现金' => 'Invite friends to earn cash',
-
 ];
