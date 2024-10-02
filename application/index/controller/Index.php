@@ -24,7 +24,7 @@ class Index extends Base
 
     public function landing()
     {
-        return $this->fetch('landing');
+        return $this->fetch();
     }
 
     public function home()

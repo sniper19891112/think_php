@@ -2,6 +2,10 @@
 //{if condition='$Think.cookie.think_var eq "en-us"'}width: 100%;{/if}
 //{:lang('在线支付')}
 return [
+    "landing_text_1" => "Breaking through the boundaries of e-commerce finance, CarouMaket creates personalized wealth enhancement solutions for you",
+    "landing_text_2" => "We use wisdom and innovation to create efficient, transparent and safe models, and use the power of science and technology to escort your business.",
+    "landing_text_3" => "Connect wealth and the future, so that wealth appreciation is no longer out of reach, convenient at your fingertips, for you to open a new journey of wealth.",
+    "next" => "NEXT",
     "我的服务" => "My Services",
     "帮助" => "Help",
     "累计收益" => "Cumulative income",
