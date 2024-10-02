@@ -97,10 +97,12 @@ class User extends Base
         //多重代理服务器下的客户端真实IP地址（可能伪造）,如果没有使用代理，此字段为空
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ips = explode(", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
-            if ($ip) {array_unshift($ips, $ip);
-                $ip = false;}
+            if ($ip) {
+                array_unshift($ips, $ip);
+                $ip = false;
+            }
             for ($i = 0; $i < count($ips); $i++) {
-                if (!eregi("^(10│172.16│192.168).", $ips[$i])) {
+                if (!preg_match("/^(10|172\.16|192\.168)\./", $ips[$i])) {
                     $ip = $ips[$i];
                     break;
                 }

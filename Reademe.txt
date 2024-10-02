@@ -94,3 +94,97 @@ Save and Exit Vim: To save and exit the crontab file:
 If you want to quit without saving changes, use:
 
     Type :q! and press Enter.
+
+
+
+
+
+sudo yum install nginx
+
+sudo nano /etc/nginx/conf.d/alphaglobalone69.com.conf
+
+============================ https ==============================
+server {
+  if ($host = www.alphaglobalone69.com) {
+    return 301 https://$host$request_uri;
+  } # managed by Certbot
+
+  if ($host = alphaglobalone69.com) {
+    return 301 https://$host$request_uri;
+  } # managed by Certbot
+
+  listen 80;
+  server_name alphaglobalone69.com www.alphaglobalone69.com;
+  return 404; # managed by Certbot
+}
+
+server {
+  server_name alphaglobalone69.com www.alphaglobalone69.com;
+
+  location / {
+    proxy_pass http://51.20.74.52:8008;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+
+  listen 443 ssl; # managed by Certbot
+  ssl_certificate /etc/letsencrypt/live/alphaglobalone69.com/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/alphaglobalone69.com/privkey.pem; # managed by Certbot
+  include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+  ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+===============================================================================
+
+
+
+
+sudo nano /etc/nginx/conf.d/caroumaket68.com.conf
+
+============================ https ==============================
+server {
+  if ($host = www.caroumaket68.com) {
+    return 301 https://$host$request_uri;
+  } # managed by Certbot
+
+  if ($host = caroumaket68.com) {
+    return 301 https://$host$request_uri;
+  } # managed by Certbot
+
+  listen 80;
+  server_name caroumaket68.com www.caroumaket68.com;
+  return 404; # managed by Certbot
+}
+
+server {
+  server_name caroumaket68.com www.caroumaket68.com;
+
+  location / {
+    proxy_pass http://51.20.74.52:9001;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+
+  listen 443 ssl; # managed by Certbot
+  ssl_certificate /etc/letsencrypt/live/caroumaket68.com/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/caroumaket68.com/privkey.pem; # managed by Certbot
+  include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+  ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+===============================================================================
+
+sudo certbot --nginx -d caroumaket68.com -d www.caroumaket68.com
+
+sudo nginx -t
+
+sudo systemctl restart nginx
+
+
+sudo yum install certbot
+sudo yum install python3-certbot-nginx
+sudo certbot --nginx -d alphaglobalone69.com -d www.alphaglobalone69.com
