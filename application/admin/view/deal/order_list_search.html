@@ -22,6 +22,7 @@
             </div>
             <div class="layui-form-item layui-inline">
                 <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                <button data-action='{:url("export_batch_order")}' data-csrf="{:systoken('export_batch_order')}" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-danger'>批量导出</button>
             </div>
         </form>
     </fieldset>

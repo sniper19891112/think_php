@@ -25,5 +25,3 @@ require __DIR__ . '/../thinkphp/base.php';
 require __DIR__ . '/../extend/org/Mobile.php';
 
 Container::get('app')->run()->send();
-
-

@@ -14,6 +14,162 @@ use think\Db;
  */
 class Deal extends Controller
 {
+
+    /**
+     * export customer order and delivery address
+     * @auth true
+     */
+    public function export_batch_order()
+    {
+
+        $ids = [];
+        if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
+            $ids = explode(',', $_REQUEST['id']);
+            $this->success('处理成功', $ids);
+        }
+
+        $list = db('xy_convey')
+            ->whereIn('xc.id', $ids)
+            ->alias('xc')
+            ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
+            ->leftJoin('xy_users xu', 'xc.uid=xu.id')
+            ->leftJoin('xy_member_address xm', 'xc.uid=xm.uid')
+            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xm.name,xm.tel,xm.address,xu.balance,xu.level')
+            ->select();
+
+        $objPHPExcel = new PHPExcel();
+
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A1', '订单号');
+        $objPHPExcel->getActiveSheet()->setCellValue('B1', '商品名称');
+        $objPHPExcel->getActiveSheet()->setCellValue('C1', '真实姓名');
+        $objPHPExcel->getActiveSheet()->setCellValue('D1', '电话');
+        $objPHPExcel->getActiveSheet()->setCellValue('E1', '地址');
+        $objPHPExcel->getActiveSheet()->setCellValue('F1', '会员等级');
+        $objPHPExcel->getActiveSheet()->setCellValue('G1', '余额');
+        $objPHPExcel->getActiveSheet()->setCellValue('H1', '单价');
+        $objPHPExcel->getActiveSheet()->setCellValue('I1', '数量');
+        $objPHPExcel->getActiveSheet()->setCellValue('J1', '总价');
+        $objPHPExcel->getActiveSheet()->setCellValue('K1', '佣金');
+        $objPHPExcel->getActiveSheet()->setCellValue('L1', '下单时间');
+
+        //设置A列水平居中
+        $objPHPExcel->setActiveSheetIndex(0)->getStyle('A')->getAlignment()
+            ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        //设置单元格宽度
+        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(30);
+        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(30);
+
+        for ($i = 0; $i < count($list); $i++) {
+            $objPHPExcel->getActiveSheet()->setCellValue('A2' . ($i + 2), $list['id']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B2' . ($i + 2), $list['goods_name']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C2' . ($i + 2), $list['name']);
+            $objPHPExcel->getActiveSheet()->setCellValue('D2' . ($i + 2), $list['tel']);
+            $objPHPExcel->getActiveSheet()->setCellValue('E2' . ($i + 2), $list['address']);
+            $objPHPExcel->getActiveSheet()->setCellValue('F2' . ($i + 2), "VIP" . ($list['level'] + 1));
+            $objPHPExcel->getActiveSheet()->setCellValue('G2' . ($i + 2), $list['balance']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H2' . ($i + 2), $list['goods_price']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I2' . ($i + 2), $list['goods_count']);
+            $objPHPExcel->getActiveSheet()->setCellValue('J2' . ($i + 2), $list['num']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K2' . ($i + 2), $list['commission']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L2' . ($i + 2), date("Y-m-d H:i:s", $list['addtime']));
+        }
+
+        //7.设置保存的Excel表格名称
+        $filename = 'order' . date('ymdhis', time()) . '.xls';
+        //8.设置当前激活的sheet表格名称；
+
+        $objPHPExcel->getActiveSheet()->setTitle('sheet'); // 设置工作表名
+
+        //8.设置当前激活的sheet表格名称；
+        $objPHPExcel->getActiveSheet()->setTitle('防伪码');
+        //9.设置浏览器窗口下载表格
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header('Content-Disposition:inline;filename="' . $filename . '"');
+        //生成excel文件
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        //下载文件在浏览器窗口
+        $objWriter->save('php://output');
+        exit;
+    }
+
+    /**
+     * export customer order and delivery address
+     * @auth true
+     */
+    public function export_order()
+    {
+        $oid = input('get.oid');
+
+        $order = db('xy_convey')
+            ->where('xc.id', $oid)
+            ->alias('xc')
+            ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
+            ->leftJoin('xy_users xu', 'xc.uid=xu.id')
+            ->leftJoin('xy_member_address xm', 'xc.uid=xm.uid')
+            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xm.name,xm.tel,xm.address,xu.balance,xu.level')
+            ->find();
+
+        $objPHPExcel = new PHPExcel();
+
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A1', '订单号');
+        $objPHPExcel->getActiveSheet()->setCellValue('B1', '商品名称');
+        $objPHPExcel->getActiveSheet()->setCellValue('C1', '真实姓名');
+        $objPHPExcel->getActiveSheet()->setCellValue('D1', '电话');
+        $objPHPExcel->getActiveSheet()->setCellValue('E1', '地址');
+        $objPHPExcel->getActiveSheet()->setCellValue('F1', '会员等级');
+        $objPHPExcel->getActiveSheet()->setCellValue('G1', '余额');
+        $objPHPExcel->getActiveSheet()->setCellValue('H1', '单价');
+        $objPHPExcel->getActiveSheet()->setCellValue('I1', '数量');
+        $objPHPExcel->getActiveSheet()->setCellValue('J1', '总价');
+        $objPHPExcel->getActiveSheet()->setCellValue('K1', '佣金');
+        $objPHPExcel->getActiveSheet()->setCellValue('L1', '下单时间');
+
+        //设置A列水平居中
+        $objPHPExcel->setActiveSheetIndex(0)->getStyle('A')->getAlignment()
+            ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        //设置单元格宽度
+        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(30);
+        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(30);
+
+        $objPHPExcel->getActiveSheet()->setCellValue('A2', $order['id']);
+        $objPHPExcel->getActiveSheet()->setCellValue('B2', $order['goods_name']);
+        $objPHPExcel->getActiveSheet()->setCellValue('C2', $order['name']);
+        $objPHPExcel->getActiveSheet()->setCellValue('D2', $order['tel']);
+        $objPHPExcel->getActiveSheet()->setCellValue('E2', $order['address']);
+        $objPHPExcel->getActiveSheet()->setCellValue('F2', "VIP" . ($order['level'] + 1));
+        $objPHPExcel->getActiveSheet()->setCellValue('G2', $order['balance']);
+        $objPHPExcel->getActiveSheet()->setCellValue('H2', $order['goods_price']);
+        $objPHPExcel->getActiveSheet()->setCellValue('I2', $order['goods_count']);
+        $objPHPExcel->getActiveSheet()->setCellValue('J2', $order['num']);
+        $objPHPExcel->getActiveSheet()->setCellValue('K2', $order['commission']);
+        $objPHPExcel->getActiveSheet()->setCellValue('L2', date("Y-m-d H:i:s", $order['addtime']));
+
+        //7.设置保存的Excel表格名称
+        $filename = 'order' . date('ymdhis', time()) . '.xls';
+        //8.设置当前激活的sheet表格名称；
+
+        $objPHPExcel->getActiveSheet()->setTitle('sheet'); // 设置工作表名
+
+        //8.设置当前激活的sheet表格名称；
+        $objPHPExcel->getActiveSheet()->setTitle('防伪码');
+        //9.设置浏览器窗口下载表格
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header('Content-Disposition:inline;filename="' . $filename . '"');
+        //生成excel文件
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        //下载文件在浏览器窗口
+        $objWriter->save('php://output');
+        exit;
+    }
+
     public function shipping()
     {
         $oid = input('get.id', '');
