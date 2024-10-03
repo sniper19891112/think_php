@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use library\Controller;
 use PHPExcel;
-use PHPExcel_IOFactory; //tp5.1用法
+use PHPExcel_IOFactory;
 use think\Db;
 
 /**
@@ -69,21 +69,21 @@ class Deal extends Controller
         if ($user['authorize'] == 2 && !empty($user['nodes'])) {
             //获取直属下级
             $mobile = $user['phone'];
-            $uid = Db::table('xy_users')->where('tel', $mobile)->value('id');
+            $uid = db('xy_users')->where('tel', $mobile)->value('id');
 
-            $ids1 = Db::table('xy_users')->where('parent_id', $uid)->field('id')->column('id');
+            $ids1 = db('xy_users')->where('parent_id', $uid)->field('id')->column('id');
 
-            $ids1 ? $ids2 = Db::table('xy_users')->where('parent_id', 'in', $ids1)->field('id')->column('id') : $ids2 = [];
+            $ids1 ? $ids2 = db('xy_users')->where('parent_id', 'in', $ids1)->field('id')->column('id') : $ids2 = [];
 
-            $ids2 ? $ids3 = Db::table('xy_users')->where('parent_id', 'in', $ids2)->field('id')->column('id') : $ids3 = [];
+            $ids2 ? $ids3 = db('xy_users')->where('parent_id', 'in', $ids2)->field('id')->column('id') : $ids3 = [];
 
-            $ids3 ? $ids4 = Db::table('xy_users')->where('parent_id', 'in', $ids3)->field('id')->column('id') : $ids4 = [];
-            $ids4 ? $ids5 = Db::table('xy_users')->where('parent_id', 'in', $ids4)->field('id')->column('id') : $ids5 = [];
-            $ids5 ? $ids6 = Db::table('xy_users')->where('parent_id', 'in', $ids5)->field('id')->column('id') : $ids6 = [];
-            $ids6 ? $ids7 = Db::table('xy_users')->where('parent_id', 'in', $ids6)->field('id')->column('id') : $ids7 = [];
-            $ids7 ? $ids8 = Db::table('xy_users')->where('parent_id', 'in', $ids7)->field('id')->column('id') : $ids8 = [];
-            $ids8 ? $ids9 = Db::table('xy_users')->where('parent_id', 'in', $ids8)->field('id')->column('id') : $ids9 = [];
-            $ids9 ? $ids10 = Db::table('xy_users')->where('parent_id', 'in', $ids9)->field('id')->column('id') : $ids10 = [];
+            $ids3 ? $ids4 = db('xy_users')->where('parent_id', 'in', $ids3)->field('id')->column('id') : $ids4 = [];
+            $ids4 ? $ids5 = db('xy_users')->where('parent_id', 'in', $ids4)->field('id')->column('id') : $ids5 = [];
+            $ids5 ? $ids6 = db('xy_users')->where('parent_id', 'in', $ids5)->field('id')->column('id') : $ids6 = [];
+            $ids6 ? $ids7 = db('xy_users')->where('parent_id', 'in', $ids6)->field('id')->column('id') : $ids7 = [];
+            $ids7 ? $ids8 = db('xy_users')->where('parent_id', 'in', $ids7)->field('id')->column('id') : $ids8 = [];
+            $ids8 ? $ids9 = db('xy_users')->where('parent_id', 'in', $ids8)->field('id')->column('id') : $ids9 = [];
+            $ids9 ? $ids10 = db('xy_users')->where('parent_id', 'in', $ids9)->field('id')->column('id') : $ids10 = [];
 
             $idsAll = array_merge([$uid], $ids1, $ids2, $ids3, $ids4, $ids5, $ids6, $ids7, $ids8, $ids9, $ids10); //所有ids
             $where[] = ['xc.uid', 'in', $idsAll];
@@ -91,12 +91,12 @@ class Deal extends Controller
             //echo '<pre>';
             //var_dump($where,$idsAll,$ids3,$ids4);die;
         }
-        $this->order_sum = Db::table('xy_convey')->alias('xc')
+        $this->order_sum = db('xy_convey')->alias('xc')
             ->leftJoin('xy_users u', 'u.id=xc.uid')
             ->field('xc.commission')
             ->where($where)
             ->sum('xc.num');
-        $this->commission_sum = Db::table('xy_convey')->alias('xc')
+        $this->commission_sum = db('xy_convey')->alias('xc')
             ->leftJoin('xy_users u', 'u.id=xc.uid')
             ->field('xc.commission')
             ->where($where)
@@ -115,7 +115,7 @@ class Deal extends Controller
     public function edit_order_goods_list()
     {
         $this->title = '商品列表';
-        $this->cate = Db::table('xy_goods_cate')->order('addtime asc')->select();
+        $this->cate = db('xy_goods_cate')->order('addtime asc')->select();
         $where = [];
         $query = $this->_query('xy_goods_list');
         if (input('title/s', '')) {
@@ -138,13 +138,13 @@ class Deal extends Controller
         $oid = input('post.id/s', '');
 
         if ($oid) {
-            $oinfo = Db::name('xy_convey')->where('id', $oid)->find();
+            $oinfo = db('xy_convey')->where('id', $oid)->find();
             if ($oinfo['status'] != 5) {
                 return $this->error('该订单未冻结!');
             }
-            Db::name('xy_convey')->where('id', $oinfo['id'])->update(['status' => 1]);
+            db('xy_convey')->where('id', $oinfo['id'])->update(['status' => 1]);
             //
-            $res1 = Db::name('xy_users')
+            $res1 = db('xy_users')
                 ->where('id', $oinfo['uid'])
                 ->inc('balance', $oinfo['num'] + $oinfo['commission'])
                 ->dec('freeze_balance', $oinfo['num'] + $oinfo['commission']) //冻结商品金额 + 佣金
@@ -162,11 +162,11 @@ class Deal extends Controller
     public function deal_reward($uid, $oid, $num, $cnum)
     {
 
-        Db::name('xy_balance_log')->where('oid', $oid)->update(['status' => 1]);
+        db('xy_balance_log')->where('oid', $oid)->update(['status' => 1]);
 
         //将订单状态改为已返回佣金
-        Db::name('xy_convey')->where('id', $oid)->update(['c_status' => 1]);
-        Db::name('xy_reward_log')->insert(['oid' => $oid, 'uid' => $uid, 'num' => $num, 'addtime' => time(), 'type' => 2]); //记录充值返佣订单
+        db('xy_convey')->where('id', $oid)->update(['c_status' => 1]);
+        db('xy_reward_log')->insert(['oid' => $oid, 'uid' => $uid, 'num' => $num, 'addtime' => time(), 'type' => 2]); //记录充值返佣订单
         /************* 发放交易奖励 *********/
         $userList = model('admin/Users')->parent_user($uid, 5);
         //echo '<pre>';
@@ -174,7 +174,7 @@ class Deal extends Controller
         if ($userList) {
             foreach ($userList as $v) {
                 if ($v['status'] === 1) {
-                    Db::name('xy_reward_log')
+                    db('xy_reward_log')
                         ->insert([
                             'uid' => $v['id'],
                             'sid' => $v['pid'],
@@ -187,8 +187,8 @@ class Deal extends Controller
                         ]);
                 }
                 $num3 = $num * config($v['lv'] . '_d_reward'); //佣金
-                $res = Db::name('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $num3);
-                $res2 = Db::name('xy_balance_log')->insert([
+                $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $num3);
+                $res2 = db('xy_balance_log')->insert([
                     'uid' => $v['id'],
                     'oid' => $oid,
                     'num' => $num3,
@@ -335,7 +335,7 @@ class Deal extends Controller
     {
         $this->title = '商品管理';
 
-        $this->cate = Db::table('xy_goods_cate')->order('addtime asc')->select();
+        $this->cate = db('xy_goods_cate')->order('addtime asc')->select();
         $where = [];
         //var_dump($this->cate);die;
         $query = $this->_query('xy_goods_list');
@@ -387,7 +387,7 @@ class Deal extends Controller
             }
 
         }
-        $this->cate = Db::table('xy_goods_cate')->order('addtime asc')->select();
+        $this->cate = db('xy_goods_cate')->order('addtime asc')->select();
 
         $this->assign('cate', $this->cate);
         return $this->fetch();
@@ -459,9 +459,9 @@ class Deal extends Controller
             'deal_max_numbaifenbi' => $deal_max_numbaifenbi,
         ];
         if (!$id) {
-            $res = Db::table('xy_goods_cate')->insert($data);
+            $res = db('xy_goods_cate')->insert($data);
         } else {
-            $res = Db::table('xy_goods_cate')->where('id', $id)->update($data);
+            $res = db('xy_goods_cate')->where('id', $id)->update($data);
         }
         if ($res) {
             return ['code' => 0, 'info' => '操作成功!'];
@@ -545,8 +545,8 @@ class Deal extends Controller
             }
 
         }
-        $info = Db::table('xy_goods_list')->find($id);
-        $this->cate = Db::table('xy_goods_cate')->order('addtime asc')->select();
+        $info = db('xy_goods_list')->find($id);
+        $this->cate = db('xy_goods_cate')->order('addtime asc')->select();
         $this->assign('cate', $this->cate);
         $this->assign('info', $info);
         return $this->fetch();
@@ -580,9 +580,9 @@ class Deal extends Controller
             }
 
         }
-        $info = Db::table('xy_goods_cate')->find($id);
+        $info = db('xy_goods_cate')->find($id);
         $this->assign('info', $info);
-        $this->level = Db::table('xy_level')->select();
+        $this->level = db('xy_level')->select();
 
         return $this->fetch();
     }
@@ -657,28 +657,28 @@ class Deal extends Controller
         if ($user['authorize'] == 2 && !empty($user['nodes'])) {
             //获取直属下级
             $mobile = $user['phone'];
-            $uid = Db::table('xy_users')->where('tel', $mobile)->value('id');
+            $uid = db('xy_users')->where('tel', $mobile)->value('id');
 
-            $ids1 = Db::table('xy_users')->where('parent_id', $uid)->field('id')->column('id');
+            $ids1 = db('xy_users')->where('parent_id', $uid)->field('id')->column('id');
 
-            $ids1 ? $ids2 = Db::table('xy_users')->where('parent_id', 'in', $ids1)->field('id')->column('id') : $ids2 = [];
+            $ids1 ? $ids2 = db('xy_users')->where('parent_id', 'in', $ids1)->field('id')->column('id') : $ids2 = [];
 
-            $ids2 ? $ids3 = Db::table('xy_users')->where('parent_id', 'in', $ids2)->field('id')->column('id') : $ids3 = [];
+            $ids2 ? $ids3 = db('xy_users')->where('parent_id', 'in', $ids2)->field('id')->column('id') : $ids3 = [];
 
-            $ids3 ? $ids4 = Db::table('xy_users')->where('parent_id', 'in', $ids3)->field('id')->column('id') : $ids4 = [];
-            $ids4 ? $ids5 = Db::table('xy_users')->where('parent_id', 'in', $ids4)->field('id')->column('id') : $ids5 = [];
+            $ids3 ? $ids4 = db('xy_users')->where('parent_id', 'in', $ids3)->field('id')->column('id') : $ids4 = [];
+            $ids4 ? $ids5 = db('xy_users')->where('parent_id', 'in', $ids4)->field('id')->column('id') : $ids5 = [];
 
-            $ids5 ? $ids6 = Db::table('xy_users')->where('parent_id', 'in', $ids5)->field('id')->column('id') : $ids6 = [];
-            $ids6 ? $ids7 = Db::table('xy_users')->where('parent_id', 'in', $ids6)->field('id')->column('id') : $ids7 = [];
-            $ids7 ? $ids8 = Db::table('xy_users')->where('parent_id', 'in', $ids7)->field('id')->column('id') : $ids8 = [];
-            $ids8 ? $ids9 = Db::table('xy_users')->where('parent_id', 'in', $ids8)->field('id')->column('id') : $ids9 = [];
-            $ids9 ? $ids10 = Db::table('xy_users')->where('parent_id', 'in', $ids9)->field('id')->column('id') : $ids10 = [];
+            $ids5 ? $ids6 = db('xy_users')->where('parent_id', 'in', $ids5)->field('id')->column('id') : $ids6 = [];
+            $ids6 ? $ids7 = db('xy_users')->where('parent_id', 'in', $ids6)->field('id')->column('id') : $ids7 = [];
+            $ids7 ? $ids8 = db('xy_users')->where('parent_id', 'in', $ids7)->field('id')->column('id') : $ids8 = [];
+            $ids8 ? $ids9 = db('xy_users')->where('parent_id', 'in', $ids8)->field('id')->column('id') : $ids9 = [];
+            $ids9 ? $ids10 = db('xy_users')->where('parent_id', 'in', $ids9)->field('id')->column('id') : $ids10 = [];
 
             $idsAll = array_merge([$uid], $ids1, $ids2, $ids3, $ids4, $ids5, $ids6, $ids7, $ids8, $ids9, $ids10); //所有ids
             $where[] = ['xr.uid', 'in', $idsAll];
         }
 
-        $this->user_recharge = Db::table('xy_recharge')->alias('xr')->leftJoin('xy_users u', 'u.id=xr.uid')->field('xr.*,u.username')->where($where)->sum('xr.num');
+        $this->user_recharge = db('xy_recharge')->alias('xr')->leftJoin('xy_users u', 'u.id=xr.uid')->field('xr.*,u.username')->where($where)->sum('xr.num');
 
         $query->leftJoin('xy_users u', 'u.id=xr.uid')
             ->field('xr.*,u.username')
@@ -698,21 +698,21 @@ class Deal extends Controller
             $this->applyCsrfToken();
             $oid = input('post.id/s', '');
             $status = input('post.status/d', 1);
-            $oinfo = Db::name('xy_recharge')->find($oid);
+            $oinfo = db('xy_recharge')->find($oid);
             if ($oinfo['status'] != 1) {$this->error('订单已处理!');}
             Db::startTrans();
-            $res = Db::name('xy_recharge')->where('id', $oid)->update(['endtime' => time(), 'status' => $status]);
+            $res = db('xy_recharge')->where('id', $oid)->update(['endtime' => time(), 'status' => $status]);
             if ($status == 2) {
 
                 // if ($oinfo['is_vip']) {
-                //     $res1 = Db::name('xy_users')->where('id', $oinfo['uid'])->update(['level' => $oinfo['level']]);
+                //     $res1 = db('xy_users')->where('id', $oinfo['uid'])->update(['level' => $oinfo['level']]);
                 // } else {
-                //     $res1 = Db::name('xy_users')->where('id', $oinfo['uid'])->setInc('balance', $oinfo['num']);
+                //     $res1 = db('xy_users')->where('id', $oinfo['uid'])->setInc('balance', $oinfo['num']);
                 // }
 
-                $res1 = Db::name('xy_users')->where('id', $oinfo['uid'])->setInc('balance', $oinfo['num']);
+                $res1 = db('xy_users')->where('id', $oinfo['uid'])->setInc('balance', $oinfo['num']);
 
-                $res2 = Db::name('xy_balance_log')
+                $res2 = db('xy_balance_log')
                     ->insert([
                         'uid' => $oinfo['uid'],
                         'oid' => $oid,
@@ -724,7 +724,7 @@ class Deal extends Controller
 
                 //发放注册奖励
             } elseif ($status == 3) {
-                $res1 = Db::name('xy_message')
+                $res1 = db('xy_message')
                     ->insert([
                         'uid' => $oinfo['uid'],
                         'type' => 2,
@@ -742,15 +742,15 @@ class Deal extends Controller
                 }
 
                 /************* 发放推广奖励 *********/
-                $uinfo = Db::name('xy_users')->field('id,active')->find($oinfo['uid']);
+                $uinfo = db('xy_users')->field('id,active')->find($oinfo['uid']);
                 if ($uinfo['active'] === 0) {
-                    Db::name('xy_users')->where('id', $uinfo['id'])->update(['active' => 1]);
+                    db('xy_users')->where('id', $uinfo['id'])->update(['active' => 1]);
                     //将账号状态改为已发放推广奖励
                     $userList = model('Users')->parent_user($uinfo['id'], 3);
                     if ($userList) {
                         foreach ($userList as $v) {
                             if ($v['status'] === 1 && ($oinfo['num'] * config($v['lv'] . '_reward') != 0)) {
-                                Db::name('xy_reward_log')
+                                db('xy_reward_log')
                                     ->insert([
                                         'uid' => $v['id'],
                                         'sid' => $uinfo['id'],
@@ -803,27 +803,27 @@ class Deal extends Controller
         if ($user['authorize'] == 2 && !empty($user['nodes'])) {
             //获取直属下级
             $mobile = $user['phone'];
-            $uid = Db::table('xy_users')->where('tel', $mobile)->value('id');
+            $uid = db('xy_users')->where('tel', $mobile)->value('id');
 
-            $ids1 = Db::table('xy_users')->where('parent_id', $uid)->field('id')->column('id');
+            $ids1 = db('xy_users')->where('parent_id', $uid)->field('id')->column('id');
 
-            $ids1 ? $ids2 = Db::table('xy_users')->where('parent_id', 'in', $ids1)->field('id')->column('id') : $ids2 = [];
+            $ids1 ? $ids2 = db('xy_users')->where('parent_id', 'in', $ids1)->field('id')->column('id') : $ids2 = [];
 
-            $ids2 ? $ids3 = Db::table('xy_users')->where('parent_id', 'in', $ids2)->field('id')->column('id') : $ids3 = [];
+            $ids2 ? $ids3 = db('xy_users')->where('parent_id', 'in', $ids2)->field('id')->column('id') : $ids3 = [];
 
-            $ids3 ? $ids4 = Db::table('xy_users')->where('parent_id', 'in', $ids3)->field('id')->column('id') : $ids4 = [];
+            $ids3 ? $ids4 = db('xy_users')->where('parent_id', 'in', $ids3)->field('id')->column('id') : $ids4 = [];
 
-            $ids4 ? $ids5 = Db::table('xy_users')->where('parent_id', 'in', $ids4)->field('id')->column('id') : $ids5 = [];
-            $ids5 ? $ids6 = Db::table('xy_users')->where('parent_id', 'in', $ids5)->field('id')->column('id') : $ids6 = [];
-            $ids6 ? $ids7 = Db::table('xy_users')->where('parent_id', 'in', $ids6)->field('id')->column('id') : $ids7 = [];
-            $ids7 ? $ids8 = Db::table('xy_users')->where('parent_id', 'in', $ids7)->field('id')->column('id') : $ids8 = [];
-            $ids8 ? $ids9 = Db::table('xy_users')->where('parent_id', 'in', $ids8)->field('id')->column('id') : $ids9 = [];
-            $ids9 ? $ids10 = Db::table('xy_users')->where('parent_id', 'in', $ids9)->field('id')->column('id') : $ids10 = [];
+            $ids4 ? $ids5 = db('xy_users')->where('parent_id', 'in', $ids4)->field('id')->column('id') : $ids5 = [];
+            $ids5 ? $ids6 = db('xy_users')->where('parent_id', 'in', $ids5)->field('id')->column('id') : $ids6 = [];
+            $ids6 ? $ids7 = db('xy_users')->where('parent_id', 'in', $ids6)->field('id')->column('id') : $ids7 = [];
+            $ids7 ? $ids8 = db('xy_users')->where('parent_id', 'in', $ids7)->field('id')->column('id') : $ids8 = [];
+            $ids8 ? $ids9 = db('xy_users')->where('parent_id', 'in', $ids8)->field('id')->column('id') : $ids9 = [];
+            $ids9 ? $ids10 = db('xy_users')->where('parent_id', 'in', $ids9)->field('id')->column('id') : $ids10 = [];
 
             $idsAll = array_merge([$uid], $ids1, $ids2, $ids3, $ids4, $ids5, $ids6, $ids7, $ids8, $ids9, $ids10); //所有ids
             $where[] = ['xd.uid', 'in', $idsAll];
         }
-        $this->user_deposit = Db::table('xy_deposit')->alias('xd')->leftJoin('xy_users u', 'u.id=xd.uid')
+        $this->user_deposit = db('xy_deposit')->alias('xd')->leftJoin('xy_users u', 'u.id=xd.uid')
             ->leftJoin('xy_bankinfo bk', 'bk.id=xd.bk_id')
             ->field('xd.*,u.username,u.wx_ewm,u.zfb_ewm,bk.bankname,bk.username as khname,bk.tel,bk.cardnum,u.id uid')
             ->where($where)->sum('xd.num');
@@ -841,7 +841,7 @@ class Deal extends Controller
     public function disbursement()
     {
         $this->applyCsrfToken();
-        $oinfo = Db::name('xy_deposit')->where('id', input('post.id', 0))->find();
+        $oinfo = db('xy_deposit')->where('id', input('post.id', 0))->find();
 
         if ($oinfo['status'] != 2) {
             return $this->error('提现未审核通过不能发起代付');
@@ -868,7 +868,7 @@ class Deal extends Controller
             $bankusername = input('post.bankusername/s', '');
 
             $bankcode = input('post.bankcode/s', '');
-            $bkinfo = Db::table('xy_bank_list')->where('bankcode', $bankcode)->field('bankname')->find();
+            $bkinfo = db('xy_bank_list')->where('bankcode', $bankcode)->field('bankname')->find();
             $bankname = $bkinfo['bankname'];
             $cardnum = input('post.cardnum/s', '');
             $ifsc = input('post.ifsc/s', '');
@@ -878,7 +878,7 @@ class Deal extends Controller
 
             $id = input('post.id/s', '');
 
-            $res = Db::name('xy_deposit')->where('id', $id)->update(['bankusername' => $bankusername, 'bankname' => $bankname, 'bankcode' => $bankcode, 'cardnum' => $cardnum, 'ifsc' => $ifsc]);
+            $res = db('xy_deposit')->where('id', $id)->update(['bankusername' => $bankusername, 'bankname' => $bankname, 'bankcode' => $bankcode, 'cardnum' => $cardnum, 'ifsc' => $ifsc]);
             if ($res) {
                 return $this->success("修改成功", '/admin.html#/admin/deal/deposit_list.html');
             } else {
@@ -886,8 +886,8 @@ class Deal extends Controller
             }
 
         }
-        $info = Db::table('xy_deposit')->find($id);
-        $this->bank_list = Db::table('xy_bank_list')->order('id asc')->select();
+        $info = db('xy_deposit')->find($id);
+        $this->bank_list = db('xy_bank_list')->order('id asc')->select();
         $this->assign('bank_list', $this->bank_list);
         $this->assign('info', $info);
         return $this->fetch();
@@ -920,21 +920,21 @@ class Deal extends Controller
         if ($user['authorize'] == 2 && !empty($user['nodes'])) {
             //获取直属下级
             $mobile = $user['phone'];
-            $uid = Db::table('xy_users')->where('tel', $mobile)->value('id');
+            $uid = db('xy_users')->where('tel', $mobile)->value('id');
 
-            $ids1 = Db::table('xy_users')->where('parent_id', $uid)->field('id')->column('id');
+            $ids1 = db('xy_users')->where('parent_id', $uid)->field('id')->column('id');
 
-            $ids1 ? $ids2 = Db::table('xy_users')->where('parent_id', 'in', $ids1)->field('id')->column('id') : $ids2 = [];
+            $ids1 ? $ids2 = db('xy_users')->where('parent_id', 'in', $ids1)->field('id')->column('id') : $ids2 = [];
 
-            $ids2 ? $ids3 = Db::table('xy_users')->where('parent_id', 'in', $ids2)->field('id')->column('id') : $ids3 = [];
+            $ids2 ? $ids3 = db('xy_users')->where('parent_id', 'in', $ids2)->field('id')->column('id') : $ids3 = [];
 
-            $ids3 ? $ids4 = Db::table('xy_users')->where('parent_id', 'in', $ids3)->field('id')->column('id') : $ids4 = [];
-            $ids4 ? $ids5 = Db::table('xy_users')->where('parent_id', 'in', $ids4)->field('id')->column('id') : $ids5 = [];
-            $ids5 ? $ids6 = Db::table('xy_users')->where('parent_id', 'in', $ids5)->field('id')->column('id') : $ids6 = [];
-            $ids6 ? $ids7 = Db::table('xy_users')->where('parent_id', 'in', $ids6)->field('id')->column('id') : $ids7 = [];
-            $ids7 ? $ids8 = Db::table('xy_users')->where('parent_id', 'in', $ids7)->field('id')->column('id') : $ids8 = [];
-            $ids8 ? $ids9 = Db::table('xy_users')->where('parent_id', 'in', $ids8)->field('id')->column('id') : $ids9 = [];
-            $ids9 ? $ids10 = Db::table('xy_users')->where('parent_id', 'in', $ids9)->field('id')->column('id') : $ids10 = [];
+            $ids3 ? $ids4 = db('xy_users')->where('parent_id', 'in', $ids3)->field('id')->column('id') : $ids4 = [];
+            $ids4 ? $ids5 = db('xy_users')->where('parent_id', 'in', $ids4)->field('id')->column('id') : $ids5 = [];
+            $ids5 ? $ids6 = db('xy_users')->where('parent_id', 'in', $ids5)->field('id')->column('id') : $ids6 = [];
+            $ids6 ? $ids7 = db('xy_users')->where('parent_id', 'in', $ids6)->field('id')->column('id') : $ids7 = [];
+            $ids7 ? $ids8 = db('xy_users')->where('parent_id', 'in', $ids7)->field('id')->column('id') : $ids8 = [];
+            $ids8 ? $ids9 = db('xy_users')->where('parent_id', 'in', $ids8)->field('id')->column('id') : $ids9 = [];
+            $ids9 ? $ids10 = db('xy_users')->where('parent_id', 'in', $ids9)->field('id')->column('id') : $ids10 = [];
 
             $idsAll = array_merge([$uid], $ids1, $ids2, $ids3, $ids4, $ids5, $ids6, $ids7, $ids8, $ids9, $ids10); //所有ids
             $where[] = ['xd.uid', 'in', $idsAll];
@@ -963,7 +963,7 @@ class Deal extends Controller
             $max_num = input('post.max_num/s', '');
             $shouxu = input('post.shouxu/s', '');
 
-            $res = Db::name('xy_lixibao_list')
+            $res = db('xy_lixibao_list')
                 ->insert([
                     'name' => $name,
                     'day' => $day,
@@ -1001,7 +1001,7 @@ class Deal extends Controller
             $max_num = input('post.max_num/s', '');
             $shouxu = input('post.shouxu/s', '');
 
-            $res = Db::name('xy_lixibao_list')
+            $res = db('xy_lixibao_list')
                 ->where('id', $id)
                 ->update([
                     'name' => $name,
@@ -1021,7 +1021,7 @@ class Deal extends Controller
             }
 
         }
-        $info = Db::table('xy_lixibao_list')->find($id);
+        $info = db('xy_lixibao_list')->find($id);
         $this->assign('info', $info);
         return $this->fetch();
     }
@@ -1109,10 +1109,10 @@ class Deal extends Controller
         if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
             $ids = explode(',', $_REQUEST['id']);
             foreach ($ids as $id) {
-                $t = Db::name('xy_deposit')->where('id', $id)->find();
+                $t = db('xy_deposit')->where('id', $id)->find();
                 if ($t['status'] == 1) {
                     //通过
-                    Db::name('xy_deposit')->where('id', $id)->update(['status' => 2, 'endtime' => time()]);
+                    db('xy_deposit')->where('id', $id)->update(['status' => 2, 'endtime' => time()]);
                 }
             }
             $this->success('处理成功', '/admin.html#/admin/deal/deposit_list.html');
@@ -1135,7 +1135,7 @@ class Deal extends Controller
             $map['_string'] = "( a.create_time >= {$start_date} and a.create_time < {$end_date} )";
         }
 
-        $list = Db::name('xy_deposit')
+        $list = db('xy_deposit')
             ->alias('xd')
             ->leftJoin('xy_users u', 'u.id=xd.uid')
             ->leftJoin('xy_bankinfo bk', 'bk.id=xd.bk_id')
@@ -1192,10 +1192,6 @@ class Deal extends Controller
         $objPHPExcel->getActiveSheet()->setCellValue('I1', '提现方式');
         $objPHPExcel->getActiveSheet()->setCellValue('J1', '状态');
 
-//        $objPHPExcel->getActiveSheet()->SetCellValue('A1', '订单号');
-        //        $objPHPExcel->getActiveSheet()->SetCellValue('B1', '标题');
-        //        $objPHPExcel->getActiveSheet()->SetCellValue('C1', '金额');
-
         //设置A列水平居中
         $objPHPExcel->setActiveSheetIndex(0)->getStyle('A')->getAlignment()
             ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -1231,7 +1227,7 @@ class Deal extends Controller
         header("Content-Type: application/download");
         header('Content-Disposition:inline;filename="' . $filename . '"');
         //生成excel文件
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         //下载文件在浏览器窗口
         $objWriter->save('php://output');
         exit;
@@ -1247,12 +1243,12 @@ class Deal extends Controller
         if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
             $ids = explode(',', $_REQUEST['id']);
             foreach ($ids as $id) {
-                $t = Db::name('xy_deposit')->where('id', $id)->find();
+                $t = db('xy_deposit')->where('id', $id)->find();
                 if ($t['status'] == 1) {
                     //通过
-                    Db::name('xy_deposit')->where('id', $id)->update(['status' => 3, 'endtime' => time()]);
+                    db('xy_deposit')->where('id', $id)->update(['status' => 3, 'endtime' => time()]);
                     //驳回订单的业务逻辑
-                    Db::name('xy_users')->where('id', $t['uid'])->setInc('balance', input('num/f', 0));
+                    db('xy_users')->where('id', $t['uid'])->setInc('balance', input('num/f', 0));
                 }
             }
 
@@ -1267,7 +1263,7 @@ class Deal extends Controller
     public function do_commission()
     {
         $this->applyCsrfToken();
-        $info = Db::name('xy_convey')
+        $info = db('xy_convey')
             ->field('id oid,uid,num,commission cnum')
             ->where([
                 ['c_status', 'in', [0, 2]],
@@ -1282,9 +1278,9 @@ class Deal extends Controller
         try {
             foreach ($info as $k => $v) {
                 Db::startTrans();
-                $res = Db::name('xy_users')->where('id', $v['uid'])->where('status', 1)->setInc('balance', $v['num'] + $v['cnum']);
+                $res = db('xy_users')->where('id', $v['uid'])->where('status', 1)->setInc('balance', $v['num'] + $v['cnum']);
                 if ($res) {
-                    $res1 = Db::name('xy_balance_log')->insert([
+                    $res1 = db('xy_balance_log')->insert([
                         //记录返佣信息
                         'uid' => $v['uid'],
                         'oid' => $v['oid'],
@@ -1292,10 +1288,10 @@ class Deal extends Controller
                         'type' => 3,
                         'addtime' => time(),
                     ]);
-                    Db::name('xy_convey')->where('id', $v['oid'])->update(['c_status' => 1]);
+                    db('xy_convey')->where('id', $v['oid'])->update(['c_status' => 1]);
                 } else {
-                    // Db::name('xy_system_log')->insert();
-                    $res1 = Db::name('xy_convey')->where('id', $v['oid'])->update(['c_status' => 2]); //记录账号异常
+                    // db('xy_system_log')->insert();
+                    $res1 = db('xy_convey')->where('id', $v['oid'])->update(['c_status' => 2]); //记录账号异常
                 }
                 if ($res !== false && $res1) {
                     Db::commit();
@@ -1337,7 +1333,7 @@ class Deal extends Controller
         if (request()->isPost()) {
             $postid = input('post.id/d', 0);
             $balance = input('post.balance/f', 0); //增减金额
-            $userinfo = Db::name('xy_users')->find($postid);
+            $userinfo = db('xy_users')->find($postid);
             if (!$userinfo) {
                 $this->error('参数错误,未查询到用户');
             }
@@ -1346,13 +1342,13 @@ class Deal extends Controller
                 $this->error('彩金金额错误');
             }
 
-            $res = Db::name('xy_users')->where('id', $postid)->setInc('balance', $balance);
+            $res = db('xy_users')->where('id', $postid)->setInc('balance', $balance);
 
             if (!$res) {
                 return $this->error('编辑失败!');
             } else {
 
-                $res1 = Db::name('xy_balance_log')->insert([
+                $res1 = db('xy_balance_log')->insert([
                     'uid' => $userinfo['id'],
                     'oid' => 0,
                     'sid' => 0,
@@ -1370,7 +1366,7 @@ class Deal extends Controller
             $this->error('参数错误');
         }
 
-        $this->info = Db::name('xy_users')->find($id);
+        $this->info = db('xy_users')->find($id);
 
         return $this->fetch();
 
@@ -1381,10 +1377,10 @@ class Deal extends Controller
 
         $id = input('post.id', 0);
 
-        $order = Db::name('xy_convey')->field('id,addtime')->find($id);
+        $order = db('xy_convey')->field('id,addtime')->find($id);
         $start = strtotime(date("Y-m-d", $order['addtime']));
         $end = $start + 24 * 60 * 60 - 1;
-        /****/$orderlist = Db::name('xy_convey')->where('addtime', 'between', [$start, $end])->field('id,addtime')->select();
+        /****/$orderlist = db('xy_convey')->where('addtime', 'between', [$start, $end])->field('id,addtime')->select();
         for ($x = 0; $x <= count($orderlist); $x++) {
             if ($id == $orderlist[$x]['id']) {
                 $data['today_num'] = $x + 1;
@@ -1403,8 +1399,8 @@ class Deal extends Controller
     {
 
         $issutocheck = 1;
-        $newrecharge = Db::name('xy_recharge')->where("status=1")->select();
-        $newdeposit = Db::name('xy_deposit')->where("status=1")->select();
+        $newrecharge = db('xy_recharge')->where("status=1")->select();
+        $newdeposit = db('xy_deposit')->where("status=1")->select();
 
         if (!$newrecharge && !$newdeposit) {
 
