@@ -21,12 +21,7 @@ class Deal extends Controller
      */
     public function export_batch_order()
     {
-
-        $ids = [];
-        if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
-            $ids = explode(',', $_REQUEST['id']);
-            $this->success('处理成功', $ids);
-        }
+        $ids = explode(',', input('get.oid'));
 
         $list = db('xy_convey')
             ->whereIn('xc.id', $ids)
@@ -62,18 +57,18 @@ class Deal extends Controller
         $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(30);
 
         for ($i = 0; $i < count($list); $i++) {
-            $objPHPExcel->getActiveSheet()->setCellValue('A2' . ($i + 2), $list['id']);
-            $objPHPExcel->getActiveSheet()->setCellValue('B2' . ($i + 2), $list['goods_name']);
-            $objPHPExcel->getActiveSheet()->setCellValue('C2' . ($i + 2), $list['name']);
-            $objPHPExcel->getActiveSheet()->setCellValue('D2' . ($i + 2), $list['tel']);
-            $objPHPExcel->getActiveSheet()->setCellValue('E2' . ($i + 2), $list['address']);
-            $objPHPExcel->getActiveSheet()->setCellValue('F2' . ($i + 2), "VIP" . ($list['level'] + 1));
-            $objPHPExcel->getActiveSheet()->setCellValue('G2' . ($i + 2), $list['balance']);
-            $objPHPExcel->getActiveSheet()->setCellValue('H2' . ($i + 2), $list['goods_price']);
-            $objPHPExcel->getActiveSheet()->setCellValue('I2' . ($i + 2), $list['goods_count']);
-            $objPHPExcel->getActiveSheet()->setCellValue('J2' . ($i + 2), $list['num']);
-            $objPHPExcel->getActiveSheet()->setCellValue('K2' . ($i + 2), $list['commission']);
-            $objPHPExcel->getActiveSheet()->setCellValue('L2' . ($i + 2), date("Y-m-d H:i:s", $list['addtime']));
+            $objPHPExcel->getActiveSheet()->setCellValue('A' . ($i + 2), $list[$i]['id']);
+            $objPHPExcel->getActiveSheet()->setCellValue('B' . ($i + 2), $list[$i]['goods_name']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C' . ($i + 2), $list[$i]['name']);
+            $objPHPExcel->getActiveSheet()->setCellValue('D' . ($i + 2), $list[$i]['tel']);
+            $objPHPExcel->getActiveSheet()->setCellValue('E' . ($i + 2), $list[$i]['address']);
+            $objPHPExcel->getActiveSheet()->setCellValue('F' . ($i + 2), "VIP" . ($list[$i]['level'] + 1));
+            $objPHPExcel->getActiveSheet()->setCellValue('G' . ($i + 2), $list[$i]['balance']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H' . ($i + 2), $list[$i]['goods_price']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I' . ($i + 2), $list[$i]['goods_count']);
+            $objPHPExcel->getActiveSheet()->setCellValue('J' . ($i + 2), $list[$i]['num']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . ($i + 2), $list[$i]['commission']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L' . ($i + 2), date("Y-m-d H:i:s", $list[$i]['addtime']));
         }
 
         //7.设置保存的Excel表格名称
