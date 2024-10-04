@@ -19,7 +19,6 @@ class User extends Base
      */
     public function _empty()
     {
-
         return $this->fetch();
     }
 
@@ -29,8 +28,7 @@ class User extends Base
         if (session('user_id')) {
             $this->redirect('index/home');
         }
-
-        return $this->fetch('login');
+        return $this->fetch();
     }
 
     //用户登录接口
@@ -248,19 +246,9 @@ class User extends Base
         Db::table($this->table)->where('id', $id)->update(['activetime' => time()]);
         return 'sucess';
     }
-    /*  public function reset_qrcode()
-    {
-    $uinfo = Db::name('xy_users')->field('id,invite_code')->select();
-    foreach ($uinfo as $v) {
-    $model = model('admin/Users');
-    $model->create_qrcode($v['invite_code'],$v['id']);
-    }
-    return '重新生成用户二维码图片成功';
-    } */
 
     public function app()
     {
-
         return $this->fetch();
     }
 
@@ -269,6 +257,5 @@ class User extends Base
         $can_vip_info = model('admin/Users')->can_vip_info(session('user_id'));
         print_r($can_vip_info);
         $can_vip_info = model('admin/Users')->auto_check_down_vip(session('user_id'));
-
     }
 }

@@ -31,7 +31,7 @@ class Index extends Controller
         $this->title = '系统管理后台';
         NodeService::applyUserAuth(true);
         $this->menus = NodeService::getMenuNodeTree();
-            $this->fetch();
+        $this->fetch();
     }
 
     /**
@@ -45,69 +45,67 @@ class Index extends Controller
         $this->mysql_ver = Db::query('select version() as ver')[0]['ver'];
 
         //昨天
-        $yes1 = strtotime( date("Y-m-d 00:00:00",strtotime("-1 day")) );
-        $yes2 = strtotime( date("Y-m-d 23:59:59",strtotime("-1 day")) );
+        $yes1 = strtotime(date("Y-m-d 00:00:00", strtotime("-1 day")));
+        $yes2 = strtotime(date("Y-m-d 23:59:59", strtotime("-1 day")));
 
         $this->goods_num = db('xy_goods_list')->count('id');
-        $this->today_goods_num = db('xy_goods_list')->where('addtime','between',[strtotime(date('Y-m-d')),time()])->count('id');
-        $this->yes_goods_num = db('xy_goods_list')->where('addtime','between',[$yes1,$yes2])->count('id');
+        $this->today_goods_num = db('xy_goods_list')->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->count('id');
+        $this->yes_goods_num = db('xy_goods_list')->where('addtime', 'between', [$yes1, $yes2])->count('id');
 
         //用户
         $this->users_num = db('xy_users')->count('id');
-        $this->today_users_num = db('xy_users')->where('addtime','between',[strtotime(date('Y-m-d')),time()])->count('id');
-        $this->yes_users_num = db('xy_users')->where('addtime','between',[$yes1,$yes2])->count('id');
+        $this->today_users_num = db('xy_users')->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->count('id');
+        $this->yes_users_num = db('xy_users')->where('addtime', 'between', [$yes1, $yes2])->count('id');
 
         //订单数量
         $this->order_num = db('xy_convey')->count('id');
-        $this->today_order_num = db('xy_convey')->where('addtime','between',[strtotime(date('Y-m-d')),time()])->count('id');
-        $this->yes_order_num = db('xy_convey')->where('addtime','between',[$yes1,$yes2])->count('id');
+        $this->today_order_num = db('xy_convey')->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->count('id');
+        $this->yes_order_num = db('xy_convey')->where('addtime', 'between', [$yes1, $yes2])->count('id');
 
         //订单总额
         $this->order_sum = db('xy_convey')->sum('num');
-        $this->today_order_sum = db('xy_convey')->where('addtime','between',[strtotime(date('Y-m-d')),time()])->sum('num');
-        $this->yes_order_sum = db('xy_convey')->where('addtime','between',[$yes1,$yes2])->sum('num');
+        $this->today_order_sum = db('xy_convey')->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->sum('num');
+        $this->yes_order_sum = db('xy_convey')->where('addtime', 'between', [$yes1, $yes2])->sum('num');
 
         //充值
-        $this->user_recharge = db('xy_recharge')->where('status',2)->sum('num');
-        $this->today_user_recharge = db('xy_recharge')->where('status',2)->where('addtime','between',[strtotime(date('Y-m-d')),time()])->sum('num');
-        $this->yes_user_recharge = db('xy_recharge')->where('status',2)->where('addtime','between',[$yes1,$yes2])->sum('num');
+        $this->user_recharge = db('xy_recharge')->where('status', 2)->sum('num');
+        $this->today_user_recharge = db('xy_recharge')->where('status', 2)->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->sum('num');
+        $this->yes_user_recharge = db('xy_recharge')->where('status', 2)->where('addtime', 'between', [$yes1, $yes2])->sum('num');
 
         //提现
-        $this->user_deposit = db('xy_deposit')->where('status',2)->sum('num');
-        $this->today_user_deposit = db('xy_deposit')->where('status',2)->where('addtime','between',[strtotime(date('Y-m-d')),time()])->sum('num');
-        $this->yes_user_deposit = db('xy_deposit')->where('status',2)->where('addtime','between',[$yes1,$yes2])->sum('num');
+        $this->user_deposit = db('xy_deposit')->where('status', 2)->sum('num');
+        $this->today_user_deposit = db('xy_deposit')->where('status', 2)->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->sum('num');
+        $this->yes_user_deposit = db('xy_deposit')->where('status', 2)->where('addtime', 'between', [$yes1, $yes2])->sum('num');
 
         //抢单佣金
-        $this->user_yongjin = db('xy_convey')->where('status',1)->sum('commission');
-        $this->today_user_yongjin = db('xy_convey')->where('status',1)->where('addtime','between',[strtotime(date('Y-m-d')),time()])->sum('commission');
-        $this->yes_user_yongjin = db('xy_convey')->where('status',1)->where('addtime','between',[$yes1,$yes2])->sum('commission');
+        $this->user_yongjin = db('xy_convey')->where('status', 1)->sum('commission');
+        $this->today_user_yongjin = db('xy_convey')->where('status', 1)->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->sum('commission');
+        $this->yes_user_yongjin = db('xy_convey')->where('status', 1)->where('addtime', 'between', [$yes1, $yes2])->sum('commission');
 
-         //利息宝
-        $this->user_lixibao = db('xy_lixibao')->where('type',1)->where('is_sy',0)->sum('num');
-        $this->today_user_lixibao = db('xy_lixibao')->where('type',1)->where('is_sy',0)->where('addtime','between',[strtotime(date('Y-m-d')),time()])->sum('num');
-        $this->yes_user_lixibao = db('xy_lixibao')->where('type',1)->where('is_sy',0)->where('addtime','between',[$yes1,$yes2])->sum('num');
-
-        //下级返佣
-        $this->user_fanyong = db('xy_balance_log')->where('type',6)->where('status',1)->sum('num');
-        $this->today_user_fanyong = db('xy_balance_log')->where('type',6)->where('status',1)->where('addtime','between',[strtotime(date('Y-m-d')),time()])->sum('num');
-        $this->yes_user_fanyong = db('xy_balance_log')->where('type',6)->where('status',1)->where('addtime','between',[$yes1,$yes2])->sum('num');
+        //利息宝
+        $this->user_lixibao = db('xy_lixibao')->where('type', 1)->where('is_sy', 0)->sum('num');
+        $this->today_user_lixibao = db('xy_lixibao')->where('type', 1)->where('is_sy', 0)->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->sum('num');
+        $this->yes_user_lixibao = db('xy_lixibao')->where('type', 1)->where('is_sy', 0)->where('addtime', 'between', [$yes1, $yes2])->sum('num');
 
         //下级返佣
-        $this->user_fanyong = db('xy_balance_log')->where('type',6)->where('status',1)->sum('num');
-        $this->today_user_fanyong = db('xy_balance_log')->where('type',6)->where('status',1)->where('addtime','between',[strtotime(date('Y-m-d')),time()])->sum('num');
-        $this->yes_user_fanyong = db('xy_balance_log')->where('type',6)->where('status',1)->where('addtime','between',[$yes1,$yes2])->sum('num');
+        $this->user_fanyong = db('xy_balance_log')->where('type', 6)->where('status', 1)->sum('num');
+        $this->today_user_fanyong = db('xy_balance_log')->where('type', 6)->where('status', 1)->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->sum('num');
+        $this->yes_user_fanyong = db('xy_balance_log')->where('type', 6)->where('status', 1)->where('addtime', 'between', [$yes1, $yes2])->sum('num');
+
+        //下级返佣
+        $this->user_fanyong = db('xy_balance_log')->where('type', 6)->where('status', 1)->sum('num');
+        $this->today_user_fanyong = db('xy_balance_log')->where('type', 6)->where('status', 1)->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->sum('num');
+        $this->yes_user_fanyong = db('xy_balance_log')->where('type', 6)->where('status', 1)->where('addtime', 'between', [$yes1, $yes2])->sum('num');
 
         //用户余额
         $this->user_yue = db('xy_users')->sum('balance');
         $this->user_djyue = db('xy_users')->sum('freeze_balance');
-        $this->today_lxbsy = db('xy_balance_log')->where('type',23)->where('status',1)->where('addtime','between',[strtotime(date('Y-m-d')),time()])->sum('num');
-        $this->today_lxbzc = db('xy_balance_log')->where('type',22)->where('status',1)->where('addtime','between',[strtotime(date('Y-m-d')),time()])->sum('num');
-
-
+        $this->today_lxbsy = db('xy_balance_log')->where('type', 23)->where('status', 1)->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->sum('num');
+        $this->today_lxbzc = db('xy_balance_log')->where('type', 22)->where('status', 1)->where('addtime', 'between', [strtotime(date('Y-m-d')), time()])->sum('num');
 
         $isVersion = '';
         /**if (!session('check_update_version')){
-            $isVersion = $this->Update(1);
+        $isVersion = $this->Update(1);
         }**/
 
         $this->assign('has_version', $isVersion);
@@ -137,26 +135,29 @@ class Index extends Controller
             $this->_form('SystemUser', 'admin@user/pass', 'id', [], ['id' => $id]);
         } else {
             $data = $this->_input([
-                'password'    => $this->request->post('password'),
-                'repassword'  => $this->request->post('repassword'),
+                'password' => $this->request->post('password'),
+                'repassword' => $this->request->post('repassword'),
                 'oldpassword' => $this->request->post('oldpassword'),
             ], [
                 'oldpassword' => 'require',
-                'password'    => 'require|min:4',
-                'repassword'  => 'require|confirm:password',
+                'password' => 'require|min:4',
+                'repassword' => 'require|confirm:password',
             ], [
                 'oldpassword.require' => '旧密码不能为空！',
-                'password.require'    => '登录密码不能为空！',
-                'password.min'        => '登录密码长度不能少于4位有效字符！',
-                'repassword.require'  => '重复密码不能为空！',
-                'repassword.confirm'  => '重复密码与登录密码不匹配，请重新输入！',
+                'password.require' => '登录密码不能为空！',
+                'password.min' => '登录密码长度不能少于4位有效字符！',
+                'repassword.require' => '重复密码不能为空！',
+                'repassword.confirm' => '重复密码与登录密码不匹配，请重新输入！',
             ]);
             $user = Db::name('SystemUser')->where(['id' => $id])->find();
             if (md5($data['oldpassword']) !== $user['password']) {
                 $this->error('旧密码验证失败，请重新输入！');
             }
             $result = NodeService::checkpwd($data['password']);
-            if (empty($result['code'])) $this->error($result['msg']);
+            if (empty($result['code'])) {
+                $this->error($result['msg']);
+            }
+
             if (Data::save('SystemUser', ['id' => $user['id'], 'password' => md5($data['password'])])) {
                 $this->success('密码修改成功，下次请使用新密码登录！', '');
             } else {
@@ -229,18 +230,18 @@ class Index extends Controller
         }
     }
 
-
     public function Update($isreturn)
     {
         $version = config("version");
-        $isHtml = $isreturn?0:1;
+        $isHtml = $isreturn ? 0 : 1;
         $con = '已经是最新版：https://41y.cn';
-        session('check_update_version',1);
-        if($isreturn ) return $con;
+        session('check_update_version', 1);
+        if ($isreturn) {
+            return $con;
+        }
 
         echo $con;die;
     }
-
 
     public function order_info()
     {
@@ -248,10 +249,9 @@ class Index extends Controller
             $this->error('需要登录才能操作哦！');
         }
 
-
-        $deposit = db('xy_deposit')->where('status',1)->count('id');
-        $recharge = db('xy_recharge')->where('status',1)->count('id');
-        echo json_encode(['deposit'=>$deposit,'recharge'=>$recharge]);
+        $deposit = db('xy_deposit')->where('status', 1)->count('id');
+        $recharge = db('xy_recharge')->where('status', 1)->count('id');
+        echo json_encode(['deposit' => $deposit, 'recharge' => $recharge]);
 
     }
 
@@ -259,8 +259,5 @@ class Index extends Controller
     {
         $isVersion = $this->Update(0);
     }
-    
-    
-
 
 }

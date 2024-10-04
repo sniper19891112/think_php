@@ -39,7 +39,6 @@ class Base extends Controller
             if (!$t) {
                 $this->redirect('/download');
             }
-
         }
         /***实时监测账号状态***/
         $uinfo = db('xy_users')->find($uid);
@@ -170,6 +169,7 @@ class Base extends Controller
         $percent = (time() - $today) / (60 * 60 * 24);
         return $percent;
     }
+
     public function getUrl()
     {
         $sys_protocal = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
@@ -178,5 +178,4 @@ class Base extends Controller
         $relate_url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $php_self . (isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : $path_info);
         return $sys_protocal . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '') . $relate_url;
     }
-
 }

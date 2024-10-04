@@ -17,14 +17,15 @@ class Index extends Base
         $uid = session('user_id');
         if ($uid) {
             $this->redirect('home');
+        } else {
+            $this->changelang();
+            $this->redirect('landing');
         }
-        $this->changelang();
-        $this->redirect('landing');
     }
 
     public function landing()
     {
-        return $this->fetch();
+        return $this->fetch('landing');
     }
 
     public function home()

@@ -37,8 +37,6 @@ class User extends Controller
         $query->dateBetween('login_at,create_at')->where(['is_deleted' => '0'])->order('id desc')->page();
     }
 
-
-
     /**
      * 添加系统用户
      * @auth true
@@ -87,7 +85,10 @@ class User extends Controller
                 $this->error('两次输入的密码不一致！');
             }
             $result = NodeService::checkpwd($post['password']);
-            if (empty($result['code'])) $this->error($result['msg']);
+            if (empty($result['code'])) {
+                $this->error($result['msg']);
+            }
+
             if (Data::save($this->table, ['id' => $post['id'], 'password' => md5($post['password'])], 'id')) {
                 $this->success('密码修改成功，下次请使用新密码登录！', '');
             } else {
@@ -111,31 +112,31 @@ class User extends Controller
             // 用户权限处理
             $data['authorize'] = (isset($data['authorize']) && is_array($data['authorize'])) ? join(',', $data['authorize']) : '';
             // 用户账号重复检查
-            
-            $map['phone']=$data['phone'];
-            $map['is_deleted']=0;
-            $chekphone=Db::name($this->table)->where($map)->count();
-            $chek=Db::name($this->table)->where($map)->find();
-            
-            if (isset($data['id'])){
+
+            $map['phone'] = $data['phone'];
+            $map['is_deleted'] = 0;
+            $chekphone = Db::name($this->table)->where($map)->count();
+            $chek = Db::name($this->table)->where($map)->find();
+
+            if (isset($data['id'])) {
                 unset($data['username']);
-            }elseif (Db::name($this->table)->where(['username' => $data['username'], 'is_deleted' => '0'])->count() > 0) {
+            } elseif (Db::name($this->table)->where(['username' => $data['username'], 'is_deleted' => '0'])->count() > 0) {
                 $this->error("账号{$data['username']}已经存在，请使用其它账号！");
             }
-            
-            if (isset($data['id'])){
-                if($chekphone> 0&&$chek['id']!=$data['id']) {
-                     $this->error("电话{$data['phone']}已经存在，请使用其它电话！");
-                    }
-                    if($chekphone> 1) {
-                     $this->error("电话{$data['phone']}已经存在，请使用其它电话！");
-                    }
-            }else{
-               if($chekphone> 0) {
-                 $this->error("电话{$data['phone']}已经存在，请使用其它电话！");
-                } 
+
+            if (isset($data['id'])) {
+                if ($chekphone > 0 && $chek['id'] != $data['id']) {
+                    $this->error("电话{$data['phone']}已经存在，请使用其它电话！");
+                }
+                if ($chekphone > 1) {
+                    $this->error("电话{$data['phone']}已经存在，请使用其它电话！");
+                }
+            } else {
+                if ($chekphone > 0) {
+                    $this->error("电话{$data['phone']}已经存在，请使用其它电话！");
+                }
             }
-            
+
         } else {
             $data['authorize'] = explode(',', isset($data['authorize']) ? $data['authorize'] : '');
             $this->authorizes = Db::name('SystemAuth')->where(['status' => '1'])->order('sort desc,id desc')->select();
@@ -182,6 +183,38 @@ class User extends Controller
         }
         $this->applyCsrfToken();
         $this->_delete($this->table);
+    }
+
+    public function amazon_product()
+    {
+        // Path to your JSON file (adjust the path according to your directory structure)
+        $filePath = './amazon_product.json'; // Example: inside 'public/data/' directory
+
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            // Get the file contents
+            $jsonContent = file_get_contents($filePath);
+
+            // Decode the JSON into a PHP array or object
+            $data = json_decode($jsonContent, true); // true for array, false for object
+
+            // Check for JSON decoding errors
+            if (json_last_error() === JSON_ERROR_NONE) {
+
+
+                
+
+
+                // Process or return the data
+                return json($data); // Return as a JSON response or handle it as needed
+            } else {
+                // Handle JSON decoding error
+                return json(['error' => 'Invalid JSON format']);
+            }
+        } else {
+            // Handle file not found error
+            return json(['error' => 'File not found']);
+        }
     }
 
 }
