@@ -370,7 +370,7 @@ class Users extends Controller
     {
         $this->applyCsrfToken();
         $id = input('post.id/d', 0);
-        $res = Db::table('xy_level')->where('id', $id)->delete();
+        $res = Db::table('xy_users')->where('id', $id)->delete();
         if ($res) {
             $this->success('删除成功!');
         } else {

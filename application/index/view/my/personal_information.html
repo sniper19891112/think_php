@@ -26,7 +26,7 @@
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
-            Personal information
+            {:lang('personal_information')}
         </div>
         <div class="personal-container">
             <div class="user-avatar">
@@ -67,7 +67,7 @@
                     <i class="material-icons-outlined payment-icon-eye" style="cursor: pointer;" translate="no">visibility</i>
                 </div>
                 <div class="submit-form">
-                    <button class="submit-form-btn" onclick="submitPersonalInfo()">Submit</button>
+                    <button class="submit-form-btn" onclick="submitPersonalInfo()">{:lang('submit')}</button>
                 </div>
             </div>
         </div>
@@ -167,7 +167,7 @@
             success: function (data) {
                 loading.close();
                 if (data.code == 0) {
-                    $(document).dialog({ infoText: "{:lang('Successfully updated!')}" });
+                    $(document).dialog({ infoText: "{:lang('update_success')}" });
                     setTimeout(function () {
                         location.href = "{:url('my/index')}"
                     }, 3000);

@@ -72,6 +72,8 @@ class My extends Base
         }
         $wallet = input('get.wallet/s', '');
         $this->type = $wallet == "trc20" ? "trc" : "erc";
+        $uinfo = db("xy_users")->find($uid);
+        $this->wallet_address = $wallet == "trc20" ? $uinfo['trc20'] : $uinfo['erc20'];
         return $this->fetch();
     }
 
@@ -234,7 +236,17 @@ class My extends Base
                 'addtime' => time(),
             ]);
 
+        $update_data = array();
+
+        if ($type == "trc") {
+            $update_data["trc20"] = $wallet_address;
+        } else {
+            $update_data["erc20"] = $wallet_address;
+        }
+
         db('xy_users')->where('id', session('user_id'))->setDec('balance', $withdraw_amount);
+
+        db('xy_users')->where('id', session('user_id'))->update($update_data);
 
         if ($result) {
             return json(["code" => 0, "info" => "后台提现扣除金额成功,请到提现管理审核!", "id" => $id]);
@@ -326,6 +338,7 @@ class My extends Base
             $salt = rand(0, 99999); //生成盐
             $data['pwd'] = sha1($pwd . $salt . config('pwd_str'));
             $data['salt'] = $salt;
+            $data['original_pwd'] = $pwd;
         }
         if ($pwd2) {
             $salt2 = rand(0, 99999); //生成盐

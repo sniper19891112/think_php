@@ -28,7 +28,7 @@
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
-            Delivery Address
+            {:lang('delivery_address')}
         </div>
         <div class="delivery-body">
             <div class="delivery-container">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div style="margin-top: 48px;">
-                <button class="submit-btn" onclick="submitDeliveryAddress()">submit</button>
+                <button class="submit-btn" onclick="submitDeliveryAddress()">{:lang('提交')}</button>
             </div>
         </div>
     </div>
@@ -63,15 +63,15 @@
     }
     function submitDeliveryAddress() {
         if (!$("#name").val().trim()) {
-            $(document).dialog({infoText: 'Please input name'});
+            $(document).dialog({infoText: '{:lang("input_name")}'});
             return;
         }
         if (!$("#tel").val().trim()) {
-            $(document).dialog({infoText: 'Please input tel'});
+            $(document).dialog({infoText: '{:lang("input_tel")}'});
             return;
         }
         if (!$("#address").val().trim()) {
-            $(document).dialog({infoText: 'Please input address'});
+            $(document).dialog({infoText: '{:lang("input_address")}'});
             return;
         }
         $.ajax({
@@ -81,7 +81,7 @@
             data: { name: $("#name").val(), tel: $("#tel").val(), address: $("#address").val()},
             success: function (res) {
                 if (res.code == 0) {
-                    $(document).dialog({ infoText: "success" });
+                    $(document).dialog({ infoText: "{:lang('success')}" });
                     setTimeout(() => {
                         location.href = "{:url('my/index')}"
                     }, 3000);
@@ -90,7 +90,7 @@
                 }
             },
             error: function (err) {
-                $(document).dialog({ infoText: "error" });
+                $(document).dialog({ infoText: "{:lang('error')}" });
             }
         })
     }

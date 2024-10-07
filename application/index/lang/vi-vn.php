@@ -1,6 +1,4 @@
 <?php
-//{if condition='$Think.cookie.think_var eq "en-us"'}width: 100%;{/if}
-//{:lang('在线支付')}
 return [
     'logout' => 'Logout',
     'withdraw_reject' => 'Withdrawal rejected',

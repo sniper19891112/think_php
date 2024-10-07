@@ -29,7 +29,9 @@
                     <img src="{if $user.headpic}{$user.headpic}{else/}/web/img/USER_item.png{/if}" width="64"
                         height="64" style="border-radius: 32px;">
                     <div style="margin-left: 10px;">
-                        <div class="text-18 font-800" style="width: 100px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{$user['username'] | default='Little bamboo shoots'}</div>
+                        <div class="text-18 font-800"
+                            style="width: 100px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                            {$user['username'] | default='Little bamboo shoots'}</div>
                         <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
                             {$user['tel'] | default='15800000000'}
                         </div>
@@ -37,101 +39,158 @@
                 </div>
                 {php}
                 $level = $user['level'] + 1;
-                if ($level < 4) {
-                    $level_img = '/web/img/vip'.$level.'.png';
-                }
-                if ($level == 4) {
-                    $level_img = '/web/img/皇冠11.png';
-                }
-                if ($level == 5) {
-                    $level_img = '/web/img/超级皇冠11.png';
-                }
-                {/php}
-                <div style="position: relative;">
-                    <img src="{$level_img}" width="60"/>
+                if ($level < 4) { $level_img='/web/img/vip' .$level.'.png'; } if ($level==4) {
+                    $level_img='/web/img/皇冠11.png' ; } if ($level==5) { $level_img='/web/img/超级皇冠11.png' ; } {/php} <div
+                    style="position: relative;">
+                    <img src="{$level_img}" width="60" />
+            </div>
+        </div>
+        <div class="my-account-balance">
+            <div class="text-14 font-800 color-white">{:lang('account_balance')}</div>
+            <div class="text-32 font-800 color-white" style="margin-top: 12px;">{$user['balance']}</div>
+        </div>
+        <div class="my-order">
+            <div class="text-16 font-800 color-2B2B2B">{:lang('my_order')}</div>
+            <div class="my-order-container">
+                <a href="/index/order/order">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_20.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('all')}</div>
+                    </div>
+                </a>
+                <a href="/index/order/order?status=processing">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_24.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('under_way')}</div>
+                    </div>
+                </a>
+                <a href="/index/order/order?status=completed">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_25.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('received')}</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="my-other-functions">
+            <div class="text-16 font-800 color-2B2B2B">{:lang('other_function')}</div>
+            <div style="padding: 13px;" class="d-flex align-center justify-between">
+                <a href="/index/my/earning">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_35.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('purse')}</div>
+                    </div>
+                </a>
+                <a href="/index/my/wallet">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_36.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('wallet')}</div>
+                    </div>
+                </a>
+                <a href="/index/my/delivery_address">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_37.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('address')}</div>
+                    </div>
+                </a>
+                <a href="/index/my/team">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_38.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('my_team')}</div>
+                    </div>
+                </a>
+            </div>
+            <div style="padding: 13px;" class="d-flex align-center justify-between">
+                <a href="/index/my/invite">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_45.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('invitation_code')}</div>
+                    </div>
+                </a>
+                <a href="{$service_url}" target="_blank">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_46.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('customer_service')}</div>
+                    </div>
+                </a>
+                <a href="/index/my/personal_information">
+                    <div style="text-align: center;" class="cursor-pointer">
+                        <img src="/public/img/组_47.png" />
+                        <div class="text-14 color-2B2B2B">{:lang('account_setting')}</div>
+                    </div>
+                </a>
+                <div style="text-align: center;" class="cursor-pointer" id="languageOpenModal">
+                    <img src="/public/img/lang.jpg" style="width: 48px;" />
+                    <div class="text-14 color-2B2B2B">{:lang('language')}</div>
                 </div>
             </div>
-            <div class="my-account-balance">
-                <div class="text-14 font-800 color-white">Account balance</div>
-                <div class="text-32 font-800 color-white" style="margin-top: 12px;">{$user['balance']}</div>
+            <div style="margin-top: 24px; text-align: center;">
+                <a href="/index/user/logout">
+                    <button class="logout-btn">{:lang('logout')}</button>
+                </a>
             </div>
-            <div class="my-order">
-                <div class="text-16 font-800 color-2B2B2B">My order</div>
-                <div class="my-order-container">
-                    <a href="/index/order/order">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_20.png" />
-                            <div class="text-14 color-2B2B2B">All</div>
-                        </div>
-                    </a>
-                    <a href="/index/order/order?status=processing">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_24.png" />
-                            <div class="text-14 color-2B2B2B">Under way</div>
-                        </div>
-                    </a>
-                    <a href="/index/order/order?status=completed">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_25.png" />
-                            <div class="text-14 color-2B2B2B">Received</div>
-                        </div>
-                    </a>
+        </div>
+        <div class="modal-overlay" id="languageModalOverlay">
+            <div class="language-modal">
+                <div style="padding: 8px; display: flex; align-items: center;" onclick="changeLanguage('vi')">
+                    <img src="/public/img/country/vi.png" width="24" style="margin-right: 4px;"/>
+                    <span>ViệtNam</span>                    
                 </div>
-            </div>
-            <div class="my-other-functions">
-                <div class="text-16 font-800 color-2B2B2B">Other functions</div>
-                <div style="padding: 13px;" class="d-flex align-center justify-between">
-                    <a href="/index/my/earning">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_35.png" />
-                            <div class="text-14 color-2B2B2B">Purse</div>
-                        </div>
-                    </a>
-                    <a href="/index/my/wallet">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_36.png" />
-                            <div class="text-14 color-2B2B2B">Wallet</div>
-                        </div>
-                    </a>
-                    <a href="/index/my/delivery_address">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_37.png" />
-                            <div class="text-14 color-2B2B2B">Address</div>
-                        </div>
-                    </a>
-                    <a href="/index/my/team">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_38.png" />
-                            <div class="text-14 color-2B2B2B">My team</div>
-                        </div>
-                    </a>
+                <div style="padding: 8px; display: flex; align-items: center;" onclick="changeLanguage('pt')">
+                    <img src="/public/img/country/pt.png" width="24" style="margin-right: 4px;"/>
+                    <span>Português</span>                    
                 </div>
-                <div style="padding: 13px;" class="d-flex align-center justify-between">
-                    <a href="/index/my/invite">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_45.png" />
-                            <div class="text-14 color-2B2B2B">Invitation code</div>
-                        </div>
-                    </a>
-                    <a href="{$service_url}" target="_blank">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_46.png" />
-                            <div class="text-14 color-2B2B2B">Online customer service</div>
-                        </div>
-                    </a>
-                    <a href="/index/my/personal_information">
-                        <div style="text-align: center;" class="cursor-pointer">
-                            <img src="/public/img/组_47.png" />
-                            <div class="text-14 color-2B2B2B">Account setting</div>
-                        </div>
-                    </a>
+                <div style="padding: 8px; display: flex; align-items: center;" onclick="changeLanguage('de')">
+                    <img src="/public/img/country/de.png" width="24" style="margin-right: 4px;"/>
+                    <span>Deutsch</span>                    
+                </div>
+                <div style="padding: 8px; display: flex; align-items: center;" onclick="changeLanguage('id')">
+                    <img src="/public/img/country/id.png" width="24" style="margin-right: 4px;"/>
+                    <span>Indonesia</span>                    
+                </div>
+                <div style="padding: 8px; display: flex; align-items: center;" onclick="changeLanguage('zh')">
+                    <img src="/public/img/country/zh.png" width="24" style="margin-right: 4px;"/>
+                    <span>中文繁体</span>                    
+                </div>
+                <div style="padding: 8px; display: flex; align-items: center;" onclick="changeLanguage('hi')">
+                    <img src="/public/img/country/hi.png" width="24" style="margin-right: 4px;"/>
+                    <span>भारत</span>                    
+                </div>
+                <div style="padding: 8px; display: flex; align-items: center;" onclick="changeLanguage('en')">
+                    <img src="/public/img/country/us.png" width="24" style="margin-right: 4px;"/>
+                    <span>English</span>                    
                 </div>
             </div>
         </div>
-        {include file="public/floor" /}
+    </div>
+    {include file="public/floor" /}
     </div>
 </body>
 <script type="application/javascript">
+    // jQuery logic to open and close the modal
+    $(document).ready(function () {
+        // Open the modal when the button is clicked
+        $("#languageOpenModal").on("click", function () {
+            $("#languageModalOverlay").show();
+        });
+
+        // Close the modal when the close button is clicked
+        $("#closeModal").on("click", function () {
+            $("#languageModalOverlay").hide();
+        });
+
+        // Close the modal when clicking outside the modal (on the overlay)
+        $("#languageModalOverlay").on("click", function (event) {
+            if ($(event.target).is("#languageModalOverlay")) { // Check if the click was on the overlay
+                $(this).hide();
+            }
+        });
+    });
+    // change language
+    function changeLanguage(lang) {
+        var data = { 'lang': lang };
+        $.get("{:url('Index/changelang')}", data, function () { location.reload(); })
+    }
 </script>
 
 </html>

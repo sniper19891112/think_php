@@ -28,11 +28,11 @@
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
-            Invitation Code
+            {:lang('invitation_code')}
         </div>
         <div class="invitation-container">
             <div class="invitation-link-container">
-                <div class="invitation-link-header">Invitation Link</div>
+                <div class="invitation-link-header">{:lang('invitation_link')}</div>
                 <div style="padding-top: 52px;"></div>
                 <div id="qrcode" class="qrcode-img"></div>
                 <div class="invitation-code">{$invite_code}</div>
@@ -60,7 +60,7 @@
     function copyWalletAddress() {
         // Copy text to clipboard using Clipboard API
         navigator.clipboard.writeText($("#invitation_url").val()).then(function () {
-            $(document).dialog({infoText: 'Copied successfully!'});
+            $(document).dialog({infoText: '{:lang("copy_success")}'});
         }).catch(function (err) {
             console.error('Error copying text: ', err);
         });

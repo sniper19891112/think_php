@@ -27,13 +27,13 @@
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
-            Order Confirmation
+            {:lang('order_confirmation')}
         </div>
         <div class="order-confirm-container">
             {php}
             $sub_total_amount = $order['goods_price'] * $order['goods_count'];
             {/php}
-            <div class="text-16 font-800 color-2B2B2B">Delivery Address</div>
+            <div class="text-16 font-800 color-2B2B2B">{:lang('delivery_address')}</div>
             <div class="order-delivery-address">
                 <div class="d-flex align-center">
                     <i class="material-icons-outlined" translate="no"> house </i>
@@ -42,7 +42,7 @@
                 <div class="text-16 color-2B2B2B" style="margin-left: 26px;">{$order['tel']}</div>
                 <div class="text-16 color-2B2B2B" style="margin-left: 26px;">{$order['address']}</div>
             </div>
-            <div style="margin-top: 24px;" class="text-16 font-800 color-2B2B2B">Purchased goods</div>
+            <div style="margin-top: 24px;" class="text-16 font-800 color-2B2B2B">{:lang('purchased_goods')}</div>
             <div class="purchased-good-container">
                 <img src="{$order['goods_pic']}" style="width: 80px; height: 90px; border-radius: 8px;" />
                 <div style="margin-left: 8px; width: 100%;">
@@ -56,23 +56,23 @@
                     </div>
                 </div>
             </div>
-            <div style="margin-top: 24px;" class="text-16 font-800 color-2B2B2B">Order amount</div>
+            <div style="margin-top: 24px;" class="text-16 font-800 color-2B2B2B">{:lang('order_amount')}</div>
             <div class="order-amount-container">
                 <div class="d-flex align-center justify-between">
-                    <div class="text-14 font-800 color-2B2B2B">Subtotal</div>
+                    <div class="text-14 font-800 color-2B2B2B">{:lang('subtotal')}</div>
                     <div class="text-14 font-800 color-2B2B2B">${$sub_total_amount}</div>
                 </div>
                 <div class="d-flex align-center justify-between" style="margin-top: 4px; padding-bottom: 4px; border-bottom: 1px solid #E0E0E0;">
-                    <div class="text-14 font-800 color-2B2B2B">Delivery Fee</div>
+                    <div class="text-14 font-800 color-2B2B2B">{:lang('delivery_fee')}</div>
                     <div class="text-14 font-800 color-2B2B2B">$0</div>
                 </div>
                 <div class="d-flex align-center justify-between" style="margin-top: 4px;">
-                    <div class="text-14 font-800 color-2B2B2B">Total</div>
+                    <div class="text-14 font-800 color-2B2B2B">{:lang('total')}</div>
                     <div class="text-14 font-800 color-2B2B2B">${$sub_total_amount}</div>
                 </div>
             </div>
             <div style="margin-top: 24px;">
-                <button class="submit-btn-form" id="submitOpenModal">Submit Order</button>
+                <button class="submit-btn-form" id="submitOpenModal">{:lang('submit_order')}</button>
             </div>
             <input type="hidden" id="balance" value="{$order.balance}"/>
             <input type="hidden" id="total_amount" value="{$sub_total_amount}"/>
@@ -91,7 +91,7 @@
                     <input class="payment-password-input" type="password" name="pwd2" placeholder="Payment password" />
                     <i class="material-icons-outlined payment-icon-eye" style="cursor: pointer;" translate="no">visibility</i>
                 </div>
-                <button class="confirm-btn-form" onclick="submitOrder('{$order.id}')">Confirm Order</button>
+                <button class="confirm-btn-form" onclick="submitOrder('{$order.id}')">{:lang('confirm_order')}</button>
             </div>
         </div>
     </div>
@@ -102,15 +102,11 @@
     }
     function submitOrder(id) {
         if (Number($("#balance").val()) < Number($("#total_amount").val())) {
-            $(document).dialog({ infoText: "Insufficient Balance!" });
+            $(document).dialog({ infoText: "{:lang('insufficient_balance')}" });
             return;
         }
-        // if (!$("input[name=pwd]").val().trim()) {
-        //     $(document).dialog({ infoText: "Please input password" });
-        //     return;
-        // }
         if (!$("input[name=pwd2]").val().trim()) {
-            $(document).dialog({ infoText: "Please input payment password" });
+            $(document).dialog({ infoText: "{:lang('input_payment_password')}" });
             return;
         }
         // let pwd = $("input[name=pwd]").val();
@@ -122,7 +118,7 @@
             data: { oid: id, pwd2: pwd2 },
             success: function (res) {
                 if (res.code == 0) {
-                    $(document).dialog({ infoText: "success" });
+                    $(document).dialog({ infoText: "{:lang('success')}" });
                     setTimeout(function () {
                         location.href = "{:url('order/order')}"
                     }, 3000);
@@ -131,7 +127,7 @@
                 }
             },
             error: function (err) {
-                $(document).dialog({ infoText: "error" });
+                $(document).dialog({ infoText: "{:lang('error')}" });
             }
         })
     }

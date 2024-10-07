@@ -28,24 +28,24 @@
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
-            withdraw
+            {:lang('withdraw')}
         </div>
         <div class="withdraw-body">
             <div class="withdraw-container">
-                <div class="text-16 font-800 color-2B2B2B" style="margin-top: 14px;">Wallet address</div>
+                <div class="text-16 font-800 color-2B2B2B" style="margin-top: 14px;">{:lang('wallet_address')}</div>
                 <div class="wallet-address-input-form">
                     <i class="material-icons-outlined" translate="no">
                         wallet
                     </i>
-                    <input class="wallet-address-input" id="wallet_address" type="text" placeholder="Please enter the wallet address" />
+                    <input class="wallet-address-input" id="wallet_address" value="{$wallet_address}" type="text" placeholder="{:lang('enter_wallet_address')}" />
                 </div>
-                <div class="text-16 font-800 color-2B2B2B" style="margin-top: 14px;">Withdraw amount</div>
+                <div class="text-16 font-800 color-2B2B2B" style="margin-top: 14px;">{:lang('withdraw_amount')}</div>
                 <div class="withdraw-amount-input-form">
-                    <input class="withdraw-amount-input" id="withdraw_amount" type="text" placeholder="Please enter the withdraw amount" />
+                    <input class="withdraw-amount-input" id="withdraw_amount" type="text" placeholder="{:lang('enter_withdraw_amount')}" />
                 </div>
             </div>
             <div style="margin-top: 24px;">
-                <button class="submit-btn" id="submitOpenModal">submit</button>
+                <button class="submit-btn" id="submitOpenModal">{:lang('submit')}</button>
             </div>
         </div>
         <input type="hidden" value="{$type}" id="type"/>
@@ -58,7 +58,7 @@
                     <input class="payment-password-input" type="password" name="pwd2" placeholder="Payment password" />
                     <i class="material-icons-outlined payment-icon-eye" style="cursor: pointer;" translate="no">visibility</i>
                 </div>
-                <button class="confirm-btn-form" onclick="submitWithdraw()">Confirm</button>
+                <button class="confirm-btn-form" onclick="submitWithdraw()">{:lang('cofirm')}</button>
             </div>
         </div>
     </div>
@@ -71,15 +71,15 @@
     }
     function submitWithdraw() {
         if (!$("#wallet_address").val().trim()) {
-            $(document).dialog({infoText: 'Please input wallet address'});
+            $(document).dialog({infoText: "{:lang('input_wallet_address')}"});
             return;
         }
         if (!$("#withdraw_amount").val().trim()) {
-            $(document).dialog({infoText: 'Please input withdraw amount'});
+            $(document).dialog({infoText: "{:lang('input_withdraw_amount')}"});
             return;
         }
         if (!$("input[name=pwd2]").val().trim()) {
-            $(document).dialog({ infoText: "Please input payment password" });
+            $(document).dialog({ infoText: "{:lang('input_payment_password')}" });
             return;
         }
         $.ajax({
@@ -89,7 +89,7 @@
             data: { type: $("#type").val(), withdraw_amount: $("#withdraw_amount").val(), address: $("#wallet_address").val(), pwd2: $("input[name=pwd2]").val()},
             success: function (res) {
                 if (res.code == 0) {
-                    $(document).dialog({ infoText: "The withdrawal is under review, please pay attention to the account information." });
+                    $(document).dialog({ infoText: "{:lang('withdraw_review_text')}" });
                     id = res.id;
                     $("#modalOverlay").hide();
                     interval = setInterval(() => {
@@ -100,7 +100,7 @@
                 }
             },
             error: function (err) {
-                $(document).dialog({ infoText: "error" });
+                $(document).dialog({ infoText: "{:lang('error')}" });
             }
         })
     }
@@ -112,7 +112,7 @@
             data: { id },
             success: function (res) {
                 if (res.code == 0) {
-                    $(document).dialog({ infoText: "success" });
+                    $(document).dialog({ infoText: "{:lang('success')}" });
                     clearInterval(interval);
                     setTimeout(() => {
                         location.href = "{:url('my/wallet')}"
@@ -122,7 +122,7 @@
                 }
             },
             error: function (err) {
-                $(document).dialog({ infoText: "error" });
+                $(document).dialog({ infoText: "{:lang('error')}" });
             }
         })
     }

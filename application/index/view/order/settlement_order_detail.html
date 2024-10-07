@@ -27,7 +27,7 @@
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
-            Order details
+            {:lang('order_detail')}
         </div>
         <div class="order-detail-container">
             {php}
@@ -35,7 +35,7 @@
             $total_amount = $sub_total_amount + $order['commission'];
             {/php}
             <div class="order-detail-number">
-                <div>The order number is <font style="font-weight: bold;">{$order['id']}</font>
+                <div>{:lang('order_number_is')}&nbsp;<font style="font-weight: bold;">{$order['id']}</font>
                 </div>
                 <div class="order-detail-time">{$order['addtime']|format_datetime='Y-m-d H:i:s'}</div>
             </div>
@@ -45,33 +45,33 @@
                     <div
                         class="order-detail-status-checkbox {if condition='$order.status == 1 || $order.status == 2'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
                         <i
-                            class="material-icons-outlined {if condition='$order.status == 1 || $order.status == 2'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                            class="material-icons-outlined {if condition='$order.status == 1 || $order.status == 2'}color-FFFFFF{else /}color-FF5035{/if}" translate="no">check</i>
                     </div>
-                    <div class="order-detail-status-text">Placed an order</div>
+                    <div class="order-detail-status-text">{:lang('placed_order')}</div>
                 </div>
                 <div style="z-index: 2;">
                     <div
                         class="order-detail-status-checkbox {if condition='$order.status==3 || $order.status==4'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
                         <i
-                            class="material-icons-outlined {if condition='$order.status==3 || $order.status==4'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                            class="material-icons-outlined {if condition='$order.status==3 || $order.status==4'}color-FFFFFF{else /}color-FF5035{/if}" translate="no">check</i>
                     </div>
-                    <div class="order-detail-status-text">shipped</div>
+                    <div class="order-detail-status-text">{:lang('shipped')}</div>
                 </div>
                 <div style="z-index: 2;">
                     <div
                         class="order-detail-status-checkbox {if condition='$order.status == 5 || $order.status == 6'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
                         <i
-                            class="material-icons-outlined {if condition='$order.status == 5 || $order.status == 6'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                            class="material-icons-outlined {if condition='$order.status == 5 || $order.status == 6'}color-FFFFFF{else /}color-FF5035{/if}" translate="no">check</i>
                     </div>
-                    <div class="order-detail-status-text">confirmed</div>
+                    <div class="order-detail-status-text">{:lang('confirmed')}</div>
                 </div>
                 <div style="z-index: 2;">
                     <div
                         class="order-detail-status-checkbox {if condition='$order.status eq 7'}bg-FF5035{else /}bg-FFFFFF{/if} mg-auto">
                         <i
-                            class="material-icons-outlined {if condition='$order.status eq 7'}color-FFFFFF{else /}color-FF5035{/if}">check</i>
+                            class="material-icons-outlined {if condition='$order.status eq 7'}color-FFFFFF{else /}color-FF5035{/if}" translate="no">check</i>
                     </div>
-                    <div class="order-detail-status-text">Rated</div>
+                    <div class="order-detail-status-text">{:lang('rated')}</div>
                 </div>
             </div>
             <div class="order-detail-commodity-information">
@@ -89,49 +89,45 @@
                 </div>
             </div>
             <div class="order-detail-information">
-                <div class="text-14 color-2B2B2B">Order information</div>
+                <div class="text-14 color-2B2B2B">{:lang('order_information')}</div>
                 <div style="margin-top: 10px;" class="text-14 color-4F4F4F d-flex align-center justify-between">
-                    <div>subtotal</div>
+                    <div>{:lang('sub_total')}</div>
                     <div>${$sub_total_amount}</div>
                 </div>
                 <div style="margin-top: 10px;" class="text-14 color-4F4F4F d-flex align-center justify-between">
-                    <div>Delivery charge</div>
+                    <div>{:lang('delivery_recharge')}</div>
                     <div>$0.00</div>
                 </div>
-                <!-- <div style="margin-top: 10px;" class="text-14 color-4F4F4F d-flex align-center justify-between">
-                    <div>favorable</div>
-                    <div>$0.00</div>
-                </div> -->
                 <div style="margin-top: 10px; padding-bottom: 7px; border-bottom: 1px solid #E0E0E0;"
                     class="text-14 color-4F4F4F d-flex align-center justify-between">
-                    <div>commission</div>
+                    <div>{:lang('commission')}</div>
                     <div>${$order.commission}</div>
                 </div>
                 <div style="margin-top: 8px" class="text-14 color-4F4F4F d-flex align-center justify-between">
-                    <div>total</div>
+                    <div>{:lang('total')}</div>
                     <div>${$total_amount}</div>
                 </div>
             </div>
             <div class="order-detail-delivery-container">
-                <div class="text-14 color-2B2B2B">Delivery address</div>
+                <div class="text-14 color-2B2B2B">{:lang('delivery_address')}</div>
                 <div style="margin-top: 14px;" class="text-14 color-4F4F4F">{$order['name']}</div>
                 <div class="text-14 color-4F4F4F">{$order['tel']}</div>
                 <div class="text-14 color-4F4F4F">{$order['address']}</div>
             </div>
             {if $order.status >= 3}
             <div style="margin-top: 24px;">                
-                <div class="text-14 color-2B2B2B font-bold">Shipping Address</div>
-                <div style="margin-top: 14px;" class="text-14 color-4F4F4F"><font class="font-bold">CompanyName: </font>{$order['company_name']}</div>
-                <div class="text-14 color-4F4F4F"><font class="font-bold">Tracking Number: </font>{$order['tracking_number']}</div>
-                <div class="text-14 color-4F4F4F"><font class="font-bold">Arrival Time: </font>{$order['shipping_time']|format_datetime='Y-m-d H:i:s'}</div>
+                <div class="text-14 color-2B2B2B font-bold">{:lang('shipping_address')}</div>
+                <div style="margin-top: 14px;" class="text-14 color-4F4F4F"><font class="font-bold">{:lang('company_name')}: </font>{$order['company_name']}</div>
+                <div class="text-14 color-4F4F4F"><font class="font-bold">{:lang('tracking_number')}: </font>{$order['tracking_number']}</div>
+                <div class="text-14 color-4F4F4F"><font class="font-bold">{:lang('arrival_time')}: </font>{$order['shipping_time']|format_datetime='Y-m-d H:i:s'}</div>
                 <input type="hidden" value="{$order['shipping_time']}" id="shipping_time"/>
             </div>
             {/if}
             {if $order.status > 4}
             <div class="commodity-evaluation-container">
-                <div class="text-14 color-2B2B2B">Commodity evaluation</div>
+                <div class="text-14 color-2B2B2B">{:lang('commodity_evaluation')}</div>
                 <div class="d-flex align-center">
-                    <div class="text-14 color-4F4F4F" style="margin-top: 8px; width: 120px;">1. Quality of goods</div>
+                    <div class="text-14 color-4F4F4F" style="margin-top: 8px; width: 120px;">1. {:lang('quality_of_goods')}</div>
                     <div id="good-quality-rating" style="margin-left: 24px;">
                         <span class="stars {if $order.good_quality >= 1}selected{/if}" data-value="1">&#9733;</span>
                         <span class="stars {if $order.good_quality >= 2}selected{/if}" data-value="2">&#9733;</span>
@@ -141,7 +137,7 @@
                     </div>
                 </div>
                 <div class="d-flex align-center">
-                    <div class="text-14 color-4F4F4F" style="margin-top: 8px; width: 120px;">2. Goods service</div>
+                    <div class="text-14 color-4F4F4F" style="margin-top: 8px; width: 120px;">2. {:lang('goods_service')}</div>
                     <div id="good-service-rating" style="margin-left: 24px;">
                         <span class="stars {if $order.good_service >= 1}selected{/if}" data-value="1">&#9733;</span>
                         <span class="stars {if $order.good_service >= 2}selected{/if}" data-value="2">&#9733;</span>
@@ -151,7 +147,7 @@
                     </div>
                 </div>
                 <div class="d-flex align-center">
-                    <div class="text-14 color-4F4F4F" style="margin-top: 8px; width: 120px;">3. Attitude service</div>
+                    <div class="text-14 color-4F4F4F" style="margin-top: 8px; width: 120px;">3. {:lang('attitude_service')}</div>
                     <div id="attitude-service-rating" style="margin-left: 24px;">
                         <span class="stars {if $order.attitude_service >= 1}selected{/if}" data-value="1">&#9733;</span>
                         <span class="stars {if $order.attitude_service >= 2}selected{/if}" data-value="2">&#9733;</span>
@@ -163,7 +159,7 @@
                 <div class="buyer-show-upload" id="uploadArea">
                     <div class="text-center" id="buyer_show_upload" style="display: {if condition="!$order.buyer_show_img"}block{else}none{/if};">
                         <i class="material-icons-outlined color-C2C2C2" style="font-size: 48px;" translate="no">image</i>
-                        <div class="color-C2C2C2">Please upload the buyer show first</div>
+                        <div class="color-C2C2C2">{:lang('buyer_upload_text')}</div>
                     </div>
                     <img src="{$order.buyer_show_img}" id="buyer_show_img" style="display: {if condition="$order.buyer_show_img"}block{else}none{/if};" width="100" height="100" />
                     <input type="file" id="fileInput" style="display: none;" />
@@ -173,11 +169,11 @@
             {/if}
             {if $order.status == 3 || $order.status == 4}
             <button class="order-detail-confirm-receipt" onclick="confirmReceipt('{$order.id}')">
-                Confirm receipt of goods
+                {:lang('confirm_receipt_of_goods')}
             </button>
             {elseif $order.status == 5 || $order.status == 6}
             <button class="order-detail-confirm-receipt" onclick="submitEvaluation('{$order.id}')">
-                Submit evaluation
+                {:lang('submit_evaluation')}
             </button>
             {/if}
         </div>
@@ -231,7 +227,7 @@
     function confirmReceipt(id) {
         // console.log(Math.ceil(new Date().getTime() / 1000), Number($("#shipping_time").val()))
         if (Number($("#shipping_time").val()) > Math.ceil(new Date().getTime() / 1000)) {
-            $(document).dialog({ infoText: "You can't confirm receipt yet" });
+            $(document).dialog({ infoText: "{:lang('confirm_receipt_error_text')}" });
             return;
         }
         $.ajax({
@@ -241,7 +237,7 @@
             data: { order_id: id },
             success: function (res) {
                 if (res.code == 0) {
-                    $(document).dialog({ infoText: "success" });
+                    $(document).dialog({ infoText: "{:lang('success')}" });
                     setTimeout(function () {
                         location.href = "{:url('order/order')}"
                     }, 3000);
@@ -250,21 +246,21 @@
                 }
             },
             error: function (err) {
-                $(document).dialog({ infoText: "error" });
+                $(document).dialog({ infoText: "{:lang('error')}" });
             }
         })
     }
     function submitEvaluation(id) {
         if (goodQualityRating < 4) {
-            $(document).dialog({ infoText: "you need to click on more than 4 stars to rate" });
+            $(document).dialog({ infoText: "{:lang('star_rate_error_text')}" });
             return
         }
         if (goodServiceRating < 4) {
-            $(document).dialog({ infoText: "you need to click on more than 4 stars to rate" });
+            $(document).dialog({ infoText: "{:lang('star_rate_error_text')}" });
             return
         }
         if (attitudeServiceRating < 4) {
-            $(document).dialog({ infoText: "you need to click on more than 4 stars to rate" });
+            $(document).dialog({ infoText: "{:lang('star_rate_error_text')}" });
             return
         }
         $.ajax({
@@ -274,7 +270,7 @@
             data: { order_id: id, "good_quality": goodQualityRating, "good_service": goodServiceRating, "attitude_service": attitudeServiceRating, "buyer_show_img": $("#buyer_show_url").val() },
             success: function (res) {
                 if (res.code == 0) {
-                    $(document).dialog({ infoText: "success" });
+                    $(document).dialog({ infoText: "{:lang('success')}" });
                     setTimeout(function () {
                         location.href = "{:url('order/order')}"
                     }, 3000);
@@ -283,7 +279,7 @@
                 }
             },
             error: function (err) {
-                $(document).dialog({ infoText: "error" });
+                $(document).dialog({ infoText: "{:lang('error')}" });
             }
         })
     }

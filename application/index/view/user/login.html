@@ -32,32 +32,32 @@
             <div class="login-title-1">{:lang('email_login')}</div>
             <div class="login-title-2">{:lang('login_text_1')}</div>
             <div class="login-title-3">
-                Log in
+                {:lang('log_in')}
             </div>
             <div class="login-email-input-form">
                 <i class="material-icons-outlined" translate="no">mail</i>
-                <input class="login-email-input" name="email" placeholder="Enter your email account" type="text"/>
+                <input class="login-email-input" name="email" placeholder="{:lang('enter_your_email_account')}" type="text"/>
             </div>
             <div class="login-password-input-form">
                 <i class="material-icons-outlined" translate="no">lock</i>
-                <input class="login-password-input" name="pwd" type="password" placeholder="Enter password" />
+                <input class="login-password-input" name="pwd" type="password" placeholder="{:lang('enter_password')}" />
                 <i class="material-icons-outlined icon-eye" style="cursor: pointer;" translate="no">visibility</i>
             </div>
             <div class="login-forgot-password-form">
                 <label class="login-remember-me-text">
                     <input type="checkbox" name="remember_me" checked/>
-                    Remember me
+                    {:lang('remember_me')}
                 </label>
                 <a href="/index/user/forgot_password">
-                    <div class="login-forgot-password-text">Forgot password</div>
+                    <div class="login-forgot-password-text">{:lang('forgot_password')}</div>
                 </a>
             </div>
             <div class="login-btn-form">
-                <button class="login-btn" onclick="login()">Log in</button>
+                <button class="login-btn" onclick="login()">{:lang('log_in')}</button>
                 <div style="margin-top: 8px; text-align: center;">
-                    <span>Don't have an account yet?&nbsp;</span>
+                    <span>{:lang('account_yet_text')}&nbsp;</span>
                     <a href="/index/user/register">
-                        <span style="font-size: 14px; color: #FF5035; cursor: pointer;">Register now</span>
+                        <span style="font-size: 14px; color: #FF5035; cursor: pointer;">{:lang('register_now')}</span>
                     </a>
                 </div>
             </div>

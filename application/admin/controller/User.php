@@ -202,8 +202,6 @@ class User extends Controller
             if (json_last_error() === JSON_ERROR_NONE) {
 
 
-                
-
 
                 // Process or return the data
                 return json($data); // Return as a JSON response or handle it as needed

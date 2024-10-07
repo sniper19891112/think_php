@@ -17,8 +17,6 @@ class Base extends Controller
 
         parent::__construct();
 
-        // cookie('think_var', 'en-us', time() + 3600 * 24);
-
         if (!cookie('think_var')) {
             $url = $this->getUrl();
             cookie('think_var', 'en-us', time() + 3600 * 24);
@@ -128,40 +126,33 @@ class Base extends Controller
      */
     public function changelang()
     {
-        cookie('think_var', 'en-us', time() + 3600 * 24);
-        // $lang = input('lang');
-        // switch ($lang) {
-        //     case 'jp':
-        //         cookie('think_var', 'jp-jp', time() + 3600 * 24);
-        //         break;
-        //     case 'kr':
-        //         cookie('think_var', 'kr-kr', time() + 3600 * 24);
-        //         break;
-        //     case 'en':
-        //         cookie('think_var', 'en-us', time() + 3600 * 24);
-        //         break;
-        //     case 'zn':
-        //         cookie('think_var', 'zh-cn', time() + 3600 * 24);
-        //         break;
-        //     case 'fr':
-        //         cookie('think_var', 'fr-fr', time() + 3600 * 24);
-        //         break;
-        //     case 'es':
-        //         cookie('think_var', 'es-es', time() + 3600 * 24);
-        //         break;
-        //     case 'pt':
-        //         cookie('think_var', 'pt-pt', time() + 3600 * 24);
-        //         break;
-        //     case 'ind':
-        //         cookie('think_var', 'ind-ind', time() + 3600 * 24);
-        //         break;
-        //     case 'th':
-        //         cookie('think_var', 'th-th', time() + 3600 * 24);
-        //         break;
-        //     default:
-        //         cookie('think_var', 'en-us', time() + 3600 * 24);
-        //         break;
-        // }
+        $lang = input('lang');
+        switch ($lang) {
+            case 'vi':
+                cookie('think_var', 'vi-vn', time() + 3600 * 24);
+                break;
+            case 'pt':
+                cookie('think_var', 'pt-pt', time() + 3600 * 24);
+                break;
+            case 'en':
+                cookie('think_var', 'en-us', time() + 3600 * 24);
+                break;
+            case 'zh':
+                cookie('think_var', 'zh-tw', time() + 3600 * 24);
+                break;
+            case 'de':
+                cookie('think_var', 'de-de', time() + 3600 * 24);
+                break;
+            case 'id':
+                cookie('think_var', 'id-id', time() + 3600 * 24);
+                break;
+            case 'hi':
+                cookie('think_var', 'hi-in', time() + 3600 * 24);
+                break;
+            default:
+                cookie('think_var', 'en-us', time() + 3600 * 24);
+                break;
+        }
     }
     public function getpercent()
     {

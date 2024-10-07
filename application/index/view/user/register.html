@@ -29,40 +29,40 @@
                     <i class="material-icons" style="cursor: pointer;">close</i>
                 </a>
             </div>
-            <div class="register-title-1">Register now</div>
-            <div class="register-title-2">Register now to continue</div>
+            <div class="register-title-1">{:lang('register_now')}</div>
+            <div class="register-title-2">{:lang('register_now_to_continue')}</div>
             <div class="register-title-3">
-                Email registration
+                {:lang('email_registration')}
             </div>
             <form action="" id="register-form">
                 <div class="register-email-input-form">
                     <i class="material-icons-outlined" translate="no">mail</i>
                     <input class="register-email-input" type="text" name="email"
-                        placeholder="Enter your email account" />
+                        placeholder="{:lang('enter_your_email_account')}" />
                 </div>
                 <div class="register-code-input-form">
                     <i class="material-icons-outlined" translate="no">verified_user</i>
-                    <input class="register-code-input" type="text" name="verify_code" placeholder="Enter verify code" />
-                    <div class="register-code-text get-code">Get verification code</div>
+                    <input class="register-code-input" type="text" name="verify_code" placeholder="{:lang('enter_verify_code')}" />
+                    <div class="register-code-text get-code">{:lang('get_verification_code')}</div>
                 </div>
                 <div class="register-password-input-form">
                     <i class="material-icons-outlined" translate="no">lock</i>
-                    <input class="register-password-input" type="password" name="pwd" placeholder="Enter password" />
+                    <input class="register-password-input" type="password" name="pwd" placeholder="{:lang('enter_password')}" />
                     <i class="material-icons-outlined icon-eye" style="cursor: pointer;" translate="no">visibility</i>
                 </div>
                 <div class="register-remember-password-form">
                     <label class="register-remember-me-text">
                         <input type="checkbox" name="remember_me" checked />
-                        Remember me
+                        {:lang('remember_me')}
                     </label>
                 </div>
                 <div class="register-referrer-input-form">
                     <i class="material-icons-outlined" translate="no">person</i>
                     <input class="register-referrer-input" type="text" name="invite_code" value="{$invite_code}"
-                        placeholder="Enter referrer" />
+                        placeholder="{:lang('enter_referrer')}" />
                 </div>
                 <div class="register-btn-form">
-                    <button class="register-btn form-button">Register now</button>
+                    <button class="register-btn form-button">{:lang('register_now')}</button>
                 </div>
             </form>
         </div>

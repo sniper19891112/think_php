@@ -27,16 +27,16 @@
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
-            My wallet
+            {:lang('my_wallet')}
         </div>
         <div class="wallet-container">
             <div class="wallet-balance">
-                <div class="text-14 font-800 color-white">Account balance</div>
+                <div class="text-14 font-800 color-white">{:lang('account_balance')}</div>
                 <div class="text-20 font-800 color-white text-center"
                     style="margin-top: 12px; border-bottom: 1px solid;">
-                    USDT<font class="text-56">{$balance}</font>
+                    USDT<font class="text-32">{$balance}</font>
                 </div>
-                <div class="d-flex align-center justify-around" style="margin-top: 24px;">
+                <div class="d-flex align-center justify-around" style="margin-top: 12px;">
                     <div class="text-14 font-800 color-white cursor-pointer" id="depositOpenModal">deposit</div>
                     <div class="text-14 font-800 color-white cursor-pointer" id="withdrawOpenModal">withdraw</div>
                 </div>
@@ -47,27 +47,27 @@
                 $title = "";
                 $amount = "";
                 if ($item['type'] == 1) {
-                    $title = "Recharge amount";
+                    $title = lang('recharge_amount');
                     $amount = "+".$item['num'];
                 }
                 if ($item['type'] == 2) {
-                    $title = "Customer orders";
+                    $title = lang('用户接单');
                     $amount = $item['status'] == 2 ? "-".$item['num'] : "+".$item['num'];
                 }
                 if ($item['type'] == 3) {
-                    $title = "Receive orders and return commission";
+                    $title = lang("receive_orders_and_return_commission");
                     $amount = "+".$item['num'];
                 }
                 if ($item['type'] == 6) {
-                    $title = "Subcommission";
+                    $title = lang("sub_commission");
                     $amount = "+".$item['num'];
                 }
                 if ($item['type'] == 7) {
                     if ($item['status'] == 2) {
-                        $title = "Withdrawal amount";
+                        $title = lang("提现金额");
                         $amount = "-".$item['num'];
                     } else {
-                        $title = "Withdrawal rejected";
+                        $title = lang("withdraw_reject");
                         $amount = "+".$item['num'];
                     }
                 }
@@ -92,7 +92,7 @@
         <!-- wallet Modal Structure -->
         <div class="modal-overlay" id="modalOverlay">
             <div class="wallet-modal">
-                <div class="wallet-modal-item" id="online_recharge">Online recharge</div>
+                <div class="wallet-modal-item" id="online_recharge">{:lang('online_recharge')}</div>
                 <!-- <div class="wallet-modal-item" style="margin-top: 8px;" id="bitcoin">Bitcoin</div> -->
                 <a href="/index/my/top_up?wallet=erc20">
                     <div class="wallet-modal-item" style="margin-top: 8px;" id="usdt_erc20">USDT(ERC20)</div>
@@ -107,7 +107,7 @@
         <!-- withdraw wallet Modal Structure -->
         <div class="modal-overlay" id="withdrawModalOverlay">
             <div class="wallet-modal">
-                <div class="wallet-modal-item" id="online_recharge">Online Withdraw</div>
+                <div class="wallet-modal-item" id="online_recharge">{:lang('online_withdraw')}</div>
                 <!-- <div class="wallet-modal-item" style="margin-top: 8px;" id="bitcoin">Bitcoin</div> -->
                 <a href="/index/my/withdraw?wallet=erc20">
                     <div class="wallet-modal-item" style="margin-top: 8px;" id="usdt_erc20">USDT(ERC20)</div>

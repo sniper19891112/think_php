@@ -23,7 +23,7 @@
 
 <body>
     <div id="app">
-        <div class="order-header">My order</div>
+        <div class="order-header">{:lang('my_order')}</div>
         <div class="order-container">
             {if $list}
             {volist name='list' id='v'}
@@ -47,10 +47,10 @@
             {/if}
                 <div class="order-item">
                     <div class="order-item-title-container">
-                        <div class="order-item-title">Product:
+                        <div class="order-item-title">{:lang('product')}:
                             <span style="color: #333333;">
                                 {php}
-                                echo mb_strimwidth($v['goods_name'], 0, 25, '...');
+                                echo mb_strimwidth($v['goods_name'], 0, 17, '...');
                                 {/php}
                             </span>
                         </div>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="order-item-status-container">
                         <div class="order-item-status-text">
-                            Order status:
+                            {:lang('order_status')}:
                             <span class="order-item-status {if condition='$v.status eq 0'}bg-2595e8{else /}bg-26d28b{/if}">
                                 {$status_text}
                             </span>
@@ -66,20 +66,20 @@
                     </div>
                     <div class="order-settlement-container">
                         <div class="order-settlement-container-text">
-                            Order settlement:
+                            {:lang('order_settlement')}:
                             <span class="order-settlement-value">${$settlement_value}</span>
                         </div>
                         {if $v['status'] == 0}
                         <a href="{:url('order/confirm_order')}?oid={$v.id}">
-                            <button class="order-settlement-confirm">Submit Order</button>
+                            <button class="order-settlement-confirm">{:lang('submit_order')}</button>
                         </a>
                         {elseif $v['status'] == 3 || $v['status'] == 4}
                         <a href="{:url('order/settlement_order_detail')}?oid={$v.id}">
-                            <button class="order-settlement-confirm">Confirm Receipt</button>
+                            <button class="order-settlement-confirm">{:lang('confirm_receipt')}</button>
                         </a>
                         {elseif $v['status'] == 5 || $v['status'] == 6}
                         <a href="{:url('order/settlement_order_detail')}?oid={$v.id}">
-                            <button class="order-settlement-confirm">Submit evaluation</button>
+                            <button class="order-settlement-confirm">{:lang('submit_evaluation')}</button>
                         </a>
                         {/if}
                     </div>

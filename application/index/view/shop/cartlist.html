@@ -25,7 +25,7 @@
     <div id="app">
         <div class="cartlist-container">
             <div class="cartlist-header">
-                <div class="cartlist-header-text">Shopping cart</div>
+                <div class="cartlist-header-text">{:lang('shopping_cart')}</div>
                 <button class="cartlist-header-btn">
                     <i class="material-icons-outlined color-FF5035" translate="no">delete</i>
                 </button>
@@ -34,7 +34,7 @@
                 {if isset($noItemsMessage)}
                 <div class="cartlist-no-item">
                     <div class="cartlist-no-item-text">{$noItemsMessage}</div>
-                    <button class="cartlist-no-item-btn">Continue shopping</button>
+                    <button class="cartlist-no-item-btn">{:lang('continue_shopping')}</button>
                 </div>
                 {else}
                 {volist name="cartlist" id="item"}
@@ -57,7 +57,7 @@
                         <div class="cartlist-item-price">
                             <div>${$item['goods_price']}</div>
                             <button class="cartlist-item-btn" id="cartlist-item-btn-{$item.id}"
-                                onclick="goToDetailPage('{$item.id}', '{$item.shop_name}')">Go to Result</button>
+                                onclick="goToDetailPage('{$item.id}', '{$item.shop_name}')">{:lang('go_to_Result')}</button>
                         </div>
                     </div>
                 </div>

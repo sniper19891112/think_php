@@ -29,10 +29,10 @@
                 <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                     arrow_back
                 </i>
-                My earnings
+                {:lang('my_earning')}
             </div>
             <div style="position: absolute; top: 68px; left: 48px;" class="text-16 color-white">
-                Total income
+                {:lang('total_income')}
                 <div class="text-20 color-white font-800" style="margin-top: 12px;">USDT<font class="text-56">{$earning_balance | number_format=###,2}</font></div>
             </div>
         </div>
@@ -43,11 +43,11 @@
                 $title = "";
                 $amount = "";
                 if ($item['type'] == 3) {
-                    $title = "Receive orders and return commission";
+                    $title = lang("receive_orders_and_return_commission");
                     $amount = "+".$item['num'];
                 }
                 if ($item['type'] == 6) {
-                    $title = "Subcommission";
+                    $title = lang("sub_commission");
                     $amount = "+".$item['num'];
                 }
                 {/php}

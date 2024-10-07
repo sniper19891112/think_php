@@ -194,7 +194,7 @@ class User extends Base
             if ($verify_code != $verify_msg['msg']) {
                 return json(['code' => 1, 'info' => lang('验证码错误')]);
             }
-    
+
             $res = db('xy_verify_msg')->field('addtime,tel')->where(['tel' => session("email")])->find();
             if ($res && (($res['addtime'] + 60) < time())) {
                 return json(['code' => 1, 'info' => lang('验证码已过期')]);
@@ -206,13 +206,15 @@ class User extends Base
 
         }
         $res = model('admin/Users')->reset_pwd(session("email"), $pwd);
-        if ($res['code'] == 0) session("email", null);
+        if ($res['code'] == 0) {
+            session("email", null);
+        }
+
         return json($res);
     }
 
     public function register()
     {
-
         $param = \Request::param(true);
         $lang = isset($param[3]) ? trim($param[3]) : '';
         $this->invite_code = isset($param[1]) ? trim($param[1]) : '';
@@ -221,8 +223,23 @@ class User extends Base
                 case 'en-us':
                     cookie('think_var', 'en-us', time() + 3600 * 24);
                     break;
-                case 'zh-cn':
-                    cookie('think_var', 'zh-cn', time() + 3600 * 24);
+                case 'vi-vn':
+                    cookie('think_var', 'vi-vn', time() + 3600 * 24);
+                    break;
+                case 'pt-pt':
+                    cookie('think_var', 'pt-pt', time() + 3600 * 24);
+                    break;
+                case 'zh-tw':
+                    cookie('think_var', 'zh-tw', time() + 3600 * 24);
+                    break;
+                case 'de-de':
+                    cookie('think_var', 'de-de', time() + 3600 * 24);
+                    break;
+                case 'id-id':
+                    cookie('think_var', 'id-id', time() + 3600 * 24);
+                    break;
+                case 'hi-in':
+                    cookie('think_var', 'hi-in', time() + 3600 * 24);
                     break;
                 default:
                     cookie('think_var', 'en-us', time() + 3600 * 24);

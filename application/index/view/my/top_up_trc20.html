@@ -28,26 +28,26 @@
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
-            top-up
+            {:lang('top_up')}
         </div>
         <div class="top-up-container">
             <div class="address-container">
                 <div class="trc20-header">USDT(TRC20)</div>
                 <div class="text-center text-12 color-999999" style="padding-top: 52px;">
-                    Minimum deposit is 20USDT(TRC20)
+                    {:lang('minium_deposit_is')}&nbsp;20USDT(TRC20)
                 </div>
                 <div id="qrcode" class="qrcode-img"></div>
                 <div class="wallet-address" id="wallet_address">{$address}</div>
                 <div class="text-center">
-                    <button class="wallet-address-copy-btn" onclick="copyWalletAddress()">copy</button>
+                    <button class="wallet-address-copy-btn" onclick="copyWalletAddress()">{:lang('copy')}</button>
                 </div>
             </div>
             <div class="recharge-container">
-                <div class="text-16 font-800 color-2B2B2B">Recharge amount</div>
+                <div class="text-16 font-800 color-2B2B2B">{:lang('recharge_amount')}</div>
                 <div class="recharge-amount-input-form">
-                    <input class="recharge-amount-input" id="recharge_amount" type="text" placeholder="Please enter the recharge amount!" />
+                    <input class="recharge-amount-input" id="recharge_amount" type="text" placeholder="{:lang('recharge_enter_text')}" />
                 </div>
-                <div style="margin-top: 24px;" class="text-16 font-800 color-2B2B2B">Top-up certificate</div>
+                <div style="margin-top: 24px;" class="text-16 font-800 color-2B2B2B">{:lang('top_up_certificate')}</div>
                 <div class="d-flex align-center" style="margin-top: 16px;">
                     <div class="certificate-upload" id="uploadArea">
                         <i class="material-icons-outlined certificate-upload-add" translate="no">
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div style="margin-top: 24px;">
-                <button class="submit-btn" onclick="submitRecharge()">submit</button>
+                <button class="submit-btn" onclick="submitRecharge()">{:lang('submit')}</button>
             </div>
         </div>
     </div>
@@ -73,11 +73,11 @@
     }
     function submitRecharge() {
         if (!$("#recharge_amount").val().trim()) {
-            $(document).dialog({infoText: 'Please input recharge amount'});
+            $(document).dialog({infoText: "{:lang('recharge_enter_text')}"});
             return;
         }
         if (!$("#img_url").val().trim()) {
-            $(document).dialog({infoText: 'Please upload top up certificate'});
+            $(document).dialog({infoText: '{:lang("upload_top_up_certificate")}'});
             return;
         }
         $.ajax({
@@ -86,10 +86,10 @@
             dataType: "JSON",
             data: { type: 1, recharge_amount: $("#recharge_amount").val(), pic: $("#img_url").val(), address: $("#wallet_address").text()},
             success: function (res) {
-                $(document).dialog({ infoText: "success" });
+                $(document).dialog({ infoText: '{:lang("success")}'  });
             },
             error: function (err) {
-                $(document).dialog({ infoText: "error" });
+                $(document).dialog({ infoText: '{:lang("error")}' });
             }
         })
     }
