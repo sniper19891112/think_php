@@ -1,5 +1,6 @@
 <?php
 return [
+    'distance_from_end' => 'Khoảng cách từ cuối',
     'commodity_information' => 'Thông tin hàng hóa',
     'rated' => 'Đã đánh giá',
     'waiting_for_evaluation' => 'Chờ đánh giá',

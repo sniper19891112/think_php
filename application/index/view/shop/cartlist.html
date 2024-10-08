@@ -84,8 +84,8 @@
         const hours = Math.floor(countdownTime / 3600);
         const minutes = Math.floor((countdownTime % 3600) / 60);
         const seconds = Math.floor(countdownTime % 60);
-
-        $('#cartlist-item-timecount-' + id).text(`Distance from end ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+        var distanceFromEndText = "{:lang('distance_from_end')}";
+        $('#cartlist-item-timecount-' + id).text(`${distanceFromEndText} ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
 
         if (countdownTime <= 0) {
             clearInterval(timerInterval);

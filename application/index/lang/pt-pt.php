@@ -1,5 +1,6 @@
  <?php
 return [
+    'distance_from_end' => 'Distância do fim',
     'commodity_information' => 'Informação sobre mercadorias',
     'rated' => 'Avaliado',
     'waiting_for_evaluation' => 'Aguardando avaliação',

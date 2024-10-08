@@ -1,5 +1,6 @@
 <?php
 return [
+    'distance_from_end' => 'Jarak dari akhir',
     'commodity_information' => 'Informasi komoditas',
     'rated' => 'Dinilai',
     'waiting_for_evaluation' => 'Menunggu evaluasi',

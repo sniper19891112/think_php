@@ -1,5 +1,6 @@
 <?php
 return [
+    'distance_from_end' => 'Distance from end',
     'commodity_information' => 'Commodity information',
     'rated' => 'Rated',
     'waiting_for_evaluation' => 'Waiting for evaluation',

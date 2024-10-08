@@ -1,5 +1,6 @@
 <?php
 return [
+    'distance_from_end' => 'अंत से दूरी',
     'commodity_information' => 'वस्तु जानकारी',
     'rated' => 'रेटेड',
     'waiting_for_evaluation' => 'मूल्यांकन की प्रतीक्षा कर रहे हैं',
