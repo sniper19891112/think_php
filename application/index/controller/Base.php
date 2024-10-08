@@ -144,7 +144,7 @@ class Base extends Controller
                 cookie('think_var', 'de-de', time() + 3600 * 24);
                 break;
             case 'id':
-                cookie('think_var', 'id-id', time() + 3600 * 24);
+                cookie('think_var', 'ind-ind', time() + 3600 * 24);
                 break;
             case 'hi':
                 cookie('think_var', 'hi-in', time() + 3600 * 24);

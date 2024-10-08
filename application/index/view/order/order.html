@@ -29,17 +29,17 @@
             {volist name='list' id='v'}
             {php}
             $status_text = '';
-            if($v['status']==0) $status_text = 'Waiting for payment';
-            // if($v['status']==1) $status_text = 'Paid';
-            // if($v['status']==2) $status_text = 'Waiting for shipment';
-            if($v['status']==1 || $v['status']==2) $status_text = 'Paid';
-            // if($v['status']==3) $status_text = 'Shipped';
-            // if($v['status']==4) $status_text = 'Waiting for receipt';
-            if($v['status']==3 || $v['status']==4) $status_text = 'Shipped';
-            // if($v['status']==5) $status_text = 'Received';
-            // if($v['status']==6) $status_text = 'Waiting for evaluation';
-            if($v['status']==5 || $v['status']==6) $status_text = 'Received';
-            if($v['status']==7) $status_text = 'Rated';
+            if($v['status']==0) $status_text = lang('waiting_for_payment');
+            // if($v['status']==1) $status_text = lang('paid');
+            // if($v['status']==2) $status_text = lang('waiting_for_shipment');
+            if($v['status']==1 || $v['status']==2) $status_text = lang('paid');
+            // if($v['status']==3) $status_text = lang('shipped');
+            // if($v['status']==4) $status_text = lang('waiting_for_receipt');
+            if($v['status']==3 || $v['status']==4) $status_text = lang('shipped');
+            // if($v['status']==5) $status_text = lang('received');
+            // if($v['status']==6) $status_text = lang('waiting_for_evaluation');
+            if($v['status']==5 || $v['status']==6) $status_text = lang('received');
+            if($v['status']==7) $status_text = lang('rated');
             $settlement_value = round($v['goods_price'] * $v['goods_count'], 2);
             {/php}
             {if $v['status'] > 1}
