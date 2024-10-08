@@ -137,7 +137,10 @@ class Base extends Controller
             case 'en':
                 cookie('think_var', 'en-us', time() + 3600 * 24);
                 break;
-            case 'zh':
+            case 'zh-cn':
+                cookie('think_var', 'zh-cn', time() + 3600 * 24);
+                break;
+            case 'zh-tw':
                 cookie('think_var', 'zh-tw', time() + 3600 * 24);
                 break;
             case 'de':

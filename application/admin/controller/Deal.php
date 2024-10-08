@@ -29,7 +29,7 @@ class Deal extends Controller
             ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
             ->leftJoin('xy_users xu', 'xc.uid=xu.id')
             ->leftJoin('xy_member_address xm', 'xc.uid=xm.uid')
-            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xm.name,xm.tel,xm.address,xu.balance,xu.level')
+            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xm.name,xm.tel,xm.address,xu.balance,xu.level,xu.username as name_2,xu.tel as tel_2,xu.address as address_2')
             ->select();
 
         $objPHPExcel = new PHPExcel();
@@ -41,13 +41,16 @@ class Deal extends Controller
         $objPHPExcel->getActiveSheet()->setCellValue('C1', '真实姓名');
         $objPHPExcel->getActiveSheet()->setCellValue('D1', '电话');
         $objPHPExcel->getActiveSheet()->setCellValue('E1', '地址');
-        $objPHPExcel->getActiveSheet()->setCellValue('F1', '会员等级');
-        $objPHPExcel->getActiveSheet()->setCellValue('G1', '余额');
-        $objPHPExcel->getActiveSheet()->setCellValue('H1', '单价');
-        $objPHPExcel->getActiveSheet()->setCellValue('I1', '数量');
-        $objPHPExcel->getActiveSheet()->setCellValue('J1', '总价');
-        $objPHPExcel->getActiveSheet()->setCellValue('K1', '佣金');
-        $objPHPExcel->getActiveSheet()->setCellValue('L1', '下单时间');
+        $objPHPExcel->getActiveSheet()->setCellValue('F1', '真实姓名2');
+        $objPHPExcel->getActiveSheet()->setCellValue('G1', '电话2');
+        $objPHPExcel->getActiveSheet()->setCellValue('H1', '地址2');
+        $objPHPExcel->getActiveSheet()->setCellValue('I1', '会员等级');
+        $objPHPExcel->getActiveSheet()->setCellValue('J1', '余额');
+        $objPHPExcel->getActiveSheet()->setCellValue('K1', '单价');
+        $objPHPExcel->getActiveSheet()->setCellValue('L1', '数量');
+        $objPHPExcel->getActiveSheet()->setCellValue('M1', '总价');
+        $objPHPExcel->getActiveSheet()->setCellValue('N1', '佣金');
+        $objPHPExcel->getActiveSheet()->setCellValue('O1', '下单时间');
 
         //设置A列水平居中
         $objPHPExcel->setActiveSheetIndex(0)->getStyle('A')->getAlignment()
@@ -62,13 +65,16 @@ class Deal extends Controller
             $objPHPExcel->getActiveSheet()->setCellValue('C' . ($i + 2), $list[$i]['name']);
             $objPHPExcel->getActiveSheet()->setCellValue('D' . ($i + 2), $list[$i]['tel']);
             $objPHPExcel->getActiveSheet()->setCellValue('E' . ($i + 2), $list[$i]['address']);
-            $objPHPExcel->getActiveSheet()->setCellValue('F' . ($i + 2), "VIP" . ($list[$i]['level'] + 1));
-            $objPHPExcel->getActiveSheet()->setCellValue('G' . ($i + 2), $list[$i]['balance']);
-            $objPHPExcel->getActiveSheet()->setCellValue('H' . ($i + 2), $list[$i]['goods_price']);
-            $objPHPExcel->getActiveSheet()->setCellValue('I' . ($i + 2), $list[$i]['goods_count']);
-            $objPHPExcel->getActiveSheet()->setCellValue('J' . ($i + 2), $list[$i]['num']);
-            $objPHPExcel->getActiveSheet()->setCellValue('K' . ($i + 2), $list[$i]['commission']);
-            $objPHPExcel->getActiveSheet()->setCellValue('L' . ($i + 2), date("Y-m-d H:i:s", $list[$i]['addtime']));
+            $objPHPExcel->getActiveSheet()->setCellValue('F' . ($i + 2), $list[$i]['name_2']);
+            $objPHPExcel->getActiveSheet()->setCellValue('G' . ($i + 2), $list[$i]['tel_2']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H' . ($i + 2), $list[$i]['address_2']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I' . ($i + 2), "VIP" . ($list[$i]['level'] + 1));
+            $objPHPExcel->getActiveSheet()->setCellValue('J' . ($i + 2), $list[$i]['balance']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . ($i + 2), $list[$i]['goods_price']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L' . ($i + 2), $list[$i]['goods_count']);
+            $objPHPExcel->getActiveSheet()->setCellValue('M' . ($i + 2), $list[$i]['num']);
+            $objPHPExcel->getActiveSheet()->setCellValue('N' . ($i + 2), $list[$i]['commission']);
+            $objPHPExcel->getActiveSheet()->setCellValue('O' . ($i + 2), date("Y-m-d H:i:s", $list[$i]['addtime']));
         }
 
         //7.设置保存的Excel表格名称
@@ -105,7 +111,7 @@ class Deal extends Controller
             ->leftJoin('xy_goods_list xg', 'xc.goods_id=xg.id')
             ->leftJoin('xy_users xu', 'xc.uid=xu.id')
             ->leftJoin('xy_member_address xm', 'xc.uid=xm.uid')
-            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xm.name,xm.tel,xm.address,xu.balance,xu.level')
+            ->field('xc.*,xg.goods_name,xg.shop_name,xg.goods_price,xg.goods_pic,xm.name,xm.tel,xm.address,xu.balance,xu.level,xu.username as name_2,xu.tel as tel_2,xu.address as address_2')
             ->find();
 
         $objPHPExcel = new PHPExcel();
@@ -117,13 +123,16 @@ class Deal extends Controller
         $objPHPExcel->getActiveSheet()->setCellValue('C1', '真实姓名');
         $objPHPExcel->getActiveSheet()->setCellValue('D1', '电话');
         $objPHPExcel->getActiveSheet()->setCellValue('E1', '地址');
-        $objPHPExcel->getActiveSheet()->setCellValue('F1', '会员等级');
-        $objPHPExcel->getActiveSheet()->setCellValue('G1', '余额');
-        $objPHPExcel->getActiveSheet()->setCellValue('H1', '单价');
-        $objPHPExcel->getActiveSheet()->setCellValue('I1', '数量');
-        $objPHPExcel->getActiveSheet()->setCellValue('J1', '总价');
-        $objPHPExcel->getActiveSheet()->setCellValue('K1', '佣金');
-        $objPHPExcel->getActiveSheet()->setCellValue('L1', '下单时间');
+        $objPHPExcel->getActiveSheet()->setCellValue('F1', '真实姓名2');
+        $objPHPExcel->getActiveSheet()->setCellValue('G1', '电话2');
+        $objPHPExcel->getActiveSheet()->setCellValue('H1', '地址2');
+        $objPHPExcel->getActiveSheet()->setCellValue('I1', '会员等级');
+        $objPHPExcel->getActiveSheet()->setCellValue('J1', '余额');
+        $objPHPExcel->getActiveSheet()->setCellValue('K1', '单价');
+        $objPHPExcel->getActiveSheet()->setCellValue('L1', '数量');
+        $objPHPExcel->getActiveSheet()->setCellValue('M1', '总价');
+        $objPHPExcel->getActiveSheet()->setCellValue('N1', '佣金');
+        $objPHPExcel->getActiveSheet()->setCellValue('O1', '下单时间');
 
         //设置A列水平居中
         $objPHPExcel->setActiveSheetIndex(0)->getStyle('A')->getAlignment()
@@ -137,13 +146,16 @@ class Deal extends Controller
         $objPHPExcel->getActiveSheet()->setCellValue('C2', $order['name']);
         $objPHPExcel->getActiveSheet()->setCellValue('D2', $order['tel']);
         $objPHPExcel->getActiveSheet()->setCellValue('E2', $order['address']);
-        $objPHPExcel->getActiveSheet()->setCellValue('F2', "VIP" . ($order['level'] + 1));
-        $objPHPExcel->getActiveSheet()->setCellValue('G2', $order['balance']);
-        $objPHPExcel->getActiveSheet()->setCellValue('H2', $order['goods_price']);
-        $objPHPExcel->getActiveSheet()->setCellValue('I2', $order['goods_count']);
-        $objPHPExcel->getActiveSheet()->setCellValue('J2', $order['num']);
-        $objPHPExcel->getActiveSheet()->setCellValue('K2', $order['commission']);
-        $objPHPExcel->getActiveSheet()->setCellValue('L2', date("Y-m-d H:i:s", $order['addtime']));
+        $objPHPExcel->getActiveSheet()->setCellValue('F2', $order['name_2']);
+        $objPHPExcel->getActiveSheet()->setCellValue('G2', $order['tel_2']);
+        $objPHPExcel->getActiveSheet()->setCellValue('H2', $order['address_2']);
+        $objPHPExcel->getActiveSheet()->setCellValue('I2', "VIP" . ($order['level'] + 1));
+        $objPHPExcel->getActiveSheet()->setCellValue('J2', $order['balance']);
+        $objPHPExcel->getActiveSheet()->setCellValue('K2', $order['goods_price']);
+        $objPHPExcel->getActiveSheet()->setCellValue('L2', $order['goods_count']);
+        $objPHPExcel->getActiveSheet()->setCellValue('M2', $order['num']);
+        $objPHPExcel->getActiveSheet()->setCellValue('N2', $order['commission']);
+        $objPHPExcel->getActiveSheet()->setCellValue('O2', date("Y-m-d H:i:s", $order['addtime']));
 
         //7.设置保存的Excel表格名称
         $filename = 'order' . date('ymdhis', time()) . '.xls';
