@@ -154,4 +154,5 @@ return [
     'Please enter your account/password' => '请输入您的账号/密码',
     'jump' => '跳转',
     'landing' => '登录',
+    'Language' => '语言',
 ];

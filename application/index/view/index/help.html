@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="white" />
     <meta name="x5-fullscreen" content="true" />
     <meta name="apple-touch-fullscreen" content="yes" />
-    <title>{:lang('help')}</title>
+    <title></title>
     <link rel="stylesheet" href="/statics/css/global.css" />
     <link rel="stylesheet" href="/web/css/help.css" />
     <link rel="stylesheet" href="/static_new/css/public.css">
@@ -32,21 +32,21 @@
         </div>
         <div class="help-container">
             {if condition='$Think.cookie.think_var eq "zh-cn"'}
-                {$platform_introduction.zh_cn_content|raw}
+                {$help.zh_cn_content|raw}
             {elseif condition='$Think.cookie.think_var eq "zh-tw"'}
-                {$platform_introduction.zh_tw_content|raw}
+                {$help.zh_tw_content|raw}
             {elseif condition='$Think.cookie.think_var eq "vi-vn"'}
-                {$platform_introduction.vi_content|raw}
+                {$help.vi_content|raw}
             {elseif condition='$Think.cookie.think_var eq "pt-pt"'}
-                {$platform_introduction.pt_content|raw}
+                {$help.pt_content|raw}
             {elseif condition='$Think.cookie.think_var eq "de-de"'}
-                {$platform_introduction.de_content|raw}
+                {$help.de_content|raw}
             {elseif condition='$Think.cookie.think_var eq "ind-ind"'}
-                {$platform_introduction.id_content|raw}
+                {$help.id_content|raw}
             {elseif condition='$Think.cookie.think_var eq "hi-in"'}
-                {$platform_introduction.hi_content|raw}
+                {$help.hi_content|raw}
             {else}
-                {$platform_introduction.en_content|raw}
+                {$help.en_content|raw}
             {/if}
         </div>
     </div>
