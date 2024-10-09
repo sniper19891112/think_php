@@ -188,7 +188,6 @@ class Help extends Controller
             } else {
                 $this->error('编辑失败');
             }
-
         }
 
         $info = db('xy_index_msg')->find($id);

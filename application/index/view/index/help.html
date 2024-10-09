@@ -28,21 +28,25 @@
             <i class="material-icons-outlined" style="margin-right: 10px; cursor: pointer;" onclick="goBack()">
                 arrow_back
             </i>
-            Help
+            {:lang('help')}
         </div>
         <div class="help-container">
             {if condition='$Think.cookie.think_var eq "zh-cn"'}
-                {$help.content|raw}
-            {elseif condition='$Think.cookie.think_var eq "kr-kr"'}
-                {$help.kr_content|raw}
-            {elseif condition='$Think.cookie.think_var eq "fr-fr"'}
-                {$help.fr_content|raw}
-            {elseif condition='$Think.cookie.think_var eq "es-es"'}
-                {$help.es_content|raw}
+                {$platform_introduction.zh_cn_content|raw}
+            {elseif condition='$Think.cookie.think_var eq "zh-tw"'}
+                {$platform_introduction.zh_tw_content|raw}
+            {elseif condition='$Think.cookie.think_var eq "vi-vn"'}
+                {$platform_introduction.vi_content|raw}
             {elseif condition='$Think.cookie.think_var eq "pt-pt"'}
-                {$help.pt_content|raw}
+                {$platform_introduction.pt_content|raw}
+            {elseif condition='$Think.cookie.think_var eq "de-de"'}
+                {$platform_introduction.de_content|raw}
+            {elseif condition='$Think.cookie.think_var eq "ind-ind"'}
+                {$platform_introduction.id_content|raw}
+            {elseif condition='$Think.cookie.think_var eq "hi-in"'}
+                {$platform_introduction.hi_content|raw}
             {else}
-                {$help.en_content|raw}
+                {$platform_introduction.en_content|raw}
             {/if}
         </div>
     </div>
