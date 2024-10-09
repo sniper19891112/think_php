@@ -30,7 +30,7 @@
         <div class="arrow-right"></div>
         <div style="text-align: center;">
           <img src="/web/img/site_logo.png" />
-          <div>ALPHA GLOBAL ONE</div>
+          <div>{:lang('alpha_global_one')}</div>
         </div>
       </div>
       <div class="home-body-2">
@@ -53,19 +53,21 @@
         <img src="/public/img/组 141.png" />
         <marquee style="margin: 0px 10px; color: white;" behavior="scroll">
           {if condition='$Think.cookie.think_var eq "zh-cn"'}
-          {$scrolling_content['content']|raw}
-          {elseif condition='$Think.cookie.think_var eq "jp-jp"'}
-          {$scrolling_content['jp_content']|raw}
-          {elseif condition='$Think.cookie.think_var eq "kr-kr"'}
-          {$scrolling_content['kr_content']|raw}
-          {elseif condition='$Think.cookie.think_var eq "fr-fr"'}
-          {$scrolling_content['fr_content']|raw}
-          {elseif condition='$Think.cookie.think_var eq "es-es"'}
-          {$scrolling_content['es_content']|raw}
+          {$scrolling_content.zh_cn_content|raw}
+          {elseif condition='$Think.cookie.think_var eq "zh-tw"'}
+          {$scrolling_content.zh_tw_content|raw}
+          {elseif condition='$Think.cookie.think_var eq "vi-vn"'}
+          {$scrolling_content.vi_content|raw}
           {elseif condition='$Think.cookie.think_var eq "pt-pt"'}
-          {$scrolling_content['pt_content']|raw}
+          {$scrolling_content.pt_content|raw}
+          {elseif condition='$Think.cookie.think_var eq "de-de"'}
+          {$scrolling_content.de_content|raw}
+          {elseif condition='$Think.cookie.think_var eq "ind-ind"'}
+          {$scrolling_content.id_content|raw}
+          {elseif condition='$Think.cookie.think_var eq "hi-in"'}
+          {$scrolling_content.hi_content|raw}
           {else}
-          {$scrolling_content['en_content']|raw}
+          {$scrolling_content.en_content|raw}
           {/if}
         </marquee>
       </div>
@@ -95,20 +97,20 @@
       <div class="home-body-6-text" style="margin-top: 50px;">{:lang('partner')}</div>
       <div class="home-body-7">
         <div class="d-flex align-center justify-around">
-        <img src="/public/img/link1.png" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link2.jpg" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link3.jpg" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link4.jpg" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link5.jpg" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link6.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link1.png" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link2.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link3.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link4.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link5.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link6.jpg" style="width: 15%; border-radius: 8px;" />
         </div>
         <div class="d-flex align-center justify-around" style="margin-top: 10px;">
-        <img src="/public/img/link7.jpg" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link8.jpg" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link9.jpg" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link10.jpg" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link11.jpg" style="width: 15%; border-radius: 8px;" />
-        <img src="/public/img/link12.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link7.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link8.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link9.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link10.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link11.jpg" style="width: 15%; border-radius: 8px;" />
+          <img src="/public/img/link12.jpg" style="width: 15%; border-radius: 8px;" />
         </div>
       </div>
     </div>

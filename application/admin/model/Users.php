@@ -107,7 +107,7 @@ class Users extends Model
 
         $tmp = Db::table($this->table)->where(['email' => $email])->count();
         if ($tmp) {
-            return ['code' => 1, 'info' => lang('Duplicated Email!')];
+            return ['code' => 1, 'info' => lang('duplicated_email')];
         }
         if (!$user_name) {
             $user_name = get_username();

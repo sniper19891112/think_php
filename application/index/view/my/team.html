@@ -72,10 +72,10 @@
                 </div>
             </div>
             <div class="team-report-container">
-                <div class="text-16 color-030303">Team report</div>
+                <div class="text-16 color-030303">{:lang('team_report')}</div>
                 <div class="d-flex align-center justify-around" style="margin-top: 20px;">
                     <div class="team-report-card">
-                        <div style="border-left: 2px solid #F2593B; padding: 0px 8px">Total People</div>
+                        <div style="border-left: 2px solid #F2593B; padding: 0px 8px">{:lang('total_people')}</div>
                         <div class="text-12 color-F2593B">
                             <font class="text-18 font-800">{$total_people}</font>
                         </div>
@@ -149,21 +149,21 @@
                             <img src="{if $item.headpic}{$item.headpic}{else/}/web/img/USER_item.png{/if}" width="64"
                                 height="64" style="border-radius: 32px;">
                             <div style="margin-left: 10px;">
-                                <div class="text-14 font-800 color-F2593B">Name: {$item['username'] | default='Little
-                                    bamboo shoots'}</div>
+                                <div class="text-14 font-800 color-F2593B">
+                                    {:lang('name')}: {$item['username'] | default='Little bamboo shoots'}</div>
                                 <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
-                                    Completed tasks: {$item['order_number'] | default='0'}
+                                    {:lang('completed_tasks')}: {$item['order_number'] | default='0'}
                                 </div>
-                                <div class="text-14 color-2B2B2B" style="margin-top: 4px;">Total revenue:
-                                    {$item['total_revenue']}</div>
+                                <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
+                                    {:lang('total_revenue')}: {$item['total_revenue']}</div>
                             </div>
                         </div>
                         <div style="position: relative;">
                             <div class="text-14 color-2B2B2B">
-                                Recharge: {$item['deposit_amount']}
+                                {:lang('recharge')}: {$item['deposit_amount']}
                             </div>
                             <div class="text-14 color-2B2B2B" style="margin-top: 4px;">
-                                Withdrawal: {$item['withdraw_amount']}
+                                {:lang('withdrawal')}: {$item['withdraw_amount']}
                             </div>
                         </div>
                     </div>
