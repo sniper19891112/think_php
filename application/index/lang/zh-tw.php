@@ -139,7 +139,7 @@ return [
     'withdraw' => '提款',
     'online_withdraw' => '網路提款',
     'online_recharge' => '線上充值',
-    'deposit' => '訂金',
+    'deposit' => '充值',
     'withdraw' => '提款',
     'my_wallet' => '我的錢包',
     'upload_top_up_certificate' => '請上傳充值憑證',
