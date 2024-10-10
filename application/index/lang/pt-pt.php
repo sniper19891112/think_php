@@ -1,5 +1,9 @@
  <?php
 return [
+    '还没有设置收货地址' => 'Endereço de entrega ainda não configurado',
+    '发送成功' => 'Envio bem-sucedido',
+    '发送失败' => 'Envio falhado',
+    '1分钟内只能发送一条短信' => 'Só é possível enviar uma mensagem em 1 minuto',
     '文件处理失败，请稍候再试！' => 'Falha no processamento do arquivo, por favor, tente novamente mais tarde!',
     '可执行文件禁止上传到本地服务器' => 'Arquivos executáveis são proibidos de serem carregados no servidor local.',
     '文件上传类型受限，请在后台配置' => 'Tipo de upload de arquivo restrito, por favor, configure no painel de administração.',
@@ -109,7 +113,7 @@ return [
     'arrival_time' => 'Hora de chegada',
     'tracking_number' => 'Número de rastreamento',
     'company_name' => 'Nome da empresa',
-    'shipping_address' => 'Endereço de entrega',
+    'shipping_address' => 'Informações de logística',
     'total' => 'total',
     'commission' => 'comissão',
     'delivery_recharge' => 'Taxa de entrega',

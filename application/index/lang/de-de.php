@@ -1,5 +1,9 @@
 <?php
 return [
+    '还没有设置收货地址' => 'Lieferadresse noch nicht festgelegt',
+    '发送成功' => 'Erfolgreich gesendet',
+    '发送失败' => 'Senden fehlgeschlagen',
+    '1分钟内只能发送一条短信' => 'Es kann nur eine SMS pro Minute gesendet werden',
     '文件处理失败，请稍候再试！' => 'Dateiverarbeitung fehlgeschlagen, bitte versuchen Sie es später erneut!',
     '可执行文件禁止上传到本地服务器' => 'Ausführbare Dateien sind auf dem lokalen Server nicht erlaubt.',
     '文件上传类型受限，请在后台配置' => 'Dateityp für den Upload eingeschränkt, bitte im Backend konfigurieren.',
@@ -109,7 +113,7 @@ return [
     'arrival_time' => 'Ankunftszeit',
     'tracking_number' => 'Sendungsnummer',
     'company_name' => 'Unternehmensname',
-    'shipping_address' => 'Lieferadresse',
+    'shipping_address' => 'Logistikinformationen',
     'total' => 'Gesamt',
     'commission' => 'Kommission',
     'delivery_recharge' => 'Liefergebühr',

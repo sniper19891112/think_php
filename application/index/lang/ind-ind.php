@@ -1,5 +1,9 @@
 <?php
 return [
+    '还没有设置收货地址' => 'Alamat pengiriman belum diatur',
+    '发送成功' => 'Pengiriman berhasil',
+    '发送失败' => 'Pengiriman gagal',
+    '1分钟内只能发送一条短信' => 'Hanya bisa mengirim satu SMS dalam 1 menit',
     '文件处理失败，请稍候再试！' => 'Proses file gagal, silakan coba lagi nanti!',
     '可执行文件禁止上传到本地服务器' => 'File eksekusi dilarang diunggah ke server lokal.',
     '文件上传类型受限，请在后台配置' => 'Jenis unggahan file terbatas, silakan konfigurasikan di backend.',
@@ -109,7 +113,7 @@ return [
     'arrival_time' => 'Waktu kedatangan',
     'tracking_number' => 'Nomor pelacakan',
     'company_name' => 'Nama Perusahaan',
-    'shipping_address' => 'Alamat Pengiriman',
+    'shipping_address' => 'Informasi logistik',
     'total' => 'total',
     'commission' => 'komisi',
     'delivery_recharge' => 'Biaya pengiriman',

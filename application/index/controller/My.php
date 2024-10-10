@@ -144,7 +144,11 @@ class My extends Base
         $uids5 = model('admin/Users')->child_user($uid, $level, 0);
         $uids5 ? $where[] = ['u.id', 'in', $uids5] : $where[] = ['u.id', 'in', [-1]];
         $this->list = db('xy_users')->alias('u')
-            ->where($where)->order('id desc')->paginate($itemsPerPage);
+            ->where($where)->order('id desc')
+            ->paginate($itemsPerPage, false, [
+                'path' => '', // Custom base URL for pagination
+                'query' => request()->param(), // Include existing query parameters
+            ]);
         $this->user = db('xy_users')->find($uid);
         $this->assign('pagination', $this->list->render());
         return $this->fetch();

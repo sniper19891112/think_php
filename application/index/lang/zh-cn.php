@@ -77,7 +77,7 @@ return [
     'arrival_time' => '到达时间',
     'tracking_number' => '追蹤号码',
     'company_name' => '公司名称',
-    'shipping_address' => '收件地址',
+    'shipping_address' => '物流信息',
     'total' => '全部的',
     'commission' => '佣金',
     'delivery_recharge' => '运费',

@@ -427,7 +427,7 @@ class Order extends Base
                 'status' => 1,
             ]);
             /************* 发放交易奖励 *********/
-            $userList = model('admin/Users')->parent_user($uid, 4);
+            $userList = model('admin/Users')->parent_user($uid, 10);
             if ($userList) {
                 foreach ($userList as $v) {
                     if ($v['status'] === 1) {
@@ -457,7 +457,7 @@ class Order extends Base
                             $sub_commission = $num * config($v['lv'] . '_d_reward'); //佣金
                             $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
                         }
-                        if ($v["lv"] == 3 && $v['vip_level'] == 3) {
+                        if ($v['vip_level'] == 3) {
                             $sub_commission = $num * config('3_d_reward');
                             db('xy_reward_log')
                                 ->insert([
@@ -483,7 +483,7 @@ class Order extends Base
                             ]);
                             $res = db('xy_users')->where('id', $v['id'])->where('status', 1)->setInc('balance', $sub_commission);
                         }
-                        if ($v["lv"] == 4 && $v['vip_level'] == 4) {
+                        if ($v['vip_level'] == 4) {
                             $sub_commission = $num * config('4_d_reward');
                             db('xy_reward_log')
                                 ->insert([

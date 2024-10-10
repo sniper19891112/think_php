@@ -1,5 +1,9 @@
 <?php
 return [
+    '还没有设置收货地址' => 'Chưa thiết lập địa chỉ giao hàng',
+    '发送成功' => 'Gửi thành công',
+    '发送失败' => 'Gửi thất bại',
+    '1分钟内只能发送一条短信' => 'Chỉ có thể gửi một tin nhắn trong vòng 1 phút',
     '文件处理失败，请稍候再试！' => 'Xử lý tệp thất bại, vui lòng thử lại sau!',
     '可执行文件禁止上传到本地服务器' => 'Không cho phép tải lên tệp thực thi trên máy chủ cục bộ.',
     '文件上传类型受限，请在后台配置' => 'Loại tệp tải lên bị hạn chế, vui lòng cấu hình trong nền tảng quản trị.',
@@ -109,7 +113,7 @@ return [
     'arrival_time' => 'Thời gian đến',
     'tracking_number' => 'Số theo dõi',
     'company_name' => 'Tên công ty',
-    'shipping_address' => 'Địa chỉ giao hàng',
+    'shipping_address' => 'Thông tin vận chuyển',
     'total' => 'Tổng cộng',
     'commission' => 'Hoa hồng',
     'delivery_recharge' => 'Phí giao hàng',

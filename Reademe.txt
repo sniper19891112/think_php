@@ -272,7 +272,60 @@ sudo nginx -t
 
 sudo systemctl restart nginx
 
-
+sudo yum install nginx
 sudo yum install certbot
 sudo yum install python3-certbot-nginx
 sudo certbot --nginx -d alphaglobalone69.com -d www.alphaglobalone69.com
+
+
+1. create domain in amazon route53
+2. register in hostedzone
+
+1. Certificate Manager
+
+
+sudo certbot --nginx -d iremy23.com -d www.iremy23.com
+
+
+sudo nano /etc/nginx/conf.d/iremy23.com.conf
+
+============================ https ==============================
+server {
+  if ($host = www.iremy23.com) {
+    return 301 https://$host$request_uri;
+  } # managed by Certbot
+
+  if ($host = iremy23.com) {
+    return 301 https://$host$request_uri;
+  } # managed by Certbot
+
+  listen 80;
+  server_name iremy23.com www.iremy23.com;
+  return 404; # managed by Certbot
+}
+
+server {
+  server_name iremy23.com www.iremy23.com;
+
+  location / {
+    proxy_pass http://43.154.106.155:8008;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+
+  listen 443 ssl; # managed by Certbot
+  ssl_certificate /etc/letsencrypt/live/iremy23.com/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/iremy23.com/privkey.pem; # managed by Certbot
+  include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+  ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+===============================================================================
+
+sudo certbot --nginx -d iremy23.com -d www.iremy23.com
+
+sudo nginx -t
+
+sudo systemctl restart nginx
