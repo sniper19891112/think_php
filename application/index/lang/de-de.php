@@ -1,5 +1,7 @@
 <?php
 return [
+    '用户接单' => 'Kundenbestellungen',
+    '提现金额' => 'Auszahlungsbetrag',
     '还没有设置收货地址' => 'Lieferadresse noch nicht festgelegt',
     '发送成功' => 'Erfolgreich gesendet',
     '发送失败' => 'Senden fehlgeschlagen',

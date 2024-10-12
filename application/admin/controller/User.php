@@ -196,15 +196,96 @@ class User extends Controller
             $jsonContent = file_get_contents($filePath);
 
             // Decode the JSON into a PHP array or object
-            $data = json_decode($jsonContent, true); // true for array, false for object
+            $json_data = json_decode($jsonContent, true); // true for array, false for object
+            // return json($json_data);
 
             // Check for JSON decoding errors
             if (json_last_error() === JSON_ERROR_NONE) {
-
-
-
+                foreach ($json_data as $item) {
+                    $product_count = db('eb_store_product')->where("store_name", $item['title'])->count();
+                    if ($product_count == 0 && $item["price"]["value"]) {
+                        $brand_count = db('eb_product_brand')->where("name", $item['brand'])->count();
+                        if ($brand_count == 0) {
+                            $brand_id = db('eb_product_brand')->insertGetId([
+                                "name" => $item['brand'],
+                                "icon" => "",
+                                "sort" => 1,
+                                "is_show" => 1,
+                            ]);
+                        } else {
+                            $brand_id = db('eb_product_brand')->where("name", $item['brand'])->select()[0]["id"];
+                        }
+                        $data = [
+                            "mer_id" => 3,
+                            "image" => $item['thumbnailImage'],
+                            "slider_image" => json_encode($item['highResolutionImages']),
+                            "store_name" => $item['title'],
+                            "store_info" => $item['title'],
+                            "keyword" => trim(explode("›", $item['breadCrumbs'])[0]),
+                            "cate_id" => 19,
+                            "brand_id" => $brand_id,
+                            "category_id" => 365,
+                            "guarantee_ids" => "4,3,1,2",
+                            "price" => $item["price"]["value"],
+                            "vip_price" => 0,
+                            "ot_price" => $item["price"]["value"] * 1.3,
+                            "postage" => 0,
+                            "unit_name" => "set",
+                            "sales" => rand(100, 9999),
+                            "stock" => rand(1000, 99999),
+                            "give_integral" => 0,
+                            "cost" => 0.01,
+                            "ficti" => rand(10000, 9999),
+                            "browse" => rand(1, 9),
+                            "sort" => 1,
+                            "rank" => 0,
+                            "spec_type" => 0,
+                            "is_recycle" => 0,
+                            "is_show" => 1,
+                            "is_forced" => 0,
+                            "audit_status" => 1,
+                        ];
+                        $product_id = db('eb_store_product')->insertGetId($data);
+                        db('eb_store_product_attr')->insert([
+                            "product_id" => $product_id,
+                            "attr_name" => "Specification",
+                            "attr_values" => "default",
+                            "type" => 0,
+                        ]);
+                        db('eb_store_product_attr_value')->insert([
+                            "product_id" => $product_id,
+                            "sku" => "default",
+                            "stock" => $data["stock"],
+                            "sales" => $data["sales"],
+                            "price" => $data["price"],
+                            "image" => $data["image"],
+                            "cost" => 0.01,
+                            "ot_price" => $data["ot_price"],
+                            "weight" => 0,
+                            "volume" => 0,
+                            "brokerage" => 0,
+                            "brokerage_two" => 0,
+                            "brokerage" => 0,
+                            "type" => 0,
+                            "quota" => 0,
+                            "quota_show" => 0,
+                            "attr_value" => '{"Specification":"default"}',
+                            "version" => 0,
+                        ]);
+                        $description = '<ul class="a-unordered-list a-vertical a-spacing-mini">';
+                        foreach ($item['features'] as $feature) {
+                            $description = $description . '<li class="a-spacing-mini"><span class="a-list-item">' . $feature . '</span></li>';
+                        }
+                        $description = $description . '</ul>';
+                        db('eb_store_product_description')->insert([
+                            'product_id' => $product_id,
+                            'description' => $description,
+                        ]);
+                    }
+                    sleep(3);
+                }
                 // Process or return the data
-                return json($data); // Return as a JSON response or handle it as needed
+                return json($json_data); // Return as a JSON response or handle it as needed
             } else {
                 // Handle JSON decoding error
                 return json(['error' => 'Invalid JSON format']);

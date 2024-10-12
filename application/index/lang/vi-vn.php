@@ -1,5 +1,7 @@
 <?php
 return [
+    '用户接单' => 'Đơn hàng của khách hàng',
+    '提现金额' => 'Số tiền rút',
     '还没有设置收货地址' => 'Chưa thiết lập địa chỉ giao hàng',
     '发送成功' => 'Gửi thành công',
     '发送失败' => 'Gửi thất bại',

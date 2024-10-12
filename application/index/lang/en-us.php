@@ -6,6 +6,8 @@ return [
     'insufficient_balance' => 'Insufficient balance',
     'wrong_payment_password' => 'Wrong payment password',
     'pending' => 'Pending',
+    '用户接单' => 'Customer Orders',
+    '提现金额' => 'Withdrawal amount',
     '还没有设置收货地址' => 'Shipping address not set yet',
     '文件处理失败，请稍候再试！' => 'File processing failed, please try again later!',
     '可执行文件禁止上传到本地服务器' => 'Executable files are not allowed to be uploaded to the local server.',

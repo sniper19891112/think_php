@@ -1,5 +1,7 @@
 <?php
 return [
+    '用户接单' => 'Pesanan Pelanggan',
+    '提现金额' => 'Jumlah Penarikan',
     '还没有设置收货地址' => 'Alamat pengiriman belum diatur',
     '发送成功' => 'Pengiriman berhasil',
     '发送失败' => 'Pengiriman gagal',

@@ -23,13 +23,13 @@ return [
     // 数据库类型
     'type' => 'mysql',
     // 服务器地址
-    'hostname' => '127.0.0.1',
+    'hostname' => '51.20.74.52',
     // 数据库名
-    'database' => 'ecom',
+    'database' => 'java_et',
     // 用户名
     'username' => 'root',
     // 密码
-    'password' => '',
+    'password' => 'ZAYg8dnDI5sqkjRNpc7',
     // 编码
     'charset' => 'utf8mb4',
     // 端口

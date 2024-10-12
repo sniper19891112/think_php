@@ -41,6 +41,8 @@ sudo docker exec -it mysql mysql -u root -p
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'ZAYg8dnDI5sqkjRNpc7' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
+SET GLOBAL max_connections = 200;
+
 
 ==================== redis6 install ==============================
 sudo yum install redis6

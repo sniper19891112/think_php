@@ -1,5 +1,7 @@
  <?php
 return [
+    '用户接单' => 'Pedidos do Cliente',
+    '提现金额' => 'Montante de Retirada',
     '还没有设置收货地址' => 'Endereço de entrega ainda não configurado',
     '发送成功' => 'Envio bem-sucedido',
     '发送失败' => 'Envio falhado',
